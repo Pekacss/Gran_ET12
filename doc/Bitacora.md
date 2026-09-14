@@ -24,3 +24,9 @@ Bitacora_03 = {
     titulo = 'Cimientos de logica de negocios y frontend',
     descripcion = "El service y el controler de Usuario fueron programados, al menos sus cimientos. Debido a que no hay conexion a la base de datos porque no hay base de datos, la logica de negocios casi que no influye en el flujo de datos: El sevice directamente llama al repo con los datos crudos, sin filtrar. Hasta no tener una BD u controladores mas solidos no puedo aplcar logica de negocios."
 }
+
+Bitacora_04 = {
+    fecha = '14-09-2026',
+    titulo = 'Services y Controllers',
+    descripcion = "Ademas de terminar de crear y definir los controllers y services, ajuste ciertos tipos de datos (por ejemplo, algunos ObtenerTodos tenian en parametro tipos de datos incorrectos como ushort para posicion que es byte), diagrame el DER."
+}
