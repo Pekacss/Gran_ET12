@@ -17,12 +17,12 @@ namespace Repositories
             throw new NotImplementedException("Falta conectar el repositorio real de puntuaciones.");
         }
 
-        public Puntuacion? ObtenerPorId(ushort id)
+        public Puntuacion? ObtenerPorId(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de puntuaciones.");
         }
 
-        public bool Eliminar(ushort id)
+        public bool Eliminar(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de puntuaciones.");
             return false;

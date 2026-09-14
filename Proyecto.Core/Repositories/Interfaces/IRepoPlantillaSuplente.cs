@@ -7,8 +7,8 @@ namespace Interfaces
     public interface IRepoPlantillaSuplente
     {
         List<PlantillaSuplente> ObtenerTodos();
-        PlantillaSuplente? ObtenerPorId(ushort id);
-        List<Jugador> ObtenerSuplentesPlantilla(ushort id);
+        PlantillaSuplente? ObtenerPorId(int id);
+        List<Jugador> ObtenerSuplentesPlantilla(int id);
         PlantillaSuplente Agregar(PlantillaSuplente plantillaSuplente);
         bool Eliminar(int id);
     }

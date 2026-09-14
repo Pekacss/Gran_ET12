@@ -5,29 +5,29 @@ using Interfaces;
 
 namespace Repositories
 {
-    public interface IRepoPlantillaTitular
+    public class RepoPlantillaTitular : IRepoPlantillaTitular
     {
-        List<PlantillaTitular> ObtenerTodos()
+        public List<PlantillaTitular> ObtenerTodos()
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas titulares.");
         }
 
-        PlantillaTitular? ObtenerPorId(ushort id)
+        public PlantillaTitular? ObtenerPorId(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas titulares.");
         }
 
-        List<Jugador> ObtenerTitularPlantilla(ushort id)
+        public List<Jugador> ObtenerTitularesPlantilla(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas titulares.");
         }
 
-        PlantillaTitular Agregar(PlantillaTitular plantillaTitular)
+        public PlantillaTitular Agregar(PlantillaTitular plantillaTitular)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas titulares.");
         }
         
-        bool Eliminar(ushort id)
+        public bool Eliminar(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas titulares.");
             return false;

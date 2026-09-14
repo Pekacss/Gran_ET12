@@ -12,12 +12,12 @@ namespace Repositories
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas suplentes.");
         }
 
-        public PlantillaSuplente? ObtenerPorId(ushort id)
+        public PlantillaSuplente? ObtenerPorId(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas suplentes.");
         }
 
-        public List<Jugador> ObtenerSuplentesPlantilla(ushort id)
+        public List<Jugador> ObtenerSuplentesPlantilla(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas suplentes.");
         }
@@ -27,7 +27,7 @@ namespace Repositories
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas suplentes.");
         }
 
-        public bool Eliminar(ushort id)
+        public bool Eliminar(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas suplentes.");
             return false;

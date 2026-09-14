@@ -7,10 +7,10 @@ namespace Interfaces
     public interface IRepoPlantilla
     {
         List<Plantilla> ObtenerTodos();
-        Plantilla? ObtenerPorId(ushort id);
-        List<Jugador> ObtenerJugadoresPorPlantilla(ushort id);
-        float ObtenerCalificacionPlantilla(ushort id);
+        Plantilla? ObtenerPorId(int id);
+        List<Jugador> ObtenerJugadoresPorPlantilla(int id);
+        float ObtenerCalificacionPlantilla(int id);
         Plantilla Agregar(Plantilla plantilla);
-        bool Eliminar(ushort id);
+        bool Eliminar(int id);
     }
 }

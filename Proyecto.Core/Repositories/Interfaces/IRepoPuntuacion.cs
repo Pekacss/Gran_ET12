@@ -7,9 +7,8 @@ namespace Interfaces
     public interface IRepoPuntuacion
     {
         List<Puntuacion> ObtenerTodos();
-        Puntuacion? ObtenerPorId(ushort id);
-        List<Jugador> ObtenerJugadoresPorPuntuacion(ushort id);
-        float ObtenerCalificacionPuntuacion(ushort id);
+        Puntuacion? ObtenerPorId(int id);
+        float ObtenerCalificacionPuntuacion(int id);
         Puntuacion Agregar(Puntuacion puntuacion);
         bool Eliminar(int id);
     }

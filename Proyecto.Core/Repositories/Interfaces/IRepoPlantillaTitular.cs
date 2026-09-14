@@ -7,8 +7,8 @@ namespace Interfaces
     public interface IRepoPlantillaTitular
     {
         List<PlantillaTitular> ObtenerTodos();
-        PlantillaTitular? ObtenerPorId(ushort id);
-        List<Jugador> ObtenerTitularesPlantilla(ushort id);
+        PlantillaTitular? ObtenerPorId(int id);
+        List<Jugador> ObtenerTitularesPlantilla(int id);
         PlantillaTitular Agregar(PlantillaTitular plantillaTitular);
         bool Eliminar(int id);
     }
