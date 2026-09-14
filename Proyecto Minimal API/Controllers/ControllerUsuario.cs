@@ -7,13 +7,13 @@ namespace Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsuarioController : ControllerBase
+    public class ControllerUsuario : ControllerBase
     {
-        private readonly UsuarioService _service;
+        private readonly ServiceUsuario _service;
 
-        public UsuarioController(UsuarioService usuarioService)
+        public ControllerUsuario(ServiceUsuario serviceUsuario)
         {
-            _service = usuarioService;
+            _service = serviceUsuario;
         }
 
         [HttpPost]

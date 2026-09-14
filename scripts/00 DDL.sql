@@ -15,7 +15,7 @@ CREATE TABLE Jugador
 CREATE TABLE Posicion
 (
     Id TINYINT UNSIGNED PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
+    Nombre VARCHAR(20) NOT NULL,
     CONSTRAINT UQ_Posicion_Nombre UNIQUE (Nombre)
 );
 
@@ -37,7 +37,7 @@ CREATE TABLE Puntuacion
 
 CREATE TABLE Plantilla
 (
-    Id INT PRIMARY KEY,
+    Id INT UNSIGNED PRIMARY KEY,
     IdUsuario TINYINT UNSIGNED NOT NULL,
     Fecha TINYINT UNSIGNED NOT NULL ,
     CONSTRAINT FK_Plantilla_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
@@ -45,8 +45,8 @@ CREATE TABLE Plantilla
 
 CREATE TABLE PlantillaTitular
 (
-    Id INT PRIMARY KEY,
-    IdPlantilla INT NOT NULL,
+    Id INT UNSIGNED PRIMARY KEY,
+    IdPlantilla INT UNSIGNED NOT NULL,
     IdJugador SMALLINT UNSIGNED NOT NULL,
     CONSTRAINT FK_PlantillaTitular_Plantilla FOREIGN KEY (IdPlantilla) REFERENCES Plantilla(Id),
     CONSTRAINT FK_PlantillaTitular_Jugador FOREIGN KEY (IdJugador) REFERENCES Jugador(Id)
@@ -54,8 +54,8 @@ CREATE TABLE PlantillaTitular
 
 CREATE TABLE PlantillaSuplente
 (
-    Id INT PRIMARY KEY,
-    IdPlantilla INT NOT NULL,
+    Id INT UNSIGNED PRIMARY KEY,
+    IdPlantilla INT UNSIGNED NOT NULL,
     IdJugador SMALLINT UNSIGNED NOT NULL,
     CONSTRAINT FK_PlantillaSuplente_Plantilla FOREIGN KEY (IdPlantilla) REFERENCES Plantilla(Id),
     CONSTRAINT FK_PlantillaSuplente_Jugador FOREIGN KEY (IdJugador) REFERENCES Jugador(Id)
