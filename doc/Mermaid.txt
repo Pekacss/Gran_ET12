@@ -1,0 +1,64 @@
+erDiagram
+    Jugador }|--|| Equipo : ""
+    Jugador }o--|| Posicion : ""
+    Jugador }|--|{ PlantillaTitular : ""
+    Jugador }|--|{ PlantillaSuplente : ""
+    Puntuacion }o--|| Jugador : ""
+    Plantilla }o--|| Usuario : ""
+    Plantilla ||--o{ PlantillaTitular : ""
+    Plantilla ||--o{ PlantillaSuplente : ""
+
+
+    Jugador {
+        SMALLINTUNSIGNED Id PK
+        TINYINTUNSIGNED IdEquipo FK
+        TINYINTUNSIGNED IdPosicion FK
+        VARCHAR(50) Nombre
+        VARCHAR(50) Apellido
+        VARCHAR(50) Apodo
+        DATE FechaNacimiento
+        DECIMAL(10,2) Cotizacion
+    }
+
+    Posicion {
+        TINYINTUNSIGNED Id PK
+        VARCHAR(20) Nombre UK
+    }
+
+    Equipo {
+        TINYINTUNSIGNED Id PK
+        VARCHAR(50) Nombre UK
+    }
+
+    Puntuacion {
+        INTUNSIGNED Id PK
+        SMALLINTUNSIGNED IdJugador FK
+        TINYINTUNSIGNED Fecha
+        DECIMAL(3,1) Puntuacion
+    }
+
+    Plantilla {
+        INTUNSIGNED Id PK
+        TINYINTUNSIGNED IdUsuario FK
+        TINYINTUNSIGNED Fecha
+    }
+
+    PlantillaTitular {
+        INTUNSIGNED Id PK
+        INTUNSIGNED IdPlantilla FK
+        SMALLINTUNSIGNED IdJugador FK
+    }
+    
+    PlantillaSuplente {
+        INTUNSIGNED Id PK
+        INTUNSIGNED IdPlantilla FK
+        SMALLINTUNSIGNED IdJugador FK
+    }
+
+    Usuario {
+        TINYINTUNSIGNED Id PK
+        VARCHAR(50) Nombre
+        VARCHAR(50) Apellido
+        VARCHAR(100) Email UK
+        VARCHAR(64) Contrasena
+    }
