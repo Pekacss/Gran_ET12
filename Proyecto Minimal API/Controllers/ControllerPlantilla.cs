@@ -28,10 +28,43 @@ namespace Controllers
         }
 
         [HttpGet]
-        public IActionResult<List<Plantilla>> Obtener()
+        public IActionResult<List<Plantilla>> ObtenerTodos()
         {
             var plantillas = _service.ObtenerTodos();
             return Ok(plantillas);
+        }
+
+        [HttpGet("usuario/{id}")]
+        public IActionResult<Plantilla> ObtenerPorIdUsuario(ushort id)
+        {
+            var plantilla = _service.ObtenerPorIdUsuario(id);
+            if (plantilla == null)
+            {
+                return NotFound();
+            }
+            return Ok(plantilla);
+        }
+
+        [HttpGet("fecha/{fecha}")]
+        public IActionResult<Plantilla> ObtenerPorFecha(byte fecha)
+        {
+            var plantilla = _service.ObtenerPorFecha(fecha);
+            if (plantilla == null)
+            {
+                return NotFound();
+            }
+            return Ok(plantilla);
+        }
+
+        [HttpGet("nombre/{nombre}")]
+        public IActionResult<Plantilla> ObtenerPorNombre(string nombre)
+        {
+            var plantilla = _service.ObtenerPorNombre(nombre);
+            if (plantilla == null)
+            {
+                return NotFound();
+            }
+            return Ok(plantilla);
         }
 
         [HttpGet("{id}")]

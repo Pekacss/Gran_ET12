@@ -11,7 +11,21 @@ namespace Repositories
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas.");
         }
+        public Plantilla? ObtenerPorIdUsuario(ushort id)
+        {
+            throw new NotImplementedException("Falta conectar el repositorio real de plantillas.");
+        }
 
+        public Plantilla? ObtenerPorFecha(byte fecha)
+        {
+            throw new NotImplementedException("Falta conectar el repositorio real de plantillas.");
+        }
+
+        public Plantilla? ObtenerPorNombre(string nombre)
+        {
+            throw new NotImplementedException("Falta conectar el repositorio real de plantillas.");
+        }
+    
         public Plantilla? ObtenerPorId(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas.");

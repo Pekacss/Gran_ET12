@@ -26,9 +26,19 @@ namespace Services
             return _repoPuntuacion.ObtenerTodos();
         }
 
-        public Puntuacion? ObtenerPorId(int id)
+        public Puntuacion? ObtenerPorFecha(byte fecha)
         {
-            return _repoPuntuacion.ObtenerPorId(id);
+            return _repoPuntuacion.ObtenerPorFecha(fecha);
+        }
+
+        public Puntuacion? ObtenerPorJugador(ushort id)
+        {
+            return _repoPuntuacion.ObtenerPorJugador(id);
+        }
+
+        public Puntuacion? ObtenerPorFechaJugador(byte fecha, ushort id)
+        {
+            return _repoPuntuacion.ObtenerPorFechaJugador(fecha, id);
         }
 
         public bool Eliminar(int id)

@@ -26,22 +26,37 @@ namespace Services
             return _repoPlantilla.ObtenerTodos();
         }
 
-        public Plantilla? ObtenerPorId(ushort id)
+        public Plantilla? ObtenerPorIdUsuario(ushort id)
+        {
+            return _repoPlantilla.ObtenerPorIdUsuario(id);
+        }
+
+        public Plantilla? ObtenerPorFecha(byte fecha)
+        {
+            return _repoPlantilla.ObtenerPorFecha(fecha);
+        }
+
+        public Plantilla? ObtenerPorNombre(string nombre)
+        {
+            return _repoPlantilla.ObtenerPorNombre(nombre);
+        }
+
+        public Plantilla? ObtenerPorId(int id)
         {
             return _repoPlantilla.ObtenerPorId(id);
         }
 
-        public List<Jugador> ObtenerJugadoresPorPlantilla(ushort id)
+        public List<Jugador> ObtenerJugadoresPorPlantilla(int id)
         {
             return _repoPlantilla.ObtenerJugadoresPorPlantilla(id);
         }
 
-        public float ObtenerCalificacionPlantilla(ushort id)
+        public float ObtenerCalificacionPlantilla(int id)
         {
             return _repoPlantilla.ObtenerCalificacionPlantilla(id);
         }
 
-        public bool Eliminar(ushort id)
+        public bool Eliminar(int id)
         {
             return _repoPlantilla.Eliminar(id);
         }

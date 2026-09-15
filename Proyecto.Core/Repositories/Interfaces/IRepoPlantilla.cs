@@ -7,6 +7,9 @@ namespace Interfaces
     public interface IRepoPlantilla
     {
         List<Plantilla> ObtenerTodos();
+        Plantilla? ObtenerPorIdUsuario(ushort id);
+        Plantilla? ObtenerPorFecha(byte fecha);
+        Plantilla? ObtenerPorNombre(string nombre);
         Plantilla? ObtenerPorId(int id);
         List<Jugador> ObtenerJugadoresPorPlantilla(int id);
         float ObtenerCalificacionPlantilla(int id);
