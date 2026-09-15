@@ -1,2 +1,5 @@
 <Solution>
+  <Folder Name="/ProyectoMinimalAPI/">
+    <Project Path="ProyectoMinimalAPI/Gran_ET12.csproj" />
+  </Folder>
 </Solution>
