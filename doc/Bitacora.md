@@ -30,3 +30,9 @@ Bitacora_04 = {
     titulo = 'Services y Controllers',
     descripcion = "Ademas de terminar de crear y definir los controllers y services, ajuste ciertos tipos de datos (por ejemplo, algunos ObtenerTodos tenian en parametro tipos de datos incorrectos como ushort para posicion que es byte), diagrame el DER."
 }
+
+Bitacora_05 = {
+    fecha = '15-09-2026',
+    titulo = "Creacion de soluciones, xunits y csprojs",
+    descripcion = "Hoy se crearon los csproj pertinentes, estos posteriormente integrados a las soluciones para crear las unidades de testeo de cada model; ademas de actualizar el DDL por recomendacion del profesor. Al principio, el orden de carpetas, soluciones y archivos de proyecto de cs se mezclaron un poco, pero reestructurando un poco los directorios (con src y test como principales integraciones) se pudieron crear las soluciones necesarias y justas, tanto para core como minimal."
+}
