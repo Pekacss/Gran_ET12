@@ -30,7 +30,7 @@ CREATE TABLE Puntuacion
 (
     Fecha TINYINT UNSIGNED PRIMARY KEY,
     IdJugador SMALLINT UNSIGNED PRIMARY KEY,
-    Puntuacion DECIMAL(3,1) NOT NULL,
+    Puntaje DECIMAL(3,1) NOT NULL,
     CONSTRAINT PFK_Puntuacion_Jugador FOREIGN KEY (IdJugador) REFERENCES Jugador(Id)
 );
 

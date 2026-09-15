@@ -33,7 +33,7 @@ erDiagram
     Puntuacion {
         TINYINTUNSIGNED Fecha PK
         SMALLINTUNSIGNED IdJugador FK, PK
-        DECIMAL(3,1) Puntuacion
+        DECIMAL(3,1) Puntaje
     }
 
     Plantilla {
