@@ -2,4 +2,5 @@
   <Folder Name="/src/">
     <Project Path="src/ProyectoCore.csproj" />
   </Folder>
+  <Project Path="ProyectoCore/ProyectoCore.csproj" />
 </Solution>
