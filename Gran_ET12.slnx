@@ -1,4 +1,6 @@
 <Solution>
+  <Folder Name="/Proyecto.Core/" />
+  <Folder Name="/Proyecto.Core/Models/" />
   <Folder Name="/ProyectoMinimalAPI/">
     <Project Path="ProyectoMinimalAPI/Gran_ET12.csproj" />
   </Folder>

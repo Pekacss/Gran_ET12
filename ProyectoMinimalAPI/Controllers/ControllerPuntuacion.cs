@@ -23,7 +23,7 @@ namespace Controllers
                 return BadRequest();
             if (puntuacion.IdJugador == 0)
                 return BadRequest();
-            if (puntuacion.Puntuacion == null)
+            if (puntuacion.Puntaje == 0)
                 return BadRequest();
             var nuevaPuntuacion = _service.Agregar(puntuacion);
             return Ok(nuevaPuntuacion);

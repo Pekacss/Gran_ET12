@@ -5,6 +5,6 @@ namespace Models
     {
         public byte Fecha { get; set; }
         public ushort IdJugador { get; set; }
-        public float Puntuacion { get; set; }
+        public float Puntaje { get; set; }
     }
 }
