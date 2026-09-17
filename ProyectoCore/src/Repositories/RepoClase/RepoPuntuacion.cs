@@ -17,12 +17,12 @@ namespace Repositories
             throw new NotImplementedException("Falta conectar el repositorio real de puntuaciones.");
         }
 
-        public Puntuacion? ObtenerPorFecha(byte fecha)
+        public List<Puntuacion?> ObtenerPorFecha(byte fecha)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de puntuaciones.");
         }
 
-        public Puntuacion? ObtenerPorJugador(ushort id)
+        public List<Puntuacion?> ObtenerPorJugador(ushort id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de puntuaciones.");
         }

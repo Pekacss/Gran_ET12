@@ -26,12 +26,12 @@ namespace Services
             return _repoPuntuacion.ObtenerTodos();
         }
 
-        public Puntuacion? ObtenerPorFecha(byte fecha)
+        public List<Puntuacion?> ObtenerPorFecha(byte fecha)
         {
             return _repoPuntuacion.ObtenerPorFecha(fecha);
         }
 
-        public Puntuacion? ObtenerPorJugador(ushort id)
+        public List<Puntuacion?> ObtenerPorJugador(ushort id)
         {
             return _repoPuntuacion.ObtenerPorJugador(id);
         }
