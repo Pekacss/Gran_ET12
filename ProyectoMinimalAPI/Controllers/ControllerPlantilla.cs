@@ -17,7 +17,7 @@ namespace Controllers
         }
 
         [HttpPost]
-        public IActionResult<Plantilla> Agregar(Plantilla plantilla)
+        public ActionResult<Plantilla> Agregar(Plantilla plantilla)
         {
             if (plantilla.Id == 0)
                 return BadRequest();
@@ -28,14 +28,14 @@ namespace Controllers
         }
 
         [HttpGet]
-        public IActionResult<List<Plantilla>> ObtenerTodos()
+        public ActionResult<List<Plantilla>> ObtenerTodos()
         {
             var plantillas = _service.ObtenerTodos();
             return Ok(plantillas);
         }
 
         [HttpGet("usuario/{id}")]
-        public IActionResult<Plantilla> ObtenerPorIdUsuario(ushort id)
+        public ActionResult<Plantilla> ObtenerPorIdUsuario(ushort id)
         {
             var plantilla = _service.ObtenerPorIdUsuario(id);
             if (plantilla == null)
@@ -46,7 +46,7 @@ namespace Controllers
         }
 
         [HttpGet("fecha/{fecha}")]
-        public IActionResult<Plantilla> ObtenerPorFecha(byte fecha)
+        public ActionResult<Plantilla> ObtenerPorFecha(byte fecha)
         {
             var plantilla = _service.ObtenerPorFecha(fecha);
             if (plantilla == null)
@@ -57,7 +57,7 @@ namespace Controllers
         }
 
         [HttpGet("nombre/{nombre}")]
-        public IActionResult<Plantilla> ObtenerPorNombre(string nombre)
+        public ActionResult<Plantilla> ObtenerPorNombre(string nombre)
         {
             var plantilla = _service.ObtenerPorNombre(nombre);
             if (plantilla == null)
@@ -68,7 +68,7 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult<Plantilla> ObtenerPorId(int id)
+        public ActionResult<Plantilla> ObtenerPorId(int id)
         {
             var plantilla = _service.ObtenerPorId(id);
             if (plantilla == null)
@@ -79,14 +79,14 @@ namespace Controllers
         }
 
         [HttpGet("{id}/jugadores")]
-        public IActionResult<List<Jugador>> ObtenerJugadoresPorPlantilla(int id)
+        public ActionResult<List<Jugador>> ObtenerJugadoresPorPlantilla(int id)
         {
             var jugadores = _service.ObtenerJugadoresPorPlantilla(id);
             return Ok(jugadores);
         }
 
         [HttpGet("{id}/calificacion")]
-        public IActionResult<float> ObtenerCalificacionPlantilla(int id)
+        public ActionResult<float> ObtenerCalificacionPlantilla(int id)
         {
             var calificacion = _service.ObtenerCalificacionPlantilla(id);
             return Ok(calificacion);

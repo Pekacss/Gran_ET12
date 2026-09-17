@@ -17,7 +17,7 @@ namespace Controllers
         }
 
         [HttpPost]
-        public IActionResult<Jugador> Agregar(Jugador jugador)
+        public ActionResult<Jugador> Agregar(Jugador jugador)
         {
             if (jugador.Id == null)
                 return BadRequest();
@@ -36,14 +36,14 @@ namespace Controllers
         }
 
         [HttpGet]
-        public IActionResult<List<Jugador>> Obtener()
+        public ActionResult<List<Jugador>> Obtener()
         {
             var jugadores = _service.ObtenerTodos();
             return Ok(jugadores);
         }
 
         [HttpGet("{id}")]
-        public IActionResult<Jugador> ObtenerPorId(int id)
+        public ActionResult<Jugador> ObtenerPorId(int id)
         {
             var jugador = _service.ObtenerPorId(id);
             if (jugador == null)
@@ -54,7 +54,7 @@ namespace Controllers
         }
 
         [HttpGet("equipo/{id}")]
-        public IActionResult<Equipo> ObtenerEquipoPorjugador(int id)
+        public ActionResult<Equipo> ObtenerEquipoPorjugador(int id)
         {
             var equipo = _service.ObtenerEquipoPorjugador(id);
             if (equipo == null)
@@ -65,7 +65,7 @@ namespace Controllers
         }
 
         [HttpGet("posicion/{id}")]
-        public IActionResult<Posicion> ObtenerPosicionPorjugador(int id)
+        public ActionResult<Posicion> ObtenerPosicionPorjugador(int id)
         {
             var posicion = _service.ObtenerPosicionPorjugador(id);
             if (posicion == null)

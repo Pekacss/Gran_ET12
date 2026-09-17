@@ -17,7 +17,7 @@ namespace Controllers
         }
 
         [HttpPost]
-        public IActionResult<Usuario> Agregar(Usuario usuario)
+        public ActionResult<Usuario> Agregar(Usuario usuario)
         {
             if (usuario.Id == null)
                 return BadRequest();
@@ -36,14 +36,14 @@ namespace Controllers
         }
 
         [HttpGet]
-        public IActionResult<List<Usuario>> Obtener()
+        public ActionResult<List<Usuario>> Obtener()
         {
             var usuarios = _service.ObtenerTodos();
             return Ok(usuarios);
         }
 
         [HttpGet("{id}")]
-        public IActionResult<Usuario> ObtenerPorId(int id)
+        public ActionResult<Usuario> ObtenerPorId(int id)
         {
             var usuario = _service.ObtenerPorId(id);
             if (usuario == null)

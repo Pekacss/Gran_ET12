@@ -17,7 +17,7 @@ namespace Controllers
         }
 
         [HttpPost]
-        public IActionResult<PlantillaTitular> Agregar(PlantillaTitular plantillaTitular)
+        public ActionResult<PlantillaTitular> Agregar(PlantillaTitular plantillaTitular)
         {
             if (plantillaTitular.Id == null || plantillaTitular.Id == 0)
                 return BadRequest();
@@ -30,14 +30,14 @@ namespace Controllers
         }
 
         [HttpGet]
-        public IActionResult<List<PlantillaTitular>> Obtener()
+        public ActionResult<List<PlantillaTitular>> Obtener()
         {
             var plantillasTitulares = _service.ObtenerTodos();
             return Ok(plantillasTitulares);
         }
 
         [HttpGet("{id}")]
-        public IActionResult<PlantillaTitular> ObtenerPorId(int id)
+        public ActionResult<PlantillaTitular> ObtenerPorId(int id)
         {
             var plantillaTitular = _service.ObtenerPorId(id);
             if (plantillaTitular == null)
@@ -48,7 +48,7 @@ namespace Controllers
         }
 
         [HttpGet("titulares/{id}")]
-        public IActionResult<List<Jugador>> ObtenerTitularesPlantilla(int id)
+        public ActionResult<List<Jugador>> ObtenerTitularesPlantilla(int id)
         {
             var titulares = _service.ObtenerTitularesPlantilla(id);
             return Ok(titulares);

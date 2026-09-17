@@ -17,7 +17,7 @@ namespace Controllers
         }
 
         [HttpPost]
-        public IActionResult<PlantillaSuplente> Agregar(PlantillaSuplente plantillaSuplente)
+        public ActionResult<PlantillaSuplente> Agregar(PlantillaSuplente plantillaSuplente)
         {
             if (plantillaSuplente.Id == null || plantillaSuplente.Id == 0)
                 return BadRequest();
@@ -30,14 +30,14 @@ namespace Controllers
         }
 
         [HttpGet]
-        public IActionResult<List<PlantillaSuplente>> Obtener()
+        public ActionResult<List<PlantillaSuplente>> Obtener()
         {
             var plantillasSuplentes = _service.ObtenerTodos();
             return Ok(plantillasSuplentes);
         }
 
         [HttpGet("{id}")]
-        public IActionResult<PlantillaSuplente> ObtenerPorId(int id)
+        public ActionResult<PlantillaSuplente> ObtenerPorId(int id)
         {
             var plantillaSuplente = _service.ObtenerPorId(id);
             if (plantillaSuplente == null)
@@ -48,7 +48,7 @@ namespace Controllers
         }
 
         [HttpGet("suplentes/{id}")]
-        public IActionResult<List<Jugador>> ObtenerSuplentesPlantilla(int id)
+        public ActionResult<List<Jugador>> ObtenerSuplentesPlantilla(int id)
         {
             var suplentes = _service.ObtenerSuplentesPlantilla(id);
             return Ok(suplentes);

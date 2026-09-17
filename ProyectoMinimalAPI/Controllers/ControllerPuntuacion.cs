@@ -17,7 +17,7 @@ namespace Controllers
         }
 
         [HttpPost]
-        public IActionResult<Puntuacion> Agregar(Puntuacion puntuacion)
+        public ActionResult<Puntuacion> Agregar(Puntuacion puntuacion)
         {
             if (puntuacion.Fecha == 0)
                 return BadRequest();
@@ -30,14 +30,14 @@ namespace Controllers
         }
 
         [HttpGet]
-        public IActionResult<List<Puntuacion>> Obtener()
+        public ActionResult<List<Puntuacion>> Obtener()
         {
             var puntuaciones = _service.ObtenerTodos();
             return Ok(puntuaciones);
         }
         
         [HttpGet("fecha/{fecha}")]
-        public IActionResult<Puntuacion> ObtenerPorFecha(byte fecha)
+        public ActionResult<Puntuacion> ObtenerPorFecha(byte fecha)
         {
             var puntuacion = _service.ObtenerPorFecha(fecha);
             if (puntuacion == null)
@@ -48,7 +48,7 @@ namespace Controllers
         }
 
         [HttpGet("jugador/{id}")]
-        public IActionResult<Puntuacion> ObtenerPorJugador(ushort id)
+        public ActionResult<Puntuacion> ObtenerPorJugador(ushort id)
         {
             var puntuacion = _service.ObtenerPorJugador(id);
             if (puntuacion == null)
@@ -59,7 +59,7 @@ namespace Controllers
         }
 
         [HttpGet("fecha/{fecha}/jugador/{id}")]
-        public IActionResult<Puntuacion> ObtenerPorFechaJugador(byte fecha, ushort id)
+        public ActionResult<Puntuacion> ObtenerPorFechaJugador(byte fecha, ushort id)
         {
             var puntuacion = _service.ObtenerPorFechaJugador(fecha, id);
             if (puntuacion == null)
@@ -70,7 +70,7 @@ namespace Controllers
         }
 
         [HttpGet("jugadores/{id}")]
-        public IActionResult<List<Jugador>> ObtenerJugadoresPorPuntuacion(int id)
+        public ActionResult<List<Jugador>> ObtenerJugadoresPorPuntuacion(int id)
         {
             var jugadores = _service.ObtenerJugadoresPorPuntuacion(id);
             return Ok(jugadores);
