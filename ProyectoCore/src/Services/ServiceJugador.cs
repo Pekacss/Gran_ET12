@@ -31,14 +31,14 @@ namespace Services
             return _repoJugador.ObtenerPorId(id);
         }
 
-        public Equipo? ObtenerEquipoPorjugador(ushort id)
+        public Equipo? ObtenerEquipoPorJugador(ushort id)
         {
-            return _repoJugador.ObtenerEquipoPorjugador(id);
+            return _repoJugador.ObtenerEquipoPorJugador(id);
         }
 
-        public Posicion? ObtenerPosicionPorjugador(ushort id)
+        public Posicion? ObtenerPosicionPorJugador(ushort id)
         {
-            return _repoJugador.ObtenerPosicionPorjugador(id);
+            return _repoJugador.ObtenerPosicionPorJugador(id);
         }
 
         public bool Eliminar(ushort id)

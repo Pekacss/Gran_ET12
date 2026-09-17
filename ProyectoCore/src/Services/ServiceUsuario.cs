@@ -18,7 +18,7 @@ namespace Services
 
         public Usuario Agregar(Usuario usuario)
         {
-            return_repoUsuario.Agregar(usuario);
+            return _repoUsuario.Agregar(usuario);
         }
 
         public List<Usuario> ObtenerTodos()
