@@ -2,5 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/ProyectoCore.csproj" />
   </Folder>
-  <Project Path="ProyectoCore/ProyectoCore.csproj" />
+  <Folder Name="/test/">
+    <Project Path="test/ProyectoCoreTest.csproj" />
+  </Folder>
 </Solution>
