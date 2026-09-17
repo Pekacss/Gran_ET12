@@ -12,12 +12,12 @@ namespace Repositories
             throw new NotImplementedException("Falta conectar el repositorio real de equipos.");
         }
 
-        public Equipo? ObtenerPorId(ushort id)
+        public Equipo? ObtenerPorId(byte id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de equipos.");
         }
 
-        public List<Jugador> ObtenerJugadoresPorEquipo(ushort id)
+        public List<Jugador> ObtenerJugadoresPorEquipo(byte id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de equipos.");
         }
@@ -27,7 +27,7 @@ namespace Repositories
             throw new NotImplementedException("Falta conectar el repositorio real de equipos.");
         }
 
-        public bool Eliminar(ushort id)
+        public bool Eliminar(byte id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de equipos.");
             return false;

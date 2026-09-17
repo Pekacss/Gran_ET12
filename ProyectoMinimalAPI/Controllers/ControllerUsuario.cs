@@ -43,7 +43,7 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Usuario> ObtenerPorId(int id)
+        public ActionResult<Usuario> ObtenerPorId(ushort id)
         {
             var usuario = _service.ObtenerPorId(id);
             if (usuario == null)
@@ -54,7 +54,7 @@ namespace Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Eliminar(int id)
+        public IActionResult Eliminar(ushort id)
         {
             var eliminado = _service.Eliminar(id);
             if (!eliminado)

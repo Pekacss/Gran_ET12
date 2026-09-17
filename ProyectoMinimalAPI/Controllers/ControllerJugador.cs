@@ -27,9 +27,9 @@ namespace Controllers
                 return BadRequest();
             if (jugador.FechaNacimiento == DateTime.MinValue)
                 return BadRequest();
-            if (jugador.EquipoId == null)
+            if (jugador.IdEquipo == null)
                 return BadRequest();
-            if (jugador.PosicionId == null)
+            if (jugador.IdPosicion == null)
                 return BadRequest();
             var nuevoJugador = _service.Agregar(jugador);
             return Ok(nuevoJugador);
@@ -43,7 +43,7 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Jugador> ObtenerPorId(int id)
+        public ActionResult<Jugador> ObtenerPorId(ushort id)
         {
             var jugador = _service.ObtenerPorId(id);
             if (jugador == null)
@@ -54,9 +54,9 @@ namespace Controllers
         }
 
         [HttpGet("equipo/{id}")]
-        public ActionResult<Equipo> ObtenerEquipoPorjugador(int id)
+        public ActionResult<Equipo> ObtenerEquipoPorJugador(ushort id)
         {
-            var equipo = _service.ObtenerEquipoPorjugador(id);
+            var equipo = _service.ObtenerEquipoPorJugador(id);
             if (equipo == null)
             {
                 return NotFound();
@@ -65,9 +65,9 @@ namespace Controllers
         }
 
         [HttpGet("posicion/{id}")]
-        public ActionResult<Posicion> ObtenerPosicionPorjugador(int id)
+        public ActionResult<Posicion> ObtenerPosicionPorJugador(ushort id)
         {
-            var posicion = _service.ObtenerPosicionPorjugador(id);
+            var posicion = _service.ObtenerPosicionPorJugador(id);
             if (posicion == null)
             {
                 return NotFound();
@@ -76,7 +76,7 @@ namespace Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Eliminar(int id)
+        public IActionResult Eliminar(ushort id)
         {
             var eliminado = _service.Eliminar(id);
             if (!eliminado)

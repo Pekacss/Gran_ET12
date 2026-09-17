@@ -7,9 +7,9 @@ namespace Interfaces
     public interface IRepoEquipo
     {
         List<Equipo> ObtenerTodos();
-        Equipo? ObtenerPorId(ushort id);
-        List<Jugador> ObtenerJugadoresPorEquipo(ushort id);
+        Equipo? ObtenerPorId(byte id);
+        List<Jugador> ObtenerJugadoresPorEquipo(byte id);
         Equipo Agregar(Equipo equipo);
-        bool Eliminar(ushort id);
+        bool Eliminar(byte id);
     }
 }

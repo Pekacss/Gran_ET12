@@ -35,7 +35,7 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Equipo> ObtenerPorId(int id)
+        public ActionResult<Equipo> ObtenerPorId(byte id)
         {
             var equipo = _service.ObtenerPorId(id);
             if (equipo == null)
@@ -46,7 +46,7 @@ namespace Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Eliminar(int id)
+        public IActionResult Eliminar(byte id)
         {
             var eliminado = _service.Eliminar(id);
             if (!eliminado)
@@ -57,7 +57,7 @@ namespace Controllers
         }
 
         [HttpGet("{id}/jugadores")]
-        public ActionResult<List<Jugador>> ObtenerJugadoresPorEquipo(int id)
+        public ActionResult<List<Jugador>> ObtenerJugadoresPorEquipo(byte id)
         {
             var jugadores = _service.ObtenerJugadoresPorEquipo(id);
             return Ok(jugadores);

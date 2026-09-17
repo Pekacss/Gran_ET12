@@ -69,13 +69,6 @@ namespace Controllers
             return Ok(puntuacion);
         }
 
-        [HttpGet("jugadores/{id}")]
-        public ActionResult<List<Jugador>> ObtenerJugadoresPorPuntuacion(int id)
-        {
-            var jugadores = _service.ObtenerJugadoresPorPuntuacion(id);
-            return Ok(jugadores);
-        }
-
         [HttpDelete("{id}")]
         public IActionResult Eliminar(int id)
         {
