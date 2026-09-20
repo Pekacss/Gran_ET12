@@ -36,3 +36,8 @@ Bitacora_05 = {
     titulo = "Creacion de soluciones, xunits y csprojs",
     descripcion = "Hoy se crearon los csproj pertinentes, estos posteriormente integrados a las soluciones para crear las unidades de testeo de cada model; ademas de actualizar el DDL por recomendacion del profesor. Al principio, el orden de carpetas, soluciones y archivos de proyecto de cs se mezclaron un poco, pero reestructurando un poco los directorios (con src y test como principales integraciones) se pudieron crear las soluciones necesarias y justas, tanto para core como minimal."
 }
+
+Bitacora_06 = {
+    fecha = '17-09-2026',
+    titulo = "Vinculacion de csprojs y reajustes"
+}
