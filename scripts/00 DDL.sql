@@ -4,6 +4,7 @@ CREATE TABLE Usuario
     Nombre VARCHAR(50) NOT NULL,
     Apellido VARCHAR(50) NOT NULL,
     Email VARCHAR(100) NOT NULL,
+    Administrador BOOLEAN NOT NULL,
     Contrasena VARCHAR(64) NOT NULL,
     CONSTRAINT UQ_Usuario_Email UNIQUE (Email)
 );
