@@ -1,18 +1,35 @@
 erDiagram
-    Jugador }|--|| Equipo : ""
-    Jugador }o--|| Posicion : ""
-    Jugador }|--|{ PlantillaTitular : ""
-    Jugador }|--|{ PlantillaSuplente : ""
-    Puntuacion }o--|| Jugador : ""
-    Plantilla }o--|| Usuario : ""
-    Plantilla ||--o{ PlantillaTitular : ""
-    Plantilla ||--o{ PlantillaSuplente : ""
+    Usuario ||--o{ Plantilla : crea
+    Equipo ||--o{ Jugador : tiene
+    Posicion ||--o{ Jugador : clasifica
+    Jugador ||--o{ Puntuacion : recibe
+    Jugador ||--o{ PlantillaTitular : integra
+    Jugador ||--o{ PlantillaSuplente : integra
+    Plantilla ||--o{ PlantillaTitular : contiene
+    Plantilla ||--o{ PlantillaSuplente : contiene
 
+    Usuario {
+        SMALLINT UNSIGNED Id PK
+        VARCHAR(50) Nombre
+        VARCHAR(50) Apellido
+        VARCHAR(100) Email UK
+        VARCHAR(64) Contrasena
+    }
+
+    Equipo {
+        TINYINT UNSIGNED Id PK
+        VARCHAR(50) Nombre UK
+    }
+
+    Posicion {
+        TINYINT UNSIGNED Id PK
+        VARCHAR(20) Nombre UK
+    }
 
     Jugador {
-        SMALLINTUNSIGNED Id PK
-        TINYINTUNSIGNED IdEquipo FK
-        TINYINTUNSIGNED IdPosicion FK
+        SMALLINT UNSIGNED Id PK
+        TINYINT UNSIGNED IdEquipo FK
+        TINYINT UNSIGNED IdPosicion FK
         VARCHAR(50) Nombre
         VARCHAR(50) Apellido
         VARCHAR(50) Apodo
@@ -20,47 +37,27 @@ erDiagram
         DECIMAL(10,2) Cotizacion
     }
 
-    Posicion {
-        TINYINTUNSIGNED Id PK
-        VARCHAR(20) Nombre UK
-    }
-
-    Equipo {
-        TINYINTUNSIGNED Id PK
-        VARCHAR(50) Nombre UK
-    }
-
     Puntuacion {
-        TINYINTUNSIGNED Fecha PK
-        SMALLINTUNSIGNED IdJugador FK, PK
+        TINYINT UNSIGNED Fecha PK
+        SMALLINT UNSIGNED IdJugador PK, FK
         DECIMAL(3,1) Puntaje
     }
 
     Plantilla {
-        INTUNSIGNED Id PK
-        TINYINTUNSIGNED IdUsuario FK
-        TINYINTUNSIGNED Fecha
+        INT UNSIGNED Id PK
+        SMALLINT UNSIGNED IdUsuario FK
+        TINYINT UNSIGNED Fecha
         VARCHAR(60) Nombre
     }
 
     PlantillaTitular {
-        INTUNSIGNED Id PK
-        INTUNSIGNED IdPlantilla FK
-        SMALLINTUNSIGNED IdJugador FK
+        INT UNSIGNED Id PK
+        INT UNSIGNED IdPlantilla FK
+        SMALLINT UNSIGNED IdJugador FK
     }
-    
     PlantillaSuplente {
-        INTUNSIGNED Id PK
-        INTUNSIGNED IdPlantilla FK
-        SMALLINTUNSIGNED IdJugador FK
+        INT UNSIGNED Id PK
+        INT UNSIGNED IdPlantilla FK
+        SMALLINT UNSIGNED IdJugador FK
     }
 
-    Usuario {
-        TINYINTUNSIGNED Id PK
-        VARCHAR(50) Nombre
-        VARCHAR(50) Apellido
-        VARCHAR(100) Email UK
-        VARCHAR(64) Contrasena
-    }
-
-https://mermaid.live/edit#pako:eNrFVV1vmzAU_SuWnxqJRMEDSniL8rFlaVHUJJM25cULXmIN7MyxpbYk_32GxQgo-Vj3MBAS4KNzz733XDuFax4RGEAihhRvBE5WYsWAvj6rDY64AMdDu304gNEvRXccBGAF9V3H8Bwz43u6ppydQ2VMKZjFmEkax3hBpYqxuBE9V7uYMElq8JliUuE86kmFIajhDI-BLfcKC8rPwg46Pr-q9jy-Qa95ymmm5kd2zR_7Dw-TcLEM55OP4WgIJhGYTcuIxST8WgWcGjO-Ait6UwV-6T8NPvWf7txuC4Q8-S7IudX-jsQxjfj5dV5dHPYXIzAm6y0OdX8SqotRXR8NJjrfO7troRYYcElf8z4azLFcrkJ-ejnNWrmMQFSkB5bTxgCnMr6P3r1KX7LpxRB5vWpRGlxh3DOeWjWwqeoHy26VojaLKsxb0fSXBjSDdNmBeWJNtfPeOK9Zo5m_26XWBqBIdnx7dSuSspc3soox_3-6zIdpxL96-D07gN3VgFGCaVyagEqbnWzGmRR4T1hhhCO04EbQCAY_cLwnFkyI0CT6G6YZYgXlliRkBbNNVJBIPbcjLH621zzmQm-qLCPYYfaN8wQGUihNIbjabAtCtYuwJKezrYAQFhEx4Ho8YOD6KOeAQQqfYdB2kNNxesj3va6Lul7v3oIv-jdyex3b63m2j1zkO553tOBrHtbuuO69jxzbdl0Hecj2LIiV5PMXtjYRSUQlF49_ztr8yD3-BrSnNnU

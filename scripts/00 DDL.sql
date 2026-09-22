@@ -1,15 +1,11 @@
-CREATE TABLE Jugador
+CREATE TABLE Usuario
 (
     Id SMALLINT UNSIGNED PRIMARY KEY,
-    IdEquipo TINYINT UNSIGNED NOT NULL,
-    IdPosicion TINYINT UNSIGNED NOT NULL,
     Nombre VARCHAR(50) NOT NULL,
     Apellido VARCHAR(50) NOT NULL,
-    Apodo VARCHAR(50) NULL,
-    FechaNacimiento DATE NOT NULL,
-    Cotizacion DECIMAL(10,2) NOT NULL,
-    CONSTRAINT FK_Jugador_Equipo FOREIGN KEY (IdEquipo) REFERENCES Equipo(Id),
-    CONSTRAINT FK_Jugador_Posicion FOREIGN KEY (IdPosicion) REFERENCES Posicion(Id)
+    Email VARCHAR(100) NOT NULL,
+    Contrasena VARCHAR(64) NOT NULL,
+    CONSTRAINT UQ_Usuario_Email UNIQUE (Email)
 );
 
 CREATE TABLE Posicion
@@ -26,20 +22,39 @@ CREATE TABLE Equipo
     CONSTRAINT UQ_Equipo_Nombre UNIQUE (Nombre)
 );
 
+CREATE TABLE Jugador
+(
+    Id SMALLINT UNSIGNED PRIMARY KEY,
+    IdEquipo TINYINT UNSIGNED NOT NULL,
+    IdPosicion TINYINT UNSIGNED NOT NULL,
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    Apodo VARCHAR(50) NULL,
+    FechaNacimiento DATE NOT NULL,
+    Cotizacion DECIMAL(10,2) NOT NULL,
+    CONSTRAINT CK_Jugador_Cotizacion CHECK (Cotizacion >= 0 AND Cotizacion <= 99999999.99),
+    CONSTRAINT FK_Jugador_Equipo FOREIGN KEY (IdEquipo) REFERENCES Equipo(Id),
+    CONSTRAINT FK_Jugador_Posicion FOREIGN KEY (IdPosicion) REFERENCES Posicion(Id)
+);
+
 CREATE TABLE Puntuacion
 (
-    Fecha TINYINT UNSIGNED PRIMARY KEY,
-    IdJugador SMALLINT UNSIGNED PRIMARY KEY,
+    Fecha TINYINT UNSIGNED NOT NULL,
+    IdJugador SMALLINT UNSIGNED NOT NULL,
     Puntaje DECIMAL(3,1) NOT NULL,
+    PRIMARY KEY (Fecha, IdJugador),
+    CONSTRAINT CK_Puntuacion_Fecha CHECK (Fecha > 0 AND Fecha < 50),
+    CONSTRAINT CK_Puntuacion_Puntaje CHECK (Puntaje >= 1.0 AND Puntaje <= 10.0),
     CONSTRAINT PFK_Puntuacion_Jugador FOREIGN KEY (IdJugador) REFERENCES Jugador(Id)
 );
 
 CREATE TABLE Plantilla
 (
     Id INT UNSIGNED PRIMARY KEY,
-    IdUsuario TINYINT UNSIGNED NOT NULL,
-    Fecha TINYINT UNSIGNED NOT NULL ,
+    IdUsuario SMALLINT UNSIGNED NOT NULL,
+    Fecha TINYINT UNSIGNED NOT NULL,
     Nombre VARCHAR(60) NULL,
+    CONSTRAINT CK_Plantilla_Fecha CHECK (Fecha > 0 AND Fecha < 50),
     CONSTRAINT FK_Plantilla_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
 );
 
@@ -59,14 +74,4 @@ CREATE TABLE PlantillaSuplente
     IdJugador SMALLINT UNSIGNED NOT NULL,
     CONSTRAINT FK_PlantillaSuplente_Plantilla FOREIGN KEY (IdPlantilla) REFERENCES Plantilla(Id),
     CONSTRAINT FK_PlantillaSuplente_Jugador FOREIGN KEY (IdJugador) REFERENCES Jugador(Id)
-);
-
-CREATE TABLE Usuario
-(
-    Id TINYINT UNSIGNED PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
-    Apellido VARCHAR(50) NOT NULL,
-    Email VARCHAR(100) NOT NULL,
-    Contrasena VARCHAR(64) NOT NULL,
-    CONSTRAINT UQ_Usuario_Email UNIQUE (Email)
 );

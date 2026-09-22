@@ -19,17 +19,7 @@ namespace Controllers
         [HttpPost]
         public ActionResult<Jugador> Agregar(Jugador jugador)
         {
-            if (jugador.Id == null)
-                return BadRequest();
-            if (string.IsNullOrEmpty(jugador.Nombre))
-                return BadRequest();
-            if (string.IsNullOrEmpty(jugador.Apellido))
-                return BadRequest();
-            if (jugador.FechaNacimiento == DateTime.MinValue)
-                return BadRequest();
-            if (jugador.IdEquipo == null)
-                return BadRequest();
-            if (jugador.IdPosicion == null)
+            if (!jugador.EsValido())
                 return BadRequest();
             var nuevoJugador = _service.Agregar(jugador);
             return Ok(nuevoJugador);

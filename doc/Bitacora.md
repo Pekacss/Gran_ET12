@@ -41,3 +41,9 @@ Bitacora_06 = {
     fecha = '17-09-2026',
     titulo = "Vinculacion de csprojs y reajustes"
 }
+
+Bitacora_07 = {
+    fecha = '22-09-2026',
+    titulo = "Logica de negocio en Models y preparacion de tests",
+    descripcion = "Se releyo el enunciado y se incorporo comportamiento de dominio a los Models sin mezclar persistencia. Jugador valida su cotizacion, Puntuacion valida fecha y puntaje, Usuario valida la longitud fija de la contraseña almacenada, y Plantilla administra titulares, suplentes, presupuesto, formacion y puntaje por fecha. Tambien se corrigio el DDL para soportar hasta 2000 usuarios, usar la clave compuesta Fecha + IdJugador en Puntuacion y reforzar restricciones de datos. Se actualizaron los tests unitarios para probar reglas de negocio sin depender de MySQL, Repository o Service. Por ultimo, se dejaron preparados y vacios los archivos de tests de Repository y Service para completarlos cuando exista persistencia real."
+}

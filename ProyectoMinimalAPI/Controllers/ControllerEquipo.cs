@@ -19,9 +19,7 @@ namespace Controllers
         [HttpPost]
         public ActionResult<Equipo> Agregar(Equipo equipo)
         {
-            if (equipo.Id == null)
-                return BadRequest();
-            if (string.IsNullOrEmpty(equipo.Nombre))
+            if (!equipo.EsValido())
                 return BadRequest();
             var nuevoEquipo = _service.Agregar(equipo);
             return Ok(nuevoEquipo);

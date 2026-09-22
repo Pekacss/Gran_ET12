@@ -47,12 +47,26 @@ namespace TestModels
         }
 
         [Fact]
-        public void OKGuardarContraseña()
+        public void ContraseñaDe64CaracteresEsValida()
+        {
+            Usuario usuario = new Usuario();
+            usuario.Nombre = "Thiago";
+            usuario.Apellido = "Rojas";
+            usuario.Email = "thiago@email.com";
+            usuario.FechaNacimiento = new DateTime(2008, 5, 10);
+            usuario.Contraseña = new string('a', 64);
+
+            Assert.True(usuario.EsValido());
+        }
+
+        [Fact]
+        public void ContraseñaConLongitudIncorrectaEsInvalida()
         {
             Usuario usuario = new Usuario();
             usuario.Contraseña = "123456";
 
-            Assert.Equal("123456", usuario.Contraseña);
+            Assert.False(usuario.EsValido());
+            Assert.Throws<ArgumentException>(() => usuario.Validar());
         }
     }
 }

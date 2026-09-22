@@ -19,11 +19,11 @@ namespace Controllers
         [HttpPost]
         public ActionResult<PlantillaSuplente> Agregar(PlantillaSuplente plantillaSuplente)
         {
-            if (plantillaSuplente.Id == null || plantillaSuplente.Id == 0)
+            if (plantillaSuplente.Id == 0)
                 return BadRequest();
-            if (plantillaSuplente.IdPlantilla == null || plantillaSuplente.IdPlantilla == 0)
+            if (plantillaSuplente.IdPlantilla == 0)
                 return BadRequest();
-            if (plantillaSuplente.IdJugador == null || plantillaSuplente.IdJugador == 0)
+            if (plantillaSuplente.IdJugador == 0)
                 return BadRequest();
             var nuevaPlantillaSuplente = _service.Agregar(plantillaSuplente);
             return Ok(nuevaPlantillaSuplente);

@@ -61,12 +61,32 @@ namespace TestModels
         }
 
         [Fact]
-        public void TestGuardarCotizacion()
+        public void CotizacionMaximaEsValida()
         {
             Jugador jugador = new Jugador();
-            jugador.Cotizacion = 125.5f;
+            jugador.Nombre = "Lionel";
+            jugador.Apellido = "Messi";
+            jugador.FechaNacimiento = new DateTime(1987, 6, 24);
+            jugador.IdEquipo = 1;
+            jugador.IdPosicion = Posicion.Delantero;
+            jugador.Cotizacion = Jugador.CotizacionMaxima;
 
-            Assert.Equal(125.5f, jugador.Cotizacion);
+            Assert.True(jugador.EsValido());
+        }
+
+        [Fact]
+        public void CotizacionSuperiorAlMaximoEsInvalida()
+        {
+            Jugador jugador = new Jugador();
+            jugador.Nombre = "Lionel";
+            jugador.Apellido = "Messi";
+            jugador.FechaNacimiento = new DateTime(1987, 6, 24);
+            jugador.IdEquipo = 1;
+            jugador.IdPosicion = Posicion.Delantero;
+            jugador.Cotizacion = Jugador.CotizacionMaxima + 0.01m;
+
+            Assert.False(jugador.EsValido());
+            Assert.Throws<ArgumentOutOfRangeException>(() => jugador.Validar());
         }
     }
 }

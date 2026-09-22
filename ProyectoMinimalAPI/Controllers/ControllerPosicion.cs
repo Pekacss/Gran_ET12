@@ -19,9 +19,7 @@ namespace Controllers
         [HttpPost]
         public ActionResult<Posicion> Agregar(Posicion posicion)
         {
-            if (posicion.Id == null || posicion.Id == 0)
-                return BadRequest();
-            if (string.IsNullOrEmpty(posicion.Nombre))
+            if (!posicion.EsValida())
                 return BadRequest();
             var nuevaPosicion = _service.Agregar(posicion);
             return Ok(nuevaPosicion);

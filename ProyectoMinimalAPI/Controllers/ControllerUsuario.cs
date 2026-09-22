@@ -19,17 +19,7 @@ namespace Controllers
         [HttpPost]
         public ActionResult<Usuario> Agregar(Usuario usuario)
         {
-            if (usuario.Id == null)
-                return BadRequest();
-            if (string.IsNullOrEmpty(usuario.Nombre))
-                return BadRequest();
-            if (string.IsNullOrEmpty(usuario.Apellido))
-                return BadRequest();
-            if (string.IsNullOrEmpty(usuario.Email))
-                return BadRequest();
-            if (string.IsNullOrEmpty(usuario.Contraseña))
-                return BadRequest();
-            if (usuario.FechaNacimiento == DateTime.MinValue)
+            if (!usuario.EsValido())
                 return BadRequest();
             var nuevoUsuario = _service.Agregar(usuario);
             return Ok(nuevoUsuario);
