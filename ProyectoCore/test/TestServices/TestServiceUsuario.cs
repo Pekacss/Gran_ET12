@@ -44,6 +44,30 @@ namespace TestServices
 			Assert.Null(usuarioAutenticado);
 		}
 
+		[Fact]
+		public void LoginRechazaUnEmailInexistente()
+		{
+			ServiceUsuario servicio = new ServiceUsuario(new RepositorioUsuarioEnMemoria());
+
+			Assert.Null(servicio.IniciarSesion("inexistente@example.com", "clave-prueba"));
+		}
+
+		[Fact]
+		public void LaMismaContraseñaGeneraHashesDistintosPorLaSalAleatoria()
+		{
+			RepositorioUsuarioEnMemoria repositorio = new RepositorioUsuarioEnMemoria();
+			ServiceUsuario servicio = new ServiceUsuario(repositorio);
+			Usuario primerUsuario = CrearUsuario(false);
+			servicio.Agregar(primerUsuario);
+			string primerHash = repositorio.UsuarioGuardado!.Contraseña;
+
+			Usuario segundoUsuario = CrearUsuario(false);
+			segundoUsuario.Email = "otro@example.com";
+			servicio.Agregar(segundoUsuario);
+
+			Assert.NotEqual(primerHash, repositorio.UsuarioGuardado!.Contraseña);
+		}
+
 		private static Usuario CrearUsuario(bool administrador)
 		{
 			return new Usuario
