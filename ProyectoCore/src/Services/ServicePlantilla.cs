@@ -51,7 +51,7 @@ namespace Services
             return _repoPlantilla.ObtenerJugadoresPorPlantilla(id);
         }
 
-        public float ObtenerCalificacionPlantilla(int id)
+        public decimal ObtenerCalificacionPlantilla(int id)
         {
             return _repoPlantilla.ObtenerCalificacionPlantilla(id);
         }

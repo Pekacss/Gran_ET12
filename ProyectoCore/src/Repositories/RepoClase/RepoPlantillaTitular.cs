@@ -30,7 +30,6 @@ namespace Repositories
         public bool Eliminar(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas titulares.");
-            return false;
         }
     }
 }

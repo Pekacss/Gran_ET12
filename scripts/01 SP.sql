@@ -25,6 +25,16 @@ DELIMITER ?
         SELECT * FROM Usuario WHERE Id = p_Id;
     END?
 
+    CREATE PROCEDURE sp_Usuario_ObtenerPorEmail (
+        p_Email VARCHAR(100)
+    )
+    BEGIN
+        SELECT Id, Nombre, Apellido, Email, FechaNacimiento, Administrador,
+               Contrasena AS Contraseña
+        FROM Usuario
+        WHERE Email = p_Email;
+    END?
+
     CREATE PROCEDURE sp_Usuario_Eliminar (
         p_Id SMALLINT UNSIGNED
     )
@@ -251,4 +261,4 @@ DELIMITER ?
         DELETE FROM Puntuacion WHERE Id = p_Id;
     END?
 
-DELIMITER ;
+DELIMITER ; 

@@ -12,7 +12,7 @@ namespace Interfaces
         Plantilla? ObtenerPorNombre(string nombre);
         Plantilla? ObtenerPorId(int id);
         List<Jugador> ObtenerJugadoresPorPlantilla(int id);
-        float ObtenerCalificacionPlantilla(int id);
+        decimal ObtenerCalificacionPlantilla(int id);
         Plantilla Agregar(Plantilla plantilla);
         bool Eliminar(int id);
     }

@@ -16,6 +16,7 @@ namespace Models
                 && !string.IsNullOrWhiteSpace(Apellido)
                 && !string.IsNullOrWhiteSpace(Email)
                 && FechaNacimiento != DateTime.MinValue
+                && !string.IsNullOrWhiteSpace(Contraseña)
                 && Contraseña.Length == 64;
         }
 
@@ -33,7 +34,7 @@ namespace Models
             {
                 throw new ArgumentException("El usuario debe tener fecha de nacimiento.");
             }
-            if (Contraseña.Length != 64)
+            if (string.IsNullOrWhiteSpace(Contraseña) || Contraseña.Length != 64)
             {
                 throw new ArgumentException("La contraseña almacenada debe tener exactamente 64 caracteres.", nameof(Contraseña));
             }

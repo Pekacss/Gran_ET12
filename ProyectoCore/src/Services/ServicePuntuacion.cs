@@ -26,12 +26,12 @@ namespace Services
             return _repoPuntuacion.ObtenerTodos();
         }
 
-        public List<Puntuacion?> ObtenerPorFecha(byte fecha)
+        public List<Puntuacion> ObtenerPorFecha(byte fecha)
         {
             return _repoPuntuacion.ObtenerPorFecha(fecha);
         }
 
-        public List<Puntuacion?> ObtenerPorJugador(ushort id)
+        public List<Puntuacion> ObtenerPorJugador(ushort id)
         {
             return _repoPuntuacion.ObtenerPorJugador(id);
         }
@@ -41,9 +41,9 @@ namespace Services
             return _repoPuntuacion.ObtenerPorFechaJugador(fecha, id);
         }
 
-        public bool Eliminar(int id)
+        public bool Eliminar(byte fecha, ushort idJugador)
         {
-            return _repoPuntuacion.Eliminar(id);
+            return _repoPuntuacion.Eliminar(fecha, idJugador);
         }
     }
 }

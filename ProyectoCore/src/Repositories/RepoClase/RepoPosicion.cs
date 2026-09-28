@@ -17,12 +17,12 @@ namespace Repositories
             throw new NotImplementedException("Falta conectar el repositorio real de posiciones.");
         }
 
-        public List<Jugador> ObtenerJugadoresPorPosicion(ushort id)
+        public List<Jugador> ObtenerJugadoresPorPosicion(byte id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de posiciones.");
         }
 
-        public Posicion? ObtenerPorId(ushort id)
+        public Posicion? ObtenerPorId(byte id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de posiciones.");
         }
@@ -30,7 +30,6 @@ namespace Repositories
         public bool Eliminar(byte id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de posiciones.");
-            return false;
         }
     }
 }

@@ -86,7 +86,7 @@ namespace Controllers
         }
 
         [HttpGet("{id}/calificacion")]
-        public ActionResult<float> ObtenerCalificacionPlantilla(int id)
+        public ActionResult<decimal> ObtenerCalificacionPlantilla(int id)
         {
             var calificacion = _service.ObtenerCalificacionPlantilla(id);
             return Ok(calificacion);

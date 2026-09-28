@@ -36,7 +36,7 @@ namespace Repositories
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas.");
         }
 
-        public float ObtenerCalificacionPlantilla(int id)
+        public decimal ObtenerCalificacionPlantilla(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas.");
         }
@@ -49,7 +49,6 @@ namespace Repositories
         public bool Eliminar(int id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de plantillas.");
-            return false;
         }
     }
 }

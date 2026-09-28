@@ -69,10 +69,10 @@ namespace Controllers
             return Ok(puntuacion);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Eliminar(int id)
+        [HttpDelete("fecha/{fecha}/jugador/{idJugador}")]
+        public IActionResult Eliminar(byte fecha, ushort idJugador)
         {
-            var eliminado = _service.Eliminar(id);
+            var eliminado = _service.Eliminar(fecha, idJugador);
             if (!eliminado)
             {
                 return NotFound();

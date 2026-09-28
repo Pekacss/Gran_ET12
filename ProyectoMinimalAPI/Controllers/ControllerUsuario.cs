@@ -17,12 +17,43 @@ namespace Controllers
         }
 
         [HttpPost]
-        public ActionResult<Usuario> Agregar(Usuario usuario)
+        public ActionResult<object> Agregar(Usuario usuario)
         {
-            if (!usuario.EsValido())
+            try
+            {
+                var nuevoUsuario = _service.Agregar(usuario);
+                return Ok(new
+                {
+                    nuevoUsuario.Id,
+                    nuevoUsuario.Nombre,
+                    nuevoUsuario.Apellido,
+                    nuevoUsuario.Email,
+                    nuevoUsuario.FechaNacimiento,
+                    nuevoUsuario.Administrador
+                });
+            }
+            catch (ArgumentException)
+            {
                 return BadRequest();
-            var nuevoUsuario = _service.Agregar(usuario);
-            return Ok(nuevoUsuario);
+            }
+        }
+
+        [HttpPost("login")]
+        public ActionResult<object> IniciarSesion(Usuario credenciales)
+        {
+            Usuario? usuario = _service.IniciarSesion(credenciales.Email, credenciales.Contraseña);
+            if (usuario == null)
+                return Unauthorized();
+
+            return Ok(new
+            {
+                usuario.Id,
+                usuario.Nombre,
+                usuario.Apellido,
+                usuario.Email,
+                usuario.FechaNacimiento,
+                usuario.Administrador
+            });
         }
 
         [HttpGet]

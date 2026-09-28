@@ -7,8 +7,8 @@ namespace Interfaces
     public interface IRepoPosicion
     {
         List<Posicion> ObtenerTodos();
-        Posicion? ObtenerPorId(ushort id);
-        List<Jugador> ObtenerJugadoresPorPosicion(ushort id);
+        Posicion? ObtenerPorId(byte id);
+        List<Jugador> ObtenerJugadoresPorPosicion(byte id);
         Posicion Agregar(Posicion posicion);
         bool Eliminar(byte id);
     }

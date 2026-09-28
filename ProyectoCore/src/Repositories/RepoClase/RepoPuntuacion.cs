@@ -17,12 +17,12 @@ namespace Repositories
             throw new NotImplementedException("Falta conectar el repositorio real de puntuaciones.");
         }
 
-        public List<Puntuacion?> ObtenerPorFecha(byte fecha)
+        public List<Puntuacion> ObtenerPorFecha(byte fecha)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de puntuaciones.");
         }
 
-        public List<Puntuacion?> ObtenerPorJugador(ushort id)
+        public List<Puntuacion> ObtenerPorJugador(ushort id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de puntuaciones.");
         }
@@ -32,10 +32,9 @@ namespace Repositories
             throw new NotImplementedException("Falta conectar el repositorio real de puntuaciones.");
         }
 
-        public bool Eliminar(int id)
+        public bool Eliminar(byte fecha, ushort idJugador)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de puntuaciones.");
-            return false;
         }
     }
 }

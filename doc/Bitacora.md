@@ -47,3 +47,22 @@ Bitacora_07 = {
     titulo = "Logica de negocio en Models y preparacion de tests",
     descripcion = "Se releyo el enunciado y se incorporo comportamiento de dominio a los Models sin mezclar persistencia. Jugador valida su cotizacion, Puntuacion valida fecha y puntaje, Usuario valida la longitud fija de la contraseña almacenada, y Plantilla administra titulares, suplentes, presupuesto, formacion y puntaje por fecha. Tambien se corrigio el DDL para soportar hasta 2000 usuarios, usar la clave compuesta Fecha + IdJugador en Puntuacion y reforzar restricciones de datos. Se actualizaron los tests unitarios para probar reglas de negocio sin depender de MySQL, Repository o Service. Por ultimo, se dejaron preparados y vacios los archivos de tests de Repository y Service para completarlos cuando exista persistencia real."
 }
+
+<!-- Incidente de Git en main (28-09-2026)
+Que paso: despues del apagado, Git mostraba todos los archivos con A y no podia cargar el graph. La causa tecnica que se pudo comprobar fue que .git/refs/heads/main contenia un hash de ceros; por eso HEAD apuntaba a una referencia invalida. No se perdieron los commits: el reflog local conservaba la secuencia y GitHub tenia main en 69bc842. Que el apagado durante el push haya causado directamente la referencia rota es una explicacion probable, no algo que se pueda probar solo con esos datos.
+
+Como reconocerlo (PowerShell, parado en la carpeta del repositorio):
+    git status --short --branch
+    git log --oneline --decorate --graph -10
+    git fsck --full --no-reflogs
+    git reflog show --all
+    git ls-remote origin main
+Si status muestra muchos A, pero Git log informa "bad object refs/heads/main" o "failed to resolve HEAD", no asumir que todos los archivos son nuevos y no ejecutar reset --hard, git clean ni push --force. fsck puede señalar una referencia invalida; reflog ayuda a recuperar los hashes previos; ls-remote confirma el hash publicado en GitHub.
+
+Recuperacion usada: respaldar el archivo local roto fuera de refs, restaurar main al hash comprobado del remoto, traer la referencia remota y verificar status y graph. En este caso, el archivo roto se guardo como .git/main-ref-corrupt-backup; main se restauro a 69bc842 y luego se ejecuto git fetch origin. Despues, status quedo en main...origin/main y solo marco M en scripts/01 SP.sql, un cambio local real que se preservo. Los comandos exactos para un caso equivalente, despues de confirmar que el remoto apunta al commit correcto y que git cat-file -e <HASH>^{commit} no da error, son:
+    Move-Item .git\refs\heads\main .git\main-ref-corrupt-backup
+    git update-ref refs/heads/main <HASH>
+    git fetch origin
+    git status --short --branch
+    git log --oneline --decorate --graph -10
+Reemplazar <HASH> por el hash completo obtenido con git ls-remote origin main. Si ese archivo de referencia no existe o la rama tiene otro nombre, detenerse y revisar antes de mover o crear referencias. -->

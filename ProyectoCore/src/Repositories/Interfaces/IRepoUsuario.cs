@@ -8,6 +8,7 @@ namespace Interfaces
     {
         List<Usuario> ObtenerTodos();
         Usuario? ObtenerPorId(ushort id);
+        Usuario? ObtenerPorEmail(string email);
         Usuario Agregar(Usuario usuario);
         bool Eliminar(ushort id);
 

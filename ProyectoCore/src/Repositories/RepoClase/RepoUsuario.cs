@@ -22,10 +22,14 @@ namespace Repositories
             throw new NotImplementedException("Falta conectar el repositorio real de usuarios.");
         }
 
+        public Usuario? ObtenerPorEmail(string email)
+        {
+            throw new NotImplementedException("Falta conectar el repositorio real de usuarios.");
+        }
+
         public bool Eliminar(ushort id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de usuarios.");
-            return false;
         }
     }
 }

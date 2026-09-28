@@ -26,12 +26,12 @@ namespace Services
             return _repoPosicion.ObtenerTodos();
         }
 
-        public Posicion? ObtenerPorId(ushort id)
+        public Posicion? ObtenerPorId(byte id)
         {
             return _repoPosicion.ObtenerPorId(id);
         }
 
-        public List<Jugador> ObtenerJugadoresPorPosicion(ushort id)
+        public List<Jugador> ObtenerJugadoresPorPosicion(byte id)
         {
             return _repoPosicion.ObtenerJugadoresPorPosicion(id);
         }

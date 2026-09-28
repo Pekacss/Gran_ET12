@@ -30,7 +30,6 @@ namespace Repositories
         public bool Eliminar(byte id)
         {
             throw new NotImplementedException("Falta conectar el repositorio real de equipos.");
-            return false;
         }
     }
 }
