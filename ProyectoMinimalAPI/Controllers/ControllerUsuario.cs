@@ -57,21 +57,43 @@ namespace Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Usuario>> Obtener()
+        public ActionResult<List<object>> Obtener()
         {
             var usuarios = _service.ObtenerTodos();
-            return Ok(usuarios);
+            List<object> respuesta = new List<object>();
+            foreach (Usuario usuario in usuarios)
+            {
+                respuesta.Add(new
+                {
+                    usuario.Id,
+                    usuario.Nombre,
+                    usuario.Apellido,
+                    usuario.Email,
+                    usuario.FechaNacimiento,
+                    usuario.Administrador
+                });
+            }
+
+            return Ok(respuesta);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Usuario> ObtenerPorId(ushort id)
+        public ActionResult<object> ObtenerPorId(ushort id)
         {
             var usuario = _service.ObtenerPorId(id);
             if (usuario == null)
             {
                 return NotFound();
             }
-            return Ok(usuario);
+            return Ok(new
+            {
+                usuario.Id,
+                usuario.Nombre,
+                usuario.Apellido,
+                usuario.Email,
+                usuario.FechaNacimiento,
+                usuario.Administrador
+            });
         }
 
         [HttpDelete("{id}")]

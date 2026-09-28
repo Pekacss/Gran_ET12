@@ -58,7 +58,7 @@ namespace Services
                 return null;
 
             Usuario? usuario = _repoUsuario.ObtenerPorEmail(email);
-            if (usuario == null || !VerificarContraseña(contraseña, usuario.Contraseña))
+            if (usuario == null || !usuario.EsValido() || !VerificarContraseña(contraseña, usuario.Contraseña))
                 return null;
 
             return usuario;
