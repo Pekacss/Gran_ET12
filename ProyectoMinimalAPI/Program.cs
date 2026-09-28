@@ -8,6 +8,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
+builder.Services.AddSingleton<DBConnection>(serviceProvider =>
+{
+    string? connectionString = builder.Configuration.GetConnectionString("GranET12");
+    if (string.IsNullOrWhiteSpace(connectionString))
+        throw new InvalidOperationException("Complete la cadena ConnectionStrings:GranET12 en appsettings.Development.json.");
+
+    return new DBConnection(connectionString);
+});
+
 builder.Services.AddScoped<IRepoUsuario, RepoUsuario>();
 builder.Services.AddScoped<IRepoEquipo, RepoEquipo>();
 builder.Services.AddScoped<IRepoJugador, RepoJugador>();
