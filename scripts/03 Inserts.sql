@@ -2,24 +2,19 @@ USE bd_GranET12;
 
 -- Usuario base requerido por la plantilla de prueba; la clave de prueba es GranDT2026!.
 INSERT INTO Usuario (Id, Nombre, Apellido, Email, FechaNacimiento, Administrador, Contrasena)
-VALUES (1, 'Usuario', 'Demo', 'demo.plantilla@example.com', '2000-01-01', FALSE,
-		'AAECAwQFBgcICQoLDA0OD6rgwt0MEpg/NlUUoMDIbyUp6SpMTiYtLJ2k5Ak0b0iZ')
-ON DUPLICATE KEY UPDATE Nombre = VALUES(Nombre), Apellido = VALUES(Apellido),
-	FechaNacimiento = VALUES(FechaNacimiento), Administrador = VALUES(Administrador),
-	Contrasena = VALUES(Contrasena);
+VALUES  (1, 'Usuario', 'Demo', 'demo.plantilla@example.com', '2000-01-01', FALSE,
+		'AAECAwQFBgcICQoLDA0OD6rgwt0MEpg/NlUUoMDIbyUp6SpMTiYtLJ2k5Ak0b0iZ');
 
-INSERT INTO Posicion (Id, Nombre) VALUES
-	(1, 'Arquero'),
-	(2, 'Defensor'),
-	(3, 'Mediocampista'),
-	(4, 'Delantero')
-ON DUPLICATE KEY UPDATE Nombre = VALUES(Nombre);
+INSERT INTO Posicion (Id, Nombre) 
+VALUES  (1, 'Arquero'),
+	    (2, 'Defensor'),
+	    (3, 'Mediocampista'),
+	    (4, 'Delantero');
 
-INSERT INTO Equipo (Id, Nombre) VALUES
-	(1, 'River Plate'),
-	(2, 'Boca Juniors'),
-	(3, 'Racing Club')
-ON DUPLICATE KEY UPDATE Nombre = VALUES(Nombre);
+INSERT INTO Equipo (Id, Nombre)
+VALUES	(1, 'River Plate'),
+	    (2, 'Boca Juniors'),
+	    (3, 'Racing Club');
 
 INSERT IGNORE INTO Jugador
 	(Id, Nombre, Apellido, Apodo, FechaNacimiento, IdEquipo, Cotizacion, IdPosicion)
@@ -40,16 +35,16 @@ VALUES
 	(14, 'Juan', 'Quintero', '', '1993-01-18', 3, 4000000.00, 3),
 	(15, 'Adrian', 'Martinez', 'Maravilla', '1992-07-07', 3, 5200000.00, 4);
 
-INSERT IGNORE INTO Plantilla (Id, IdUsuario, Fecha, Nombre)
+INSERT INTO Plantilla (Id, IdUsuario, Fecha, Nombre)
 VALUES (1, 1, 1, 'Plantilla demo');
 
-INSERT IGNORE INTO PlantillaTitular (Id, IdPlantilla, IdJugador) VALUES
+INSERT INTO PlantillaTitular (Id, IdPlantilla, IdJugador) VALUES
 	(1, 1, 1), (2, 1, 2), (3, 1, 3), (4, 1, 4), (5, 1, 5),
 	(6, 1, 6), (7, 1, 7), (8, 1, 8), (9, 1, 9), (10, 1, 10), (11, 1, 11);
 
-INSERT IGNORE INTO PlantillaSuplente (Id, IdPlantilla, IdJugador) VALUES
+INSERT INTO PlantillaSuplente (Id, IdPlantilla, IdJugador) VALUES
 	(1, 1, 12), (2, 1, 13), (3, 1, 14), (4, 1, 15);
 
-INSERT IGNORE INTO Puntuacion (Fecha, IdJugador, Puntaje) VALUES
+INSERT INTO Puntuacion (Fecha, IdJugador, Puntaje) VALUES
 	(1, 1, 8.0), (1, 2, 7.0), (1, 3, 6.5), (1, 4, 7.5), (1, 5, 6.0),
 	(1, 6, 6.5), (1, 7, 8.5), (1, 8, 9.0), (1, 9, 7.0), (1, 10, 8.0), (1, 11, 7.5);

@@ -1,16 +1,16 @@
 USE bd_GranET12;
 
-DROP TRIGGER IF EXISTS trg_Usuario_Maximo;
-DROP TRIGGER IF EXISTS trg_Equipo_Maximo;
-DROP TRIGGER IF EXISTS trg_Jugador_Maximo;
-DROP TRIGGER IF EXISTS trg_PlantillaTitular_Validar;
-DROP TRIGGER IF EXISTS trg_PlantillaTitular_ValidarActualizacion;
-DROP TRIGGER IF EXISTS trg_PlantillaSuplente_Validar;
-DROP TRIGGER IF EXISTS trg_PlantillaSuplente_ValidarActualizacion;
+DROP TRIGGER IF EXISTS BefInsUsuario;
+DROP TRIGGER IF EXISTS BefInsEquipo;
+DROP TRIGGER IF EXISTS BefInsJugador;
+DROP TRIGGER IF EXISTS BefInsPlantillaTitular;
+DROP TRIGGER IF EXISTS BefUpdPlantillaTitular;
+DROP TRIGGER IF EXISTS BefInsBefInsUsuario;
+DROP TRIGGER IF EXISTS BefUpdPlantillaSuplente;
 
-DELIMITER $$
+DELIMITER ?
 
-CREATE TRIGGER trg_Usuario_Maximo
+CREATE TRIGGER BefInsUsuario
 BEFORE INSERT ON Usuario
 FOR EACH ROW
 BEGIN
@@ -19,9 +19,9 @@ BEGIN
 	IF cantidad >= 2000 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La base ya contiene el maximo de 2000 usuarios.';
 	END IF;
-END$$
+END?
 
-CREATE TRIGGER trg_Equipo_Maximo
+CREATE TRIGGER BefInsEquipo
 BEFORE INSERT ON Equipo
 FOR EACH ROW
 BEGIN
@@ -30,9 +30,9 @@ BEGIN
 	IF cantidad >= 32 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La base ya contiene el maximo de 32 equipos.';
 	END IF;
-END$$
+END?
 
-CREATE TRIGGER trg_Jugador_Maximo
+CREATE TRIGGER BefInsJugador
 BEFORE INSERT ON Jugador
 FOR EACH ROW
 BEGIN
@@ -41,9 +41,9 @@ BEGIN
 	IF cantidad >= 1500 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La base ya contiene el maximo de 1500 jugadores.';
 	END IF;
-END$$
+END?
 
-CREATE TRIGGER trg_PlantillaTitular_Validar
+CREATE TRIGGER BefInsPlantillaTitular
 BEFORE INSERT ON PlantillaTitular
 FOR EACH ROW
 BEGIN
@@ -61,9 +61,9 @@ BEGIN
 	) THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El jugador ya esta cargado como suplente de esta plantilla.';
 	END IF;
-END$$
+END?
 
-CREATE TRIGGER trg_PlantillaTitular_ValidarActualizacion
+CREATE TRIGGER BefUpdPlantillaTitular
 BEFORE UPDATE ON PlantillaTitular
 FOR EACH ROW
 BEGIN
@@ -84,9 +84,9 @@ BEGIN
 	) THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El jugador ya esta cargado como suplente de esta plantilla.';
 	END IF;
-END$$
+END?
 
-CREATE TRIGGER trg_PlantillaSuplente_Validar
+CREATE TRIGGER BefInsBefInsUsuario
 BEFORE INSERT ON PlantillaSuplente
 FOR EACH ROW
 BEGIN
@@ -104,9 +104,9 @@ BEGIN
 	) THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El jugador ya esta cargado como titular de esta plantilla.';
 	END IF;
-END$$
+END?
 
-CREATE TRIGGER trg_PlantillaSuplente_ValidarActualizacion
+CREATE TRIGGER BefUpdPlantillaSuplente
 BEFORE UPDATE ON PlantillaSuplente
 FOR EACH ROW
 BEGIN
@@ -127,6 +127,6 @@ BEGIN
 	) THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El jugador ya esta cargado como titular de esta plantilla.';
 	END IF;
-END$$
+END?
 
 DELIMITER ;
