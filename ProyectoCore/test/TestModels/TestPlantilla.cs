@@ -29,6 +29,15 @@ namespace TestModels
         }
 
         [Fact]
+        public void PlantillaVaciaNoTieneFormacionValida()
+        {
+            Plantilla plantilla = new Plantilla();
+
+            Assert.False(plantilla.FormacionTitularValida());
+            Assert.False(plantilla.EsValida());
+        }
+
+        [Fact]
         public void PresupuestoIncluyeTitularesYSuplentes()
         {
             Plantilla plantilla = new Plantilla();
@@ -46,6 +55,31 @@ namespace TestModels
             plantilla.AgregarTitular(CrearJugador(1, Posicion.Arquero, 100.01m));
 
             Assert.False(plantilla.PresupuestoValido());
+        }
+
+        [Fact]
+        public void PresupuestoEsValidoCuandoNoSeDefinioUnMaximo()
+        {
+            Plantilla plantilla = new Plantilla();
+            plantilla.AgregarTitular(CrearJugador(1, Posicion.Arquero, 1000000m));
+
+            Assert.Null(plantilla.PresupuestoMaximo);
+            Assert.True(plantilla.PresupuestoValido());
+        }
+
+        [Fact]
+        public void CantidadDeJugadoresEsValidaHastaElMaximoConfigurado()
+        {
+            Plantilla plantilla = new Plantilla();
+            plantilla.CantidadMaximaJugadores = 2;
+            plantilla.AgregarTitular(CrearJugador(1, Posicion.Arquero, 1m));
+            plantilla.AgregarSuplente(CrearJugador(2, Posicion.Defensor, 1m));
+
+            Assert.True(plantilla.CantidadJugadoresValida());
+
+            plantilla.CantidadMaximaJugadores = 1;
+
+            Assert.False(plantilla.CantidadJugadoresValida());
         }
 
         [Fact]
@@ -83,6 +117,16 @@ namespace TestModels
 
             Assert.Throws<InvalidOperationException>(() =>
                 plantilla.AgregarSuplente(CrearJugador(1, Posicion.Defensor, 1m)));
+        }
+
+        [Fact]
+        public void PuntajeFechaRechazaUnaFechaFueraDeRango()
+        {
+            Plantilla plantilla = new Plantilla();
+            List<Puntuacion> puntuaciones = new List<Puntuacion>();
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => plantilla.PuntajeFecha(0, puntuaciones));
+            Assert.Throws<ArgumentOutOfRangeException>(() => plantilla.PuntajeFecha(50, puntuaciones));
         }
 
         private static Jugador CrearJugador(ushort id, byte posicion, decimal cotizacion)

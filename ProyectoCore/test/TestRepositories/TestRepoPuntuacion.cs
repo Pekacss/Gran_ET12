@@ -6,7 +6,7 @@ namespace TestRepositories
 {
 	public class TestRepoPuntuacion
 	{
-		[IntegrationFact]
+		[Fact]
 		[Trait("Category", "Integration")]
 		public void PuedeConsultarAgregarYEliminarPorClaveCompuesta()
 		{

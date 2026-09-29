@@ -6,7 +6,7 @@ namespace TestRepositories
 {
 	public class TestRepoPlantillaSuplente
 	{
-		[IntegrationFact]
+		[Fact]
 		[Trait("Category", "Integration")]
 		public void PuedeAgregarBuscarJugadoresYEliminarSuplente()
 		{

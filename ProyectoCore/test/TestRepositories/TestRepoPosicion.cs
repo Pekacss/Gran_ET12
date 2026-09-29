@@ -5,7 +5,7 @@ namespace TestRepositories
 {
 	public class TestRepoPosicion
 	{
-		[IntegrationFact]
+		[Fact]
 		[Trait("Category", "Integration")]
 		public void PuedeObtenerPosicionesYSusJugadores()
 		{

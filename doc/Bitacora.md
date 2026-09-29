@@ -66,3 +66,9 @@ Recuperacion usada: respaldar el archivo local roto fuera de refs, restaurar mai
     git status --short --branch
     git log --oneline --decorate --graph -10
 Reemplazar <HASH> por el hash completo obtenido con git ls-remote origin main. Si ese archivo de referencia no existe o la rama tiene otro nombre, detenerse y revisar antes de mover o crear referencias. -->
+
+Bitacora_08 = {
+    fecha = '28-09-2026'
+    titulo = "Tests de Models y conexion MySQL"
+    descripcion = "Que hice: rehice los tests de Models para probar los metodos de validacion y las reglas de dominio que implementa cada clase. En PlantillaTitular y PlantillaSuplente, que no tienen metodos propios, deje pruebas simples de sus propiedades. Tambien simplifique el test de conexion a un Fact comun. Problemas: los tests de integracion requieren MySQL activo y GRAN_ET12_CONNECTION_STRING configurada. Soluciones: marque los tests de repositorio como Integration y deje los tests unitarios separables por categoria. Aprendizaje: un test debe comprobar comportamiento existente en la clase, y una prueba de conexion permite confirmar que se pudo abrir el enlace con MySQL."
+};

@@ -6,7 +6,7 @@ namespace TestRepositories
 {
 	public class TestRepoPlantilla
 	{
-		[IntegrationFact]
+		[Fact]
 		[Trait("Category", "Integration")]
 		public void PuedeAgregarConsultarYEliminarPlantilla()
 		{

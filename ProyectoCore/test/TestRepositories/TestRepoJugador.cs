@@ -7,7 +7,7 @@ namespace TestRepositories
 {
 	public class TestRepoJugador
 	{
-		[IntegrationFact]
+		[Fact]
 		[Trait("Category", "Integration")]
 		public void PuedeAgregarBuscarRelacionesYEliminarJugador()
 		{

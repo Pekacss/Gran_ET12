@@ -1,5 +1,5 @@
 using System;
-using Dapper;
+using System.Data;
 using Repositories;
 using Xunit;
 
@@ -7,36 +7,18 @@ namespace TestRepositories
 {
     public class TestDBConnection
     {
-        [IntegrationFact]
+        [Fact]
         [Trait("Category", "Integration")]
-        public void PuedeAbrirConexionMySqlYEjecutarSelect1()
+        public void PuedeAbrirConexionMySql()
         {
-            string connectionString = Environment.GetEnvironmentVariable("GRAN_ET12_CONNECTION_STRING")!;
+            // Requiere MySQL activo y GRAN_ET12_CONNECTION_STRING configurada.
+            string cadenaConexion = Environment.GetEnvironmentVariable("GRAN_ET12_CONNECTION_STRING") ?? string.Empty;
+            DBConnection conexionDb = new DBConnection(cadenaConexion);
 
-            using var connection = new DBConnection(connectionString).CrearConexion();
-            connection.Open();
+            using var conexion = conexionDb.CrearConexion();
+            conexion.Open();
 
-            int resultado = connection.ExecuteScalar<int>("SELECT 1");
-
-            Assert.Equal(1, resultado);
-        }
-    }
-
-    public sealed class IntegrationFactAttribute : FactAttribute
-    {
-        public IntegrationFactAttribute()
-        {
-            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("GRAN_ET12_CONNECTION_STRING")))
-                Skip = "Configure GRAN_ET12_CONNECTION_STRING y arranque MySQL para ejecutar la integración.";
-        }
-    }
-
-    internal static class TestRepositorioSupport
-    {
-        public static DBConnection CrearConexion()
-        {
-            string connectionString = Environment.GetEnvironmentVariable("GRAN_ET12_CONNECTION_STRING")!;
-            return new DBConnection(connectionString);
+            Assert.Equal(ConnectionState.Open, conexion.State);
         }
     }
 }

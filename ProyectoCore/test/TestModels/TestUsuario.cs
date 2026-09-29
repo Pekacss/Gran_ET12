@@ -6,47 +6,6 @@ namespace TestModels
     public class TestUsuario
     {
         [Fact]
-        public void OKGuardarId()
-        {
-            Usuario usuario = new Usuario();
-            usuario.Id = 10;
-
-            Assert.Equal(10, usuario.Id);
-        }
-
-        [Fact]
-        public void OKGuardarNombreYApellido()
-        {
-            Usuario usuario = new Usuario();
-
-            usuario.Nombre = "Thiago";
-            usuario.Apellido = "Rojas";
-
-            Assert.Equal("Thiago", usuario.Nombre);
-            Assert.Equal("Rojas", usuario.Apellido);
-        }
-
-        [Fact]
-        public void OKGuardarEmail()
-        {
-            Usuario usuario = new Usuario();
-            usuario.Email = "thiago@email.com";
-
-            Assert.Equal("thiago@email.com", usuario.Email);
-        }
-
-        [Fact]
-        public void OKGuardarFechaNacimiento()
-        {
-            Usuario usuario = new Usuario();
-            DateTime fecha = new DateTime(2008, 5, 10);
-
-            usuario.FechaNacimiento = fecha;
-
-            Assert.Equal(fecha, usuario.FechaNacimiento);
-        }
-
-        [Fact]
         public void ContraseñaDe64CaracteresEsValida()
         {
             Usuario usuario = new Usuario();
@@ -57,6 +16,7 @@ namespace TestModels
             usuario.Contraseña = new string('a', 64);
 
             Assert.True(usuario.EsValido());
+            usuario.Validar();
         }
 
         [Fact]
@@ -67,6 +27,33 @@ namespace TestModels
 
             Assert.False(usuario.EsValido());
             Assert.Throws<ArgumentException>(() => usuario.Validar());
+        }
+
+        [Fact]
+        public void UsuarioSinDatosObligatoriosNoEsValido()
+        {
+            Usuario usuario = new Usuario();
+
+            Assert.False(usuario.EsValido());
+            Assert.Throws<ArgumentException>(() => usuario.Validar());
+        }
+
+        [Fact]
+        public void UsuarioComunNoEsAdministrador()
+        {
+            Usuario usuario = new Usuario();
+
+            Assert.False(usuario.EsAdministrador());
+            Assert.Throws<ArgumentException>(() => usuario.ValidarAdministrador());
+        }
+
+        [Fact]
+        public void AdministradorEsReconocidoComoTal()
+        {
+            Usuario usuario = new Usuario { Administrador = true };
+
+            Assert.True(usuario.EsAdministrador());
+            usuario.ValidarAdministrador();
         }
     }
 }

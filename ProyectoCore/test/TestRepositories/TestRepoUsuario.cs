@@ -7,7 +7,7 @@ namespace TestRepositories
 {
 	public class TestRepoUsuario
 	{
-		[IntegrationFact]
+		[Fact]
 		[Trait("Category", "Integration")]
 		public void PuedeAgregarBuscarPorIdEmailYEliminarUsuario()
 		{

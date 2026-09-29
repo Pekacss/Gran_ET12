@@ -5,23 +5,22 @@ namespace TestModels
 {
     public class TestEquipo
     {
-        // En la capa de Model se testean las propiedades y comportamientos de las clases
         [Fact]
-        public void TestGuardarId()
+        public void EquipoConNombreEsValido()
         {
-            Equipo equipo = new Equipo();
-            equipo.Id = 10;
+            Equipo equipo = new Equipo { Nombre = "River Plate" };
 
-            Assert.Equal(10, equipo.Id);
+            Assert.True(equipo.EsValido());
+            equipo.Validar();
         }
 
         [Fact]
-        public void TestGuardarNombre()
+        public void EquipoSinNombreNoEsValido()
         {
-            Equipo equipo = new Equipo();
-            equipo.Nombre = "Riber";
+            Equipo equipo = new Equipo { Nombre = " " };
 
-            Assert.Equal("Riber", equipo.Nombre);
+            Assert.False(equipo.EsValido());
+            Assert.Throws<ArgumentException>(() => equipo.Validar());
         }
     }
 }

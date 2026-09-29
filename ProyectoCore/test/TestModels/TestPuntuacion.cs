@@ -6,24 +6,6 @@ namespace TestModels
     public class TestPuntuacion
     {
         [Fact]
-        public void OKGuardarFecha()
-        {
-            Puntuacion puntuacion = new Puntuacion();
-            puntuacion.Fecha = 4;
-
-            Assert.Equal(4, puntuacion.Fecha);
-        }
-
-        [Fact]
-        public void OKGuardarIdJugador()
-        {
-            Puntuacion puntuacion = new Puntuacion();
-            puntuacion.IdJugador = 18;
-
-            Assert.Equal(18, puntuacion.IdJugador);
-        }
-
-        [Fact]
         public void PuntajeEntreUnoYDiezEsValido()
         {
             Puntuacion puntuacion = new Puntuacion();
@@ -34,31 +16,49 @@ namespace TestModels
             Assert.True(puntuacion.EsValida());
         }
 
-        [Theory]
-        [InlineData(0.9)]
-        [InlineData(10.1)]
-        public void PuntajeFueraDeRangoEsInvalido(decimal puntaje)
+        [Fact]
+        public void PuntajeMenorAUnoEsInvalido()
         {
-            Puntuacion puntuacion = new Puntuacion();
-            puntuacion.Fecha = 4;
-            puntuacion.IdJugador = 18;
-            puntuacion.Puntaje = puntaje;
+            Puntuacion puntuacion = new Puntuacion { Fecha = 4, IdJugador = 18, Puntaje = 0.9m };
 
             Assert.False(puntuacion.EsValida());
             Assert.Throws<ArgumentOutOfRangeException>(() => puntuacion.Validar());
         }
 
-        [Theory]
-        [InlineData(0)]
-        [InlineData(50)]
-        public void FechaFueraDeRangoEsInvalida(byte fecha)
+        [Fact]
+        public void PuntajeMayorADiezEsInvalido()
         {
-            Puntuacion puntuacion = new Puntuacion();
-            puntuacion.Fecha = fecha;
-            puntuacion.IdJugador = 18;
-            puntuacion.Puntaje = 8m;
+            Puntuacion puntuacion = new Puntuacion { Fecha = 4, IdJugador = 18, Puntaje = 10.1m };
 
             Assert.False(puntuacion.EsValida());
+            Assert.Throws<ArgumentOutOfRangeException>(() => puntuacion.Validar());
+        }
+
+        [Fact]
+        public void FechaCeroEsInvalida()
+        {
+            Puntuacion puntuacion = new Puntuacion { Fecha = 0, IdJugador = 18, Puntaje = 8m };
+
+            Assert.False(puntuacion.EsValida());
+            Assert.Throws<ArgumentOutOfRangeException>(() => puntuacion.Validar());
+        }
+
+        [Fact]
+        public void FechaCincuentaEsInvalida()
+        {
+            Puntuacion puntuacion = new Puntuacion { Fecha = 50, IdJugador = 18, Puntaje = 8m };
+
+            Assert.False(puntuacion.EsValida());
+            Assert.Throws<ArgumentOutOfRangeException>(() => puntuacion.Validar());
+        }
+
+        [Fact]
+        public void IdentificadorDeJugadorCeroEsInvalido()
+        {
+            Puntuacion puntuacion = new Puntuacion { Fecha = 4, IdJugador = 0, Puntaje = 8m };
+
+            Assert.False(puntuacion.EsValida());
+            Assert.Throws<ArgumentException>(() => puntuacion.Validar());
         }
     }
 }

@@ -6,21 +6,30 @@ namespace TestModels
     public class TestPosicion
     {
         [Fact]
-        public void TestOKGuardarId()
+        public void PosicionConIdYNombreValidosEsValida()
         {
-            Posicion posicion = new Posicion();
-            posicion.Id = 3;
+            Posicion posicion = new Posicion { Id = Posicion.Delantero, Nombre = "Delantero" };
 
-            Assert.Equal(3, posicion.Id);
+            Assert.True(posicion.EsValida());
+            posicion.Validar();
         }
 
         [Fact]
-        public void TestOKGuardarNombre()
+        public void IdFueraDeRangoHaceInvalidaLaPosicion()
         {
-            Posicion posicion = new Posicion();
-            posicion.Nombre = "Delantero";
+            Posicion posicion = new Posicion { Id = 5, Nombre = "Delantero" };
 
-            Assert.Equal("Delantero", posicion.Nombre);
+            Assert.False(posicion.EsValida());
+            Assert.Throws<ArgumentException>(() => posicion.Validar());
+        }
+
+        [Fact]
+        public void NombreVacioHaceInvalidaLaPosicion()
+        {
+            Posicion posicion = new Posicion { Id = Posicion.Arquero, Nombre = string.Empty };
+
+            Assert.False(posicion.EsValida());
+            Assert.Throws<ArgumentException>(() => posicion.Validar());
         }
     }
 }

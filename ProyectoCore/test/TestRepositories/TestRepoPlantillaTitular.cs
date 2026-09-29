@@ -6,7 +6,7 @@ namespace TestRepositories
 {
 	public class TestRepoPlantillaTitular
 	{
-		[IntegrationFact]
+		[Fact]
 		[Trait("Category", "Integration")]
 		public void PuedeAgregarBuscarJugadoresYEliminarTitular()
 		{
