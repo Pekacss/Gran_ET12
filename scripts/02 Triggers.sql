@@ -67,6 +67,17 @@ CREATE TRIGGER trg_PlantillaTitular_ValidarActualizacion
 BEFORE UPDATE ON PlantillaTitular
 FOR EACH ROW
 BEGIN
+	DECLARE cantidad INT;
+	IF NEW.IdPlantilla <> OLD.IdPlantilla THEN
+		SELECT COUNT(*) INTO cantidad FROM PlantillaTitular
+		WHERE IdPlantilla = NEW.IdPlantilla AND Id <> OLD.Id;
+		SELECT cantidad + COUNT(*) INTO cantidad FROM PlantillaSuplente
+		WHERE IdPlantilla = NEW.IdPlantilla;
+		IF cantidad >= 20 THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Una plantilla no puede superar 20 jugadores.';
+		END IF;
+	END IF;
+
 	IF EXISTS (
 		SELECT 1 FROM PlantillaSuplente
 		WHERE IdPlantilla = NEW.IdPlantilla AND IdJugador = NEW.IdJugador
@@ -99,6 +110,17 @@ CREATE TRIGGER trg_PlantillaSuplente_ValidarActualizacion
 BEFORE UPDATE ON PlantillaSuplente
 FOR EACH ROW
 BEGIN
+	DECLARE cantidad INT;
+	IF NEW.IdPlantilla <> OLD.IdPlantilla THEN
+		SELECT COUNT(*) INTO cantidad FROM PlantillaSuplente
+		WHERE IdPlantilla = NEW.IdPlantilla AND Id <> OLD.Id;
+		SELECT cantidad + COUNT(*) INTO cantidad FROM PlantillaTitular
+		WHERE IdPlantilla = NEW.IdPlantilla;
+		IF cantidad >= 20 THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Una plantilla no puede superar 20 jugadores.';
+		END IF;
+	END IF;
+
 	IF EXISTS (
 		SELECT 1 FROM PlantillaTitular
 		WHERE IdPlantilla = NEW.IdPlantilla AND IdJugador = NEW.IdJugador

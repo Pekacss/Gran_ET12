@@ -186,7 +186,7 @@ BEGIN
     SELECT * FROM Plantilla;
 END$$
 
-CREATE PROCEDURE sp_Plantilla_ObtenerPorId(IN p_Id INT UNSIGNED)
+CREATE PROCEDURE sp_Plantilla_ObtenerPorId(IN p_Id INT)
 BEGIN
     SELECT * FROM Plantilla WHERE Id = p_Id;
 END$$
@@ -206,14 +206,14 @@ BEGIN
     SELECT * FROM Plantilla WHERE Nombre = p_Nombre ORDER BY Id LIMIT 1;
 END$$
 
-CREATE PROCEDURE sp_Plantilla_ObtenerJugadores(IN p_Id INT UNSIGNED)
+CREATE PROCEDURE sp_Plantilla_ObtenerJugadores(IN p_Id INT)
 BEGIN
     SELECT j.* FROM Jugador j INNER JOIN PlantillaTitular pt ON pt.IdJugador = j.Id WHERE pt.IdPlantilla = p_Id
     UNION ALL
     SELECT j.* FROM Jugador j INNER JOIN PlantillaSuplente ps ON ps.IdJugador = j.Id WHERE ps.IdPlantilla = p_Id;
 END$$
 
-CREATE PROCEDURE sp_Plantilla_ObtenerCalificacion(IN p_Id INT UNSIGNED)
+CREATE PROCEDURE sp_Plantilla_ObtenerCalificacion(IN p_Id INT)
 BEGIN
     SELECT COALESCE(SUM(p.Puntaje), 0) AS Calificacion
     FROM Plantilla t
@@ -222,13 +222,13 @@ BEGIN
     WHERE t.Id = p_Id;
 END$$
 
-CREATE PROCEDURE sp_Plantilla_Eliminar(IN p_Id INT UNSIGNED)
+CREATE PROCEDURE sp_Plantilla_Eliminar(IN p_Id INT)
 BEGIN
     DELETE FROM Plantilla WHERE Id = p_Id;
     SELECT ROW_COUNT() AS FilasAfectadas;
 END$$
 
-CREATE PROCEDURE sp_PlantillaTitular_Agregar(IN p_IdPlantilla INT UNSIGNED, IN p_IdJugador SMALLINT UNSIGNED)
+CREATE PROCEDURE sp_PlantillaTitular_Agregar(IN p_IdPlantilla INT, IN p_IdJugador SMALLINT UNSIGNED)
 BEGIN
     INSERT INTO PlantillaTitular (IdPlantilla, IdJugador) VALUES (p_IdPlantilla, p_IdJugador);
     SELECT LAST_INSERT_ID() AS Id;
@@ -239,23 +239,23 @@ BEGIN
     SELECT * FROM PlantillaTitular;
 END$$
 
-CREATE PROCEDURE sp_PlantillaTitular_ObtenerPorId(IN p_Id INT UNSIGNED)
+CREATE PROCEDURE sp_PlantillaTitular_ObtenerPorId(IN p_Id INT)
 BEGIN
     SELECT * FROM PlantillaTitular WHERE Id = p_Id;
 END$$
 
-CREATE PROCEDURE sp_PlantillaTitular_ObtenerJugadores(IN p_Id INT UNSIGNED)
+CREATE PROCEDURE sp_PlantillaTitular_ObtenerJugadores(IN p_Id INT)
 BEGIN
     SELECT j.* FROM Jugador j INNER JOIN PlantillaTitular pt ON pt.IdJugador = j.Id WHERE pt.IdPlantilla = p_Id;
 END$$
 
-CREATE PROCEDURE sp_PlantillaTitular_Eliminar(IN p_Id INT UNSIGNED)
+CREATE PROCEDURE sp_PlantillaTitular_Eliminar(IN p_Id INT)
 BEGIN
     DELETE FROM PlantillaTitular WHERE Id = p_Id;
     SELECT ROW_COUNT() AS FilasAfectadas;
 END$$
 
-CREATE PROCEDURE sp_PlantillaSuplente_Agregar(IN p_IdPlantilla INT UNSIGNED, IN p_IdJugador SMALLINT UNSIGNED)
+CREATE PROCEDURE sp_PlantillaSuplente_Agregar(IN p_IdPlantilla INT, IN p_IdJugador SMALLINT UNSIGNED)
 BEGIN
     INSERT INTO PlantillaSuplente (IdPlantilla, IdJugador) VALUES (p_IdPlantilla, p_IdJugador);
     SELECT LAST_INSERT_ID() AS Id;
@@ -266,17 +266,17 @@ BEGIN
     SELECT * FROM PlantillaSuplente;
 END$$
 
-CREATE PROCEDURE sp_PlantillaSuplente_ObtenerPorId(IN p_Id INT UNSIGNED)
+CREATE PROCEDURE sp_PlantillaSuplente_ObtenerPorId(IN p_Id INT)
 BEGIN
     SELECT * FROM PlantillaSuplente WHERE Id = p_Id;
 END$$
 
-CREATE PROCEDURE sp_PlantillaSuplente_ObtenerJugadores(IN p_Id INT UNSIGNED)
+CREATE PROCEDURE sp_PlantillaSuplente_ObtenerJugadores(IN p_Id INT)
 BEGIN
     SELECT j.* FROM Jugador j INNER JOIN PlantillaSuplente ps ON ps.IdJugador = j.Id WHERE ps.IdPlantilla = p_Id;
 END$$
 
-CREATE PROCEDURE sp_PlantillaSuplente_Eliminar(IN p_Id INT UNSIGNED)
+CREATE PROCEDURE sp_PlantillaSuplente_Eliminar(IN p_Id INT)
 BEGIN
     DELETE FROM PlantillaSuplente WHERE Id = p_Id;
     SELECT ROW_COUNT() AS FilasAfectadas;

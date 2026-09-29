@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="ProyectoCore/src/ProyectoCore.csproj" />
+  <Project Path="ProyectoCore/test/ProyectoCoreTest.csproj" />
+  <Project Path="ProyectoMinimalAPI/Gran_ET12.csproj" />
+</Solution>
