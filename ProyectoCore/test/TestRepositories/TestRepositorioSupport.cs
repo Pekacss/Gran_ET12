@@ -1,14 +1,14 @@
-using System;
 using Repositories;
 
 namespace TestRepositories
 {
     internal static class TestRepositorioSupport
     {
+        private const string CadenaConexion = "Server=localhost;Port=3306;Database=bd_GranET12;User ID=root;Password=;";
+
         public static DBConnection CrearConexion()
         {
-            string connectionString = Environment.GetEnvironmentVariable("GRAN_ET12_CONNECTION_STRING") ?? string.Empty;
-            return new DBConnection(connectionString);
+            return new DBConnection(CadenaConexion);
         }
     }
 }
