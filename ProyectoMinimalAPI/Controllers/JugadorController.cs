@@ -7,11 +7,11 @@ namespace Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ControllerJugador : ControllerBase
+    public class JugadorController : ControllerBase
     {
         private readonly ServiceJugador _service;
 
-        public ControllerJugador(ServiceJugador serviceJugador)
+        public JugadorController(ServiceJugador serviceJugador)
         {
             _service = serviceJugador;
         }

@@ -30,7 +30,11 @@ namespace Repositories
         public List<Jugador> ObtenerJugadoresPorEquipo(byte id)
         {
             using var connection = _dbConnection.CrearConexion();
-            return connection.Query<Jugador>("sp_Equipo_ObtenerJugadores", new { p_Id = id }, commandType: CommandType.StoredProcedure).AsList();
+            return connection.Query<Jugador>(
+                "sp_Equipo_ObtenerJugadores",
+                new { p_Id = id },
+                commandType: CommandType.StoredProcedure)
+                .AsList();
         }
 
         public Equipo Agregar(Equipo equipo)

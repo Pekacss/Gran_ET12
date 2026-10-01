@@ -12,8 +12,8 @@ VALUES  (1, 'Arquero'),
 	    (4, 'Delantero');
 
 INSERT INTO Equipo (Id, Nombre)
-VALUES	(1, 'River Plate'),
-	    (2, 'Boca Juniors'),
+VALUES	(1, 'Boca Juniors'),
+		(2, 'River Plate'),
 	    (3, 'Racing Club');
 
 INSERT IGNORE INTO Jugador

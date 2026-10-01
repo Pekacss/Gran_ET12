@@ -7,11 +7,11 @@ namespace Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ControllerPlantillaSuplente : ControllerBase
+    public class PlantillaSuplenteController : ControllerBase
     {
         private readonly ServicePlantillaSuplente _service;
 
-        public ControllerPlantillaSuplente(ServicePlantillaSuplente servicePlantillaSuplente)
+        public PlantillaSuplenteController(ServicePlantillaSuplente servicePlantillaSuplente)
         {
             _service = servicePlantillaSuplente;
         }

@@ -7,11 +7,11 @@ namespace Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ControllerPosicion : ControllerBase
+    public class PosicionController : ControllerBase
     {
         private readonly ServicePosicion _service;
 
-        public ControllerPosicion(ServicePosicion servicePosicion)
+        public PosicionController(ServicePosicion servicePosicion)
         {
             _service = servicePosicion;
         }
