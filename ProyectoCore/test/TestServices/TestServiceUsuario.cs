@@ -14,16 +14,16 @@ namespace TestServices
 		[InlineData(false)]
 		public void AgregarGuardaHashDe64CaracteresYLoginConservaAdministrador(bool administrador)
 		{
-			RepositorioUsuarioEnMemoria repositorio = new RepositorioUsuarioEnMemoria();
-			ServiceUsuario servicio = new ServiceUsuario(repositorio);
+			MockeoUsuario mock = new MockeoUsuario();
+			ServiceUsuario servicio = new ServiceUsuario(mock);
 			Usuario usuario = CrearUsuario(administrador);
 
 			servicio.Agregar(usuario);
 
-			Assert.NotEqual("clave-prueba", repositorio.UsuarioGuardado!.Contraseña);
-			Assert.Equal(64, repositorio.UsuarioGuardado.Contraseña.Length);
-			Assert.Equal(48, Convert.FromBase64String(repositorio.UsuarioGuardado.Contraseña).Length);
-			Assert.True(repositorio.UsuarioGuardado.EsValido());
+			Assert.NotEqual("clave-prueba", mock.UsuarioGuardado!.Contraseña);
+			Assert.Equal(64, mock.UsuarioGuardado.Contraseña.Length);
+			Assert.Equal(48, Convert.FromBase64String(mock.UsuarioGuardado.Contraseña).Length);
+			Assert.True(mock.UsuarioGuardado.EsValido());
 
 			Usuario? usuarioAutenticado = servicio.IniciarSesion(usuario.Email, "clave-prueba");
 
@@ -34,7 +34,7 @@ namespace TestServices
 		[Fact]
 		public void LoginRechazaUnaContraseñaIncorrecta()
 		{
-			RepositorioUsuarioEnMemoria repositorio = new RepositorioUsuarioEnMemoria();
+			MockeoUsuario repositorio = new MockeoUsuario();
 			ServiceUsuario servicio = new ServiceUsuario(repositorio);
 			Usuario usuario = CrearUsuario(false);
 			servicio.Agregar(usuario);
@@ -47,7 +47,7 @@ namespace TestServices
 		[Fact]
 		public void LoginRechazaUnEmailInexistente()
 		{
-			ServiceUsuario servicio = new ServiceUsuario(new RepositorioUsuarioEnMemoria());
+			ServiceUsuario servicio = new ServiceUsuario(new MockeoUsuario());
 
 			Assert.Null(servicio.IniciarSesion("inexistente@example.com", "clave-prueba"));
 		}
@@ -55,7 +55,7 @@ namespace TestServices
 		[Fact]
 		public void LaMismaContraseñaGeneraHashesDistintosPorLaSalAleatoria()
 		{
-			RepositorioUsuarioEnMemoria repositorio = new RepositorioUsuarioEnMemoria();
+			MockeoUsuario repositorio = new MockeoUsuario();
 			ServiceUsuario servicio = new ServiceUsuario(repositorio);
 			Usuario primerUsuario = CrearUsuario(false);
 			servicio.Agregar(primerUsuario);
@@ -81,7 +81,7 @@ namespace TestServices
 			};
 		}
 
-		private sealed class RepositorioUsuarioEnMemoria : IRepoUsuario
+		private sealed class MockeoUsuario : IRepoUsuario
 		{
 			public Usuario? UsuarioGuardado { get; private set; }
 

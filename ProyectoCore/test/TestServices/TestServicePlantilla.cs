@@ -12,8 +12,8 @@ namespace TestServices
         [Fact]
         public void TestAgregarJugadorYaAnadido()
         {
-            FakeRepoPlantilla repoFake = new FakeRepoPlantilla();
-            ServicePlantilla service = new ServicePlantilla(repoFake);
+            MockeoPlantilla mock = new MockeoPlantilla();
+            ServicePlantilla service = new ServicePlantilla(mock);
 
             Plantilla plantilla = new Plantilla();
             Jugador jugador = CrearJugador(1, Posicion.Arquero, 100m);
@@ -23,13 +23,13 @@ namespace TestServices
             Assert.Throws<InvalidOperationException>(() => plantilla.AgregarSuplente(jugador));
 
             service.Agregar(plantilla);
-            Assert.Single(repoFake.Agregados);
+            Assert.Single(mock.Agregados);
         }
 
         [Fact]
         public void TestAgregarDelegaEnElRepositorio()
         {
-            FakeRepoPlantilla repoFake = new FakeRepoPlantilla();
+            MockeoPlantilla repoFake = new MockeoPlantilla();
             ServicePlantilla service = new ServicePlantilla(repoFake);
 
             Plantilla plantilla = new Plantilla { IdUsuario = 1, Fecha = 1, Nombre = "Plantilla" };
@@ -43,7 +43,7 @@ namespace TestServices
         [Fact]
         public void TestEliminarDelegaEnElRepositorio()
         {
-            FakeRepoPlantilla repoFake = new FakeRepoPlantilla();
+            MockeoPlantilla repoFake = new MockeoPlantilla();
             ServicePlantilla service = new ServicePlantilla(repoFake);
             Plantilla plantilla = service.Agregar(new Plantilla { IdUsuario = 1, Fecha = 1, Nombre = "Plantilla" });
 
@@ -67,7 +67,7 @@ namespace TestServices
             };
         }
 
-        private class FakeRepoPlantilla : IRepoPlantilla
+        private class MockeoPlantilla : IRepoPlantilla
         {
             private int _siguienteId = 1;
 

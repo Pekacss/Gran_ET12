@@ -132,17 +132,10 @@ namespace Models
             {
                 throw new InvalidOperationException("La plantilla alcanzó la cantidad máxima de jugadores.");
             }
-            foreach (Jugador jugadorActual in _titulares)
-            {
-                if (jugadorActual.Id == jugador.Id)
-                    throw new InvalidOperationException("Un jugador no puede repetirse en una plantilla.");
-            }
-
-            foreach (Jugador jugadorActual in _suplentes)
-            {
-                if (jugadorActual.Id == jugador.Id)
-                    throw new InvalidOperationException("Un jugador no puede repetirse en una plantilla.");
-            }
+            
+            if (Titulares.Exists(t => t.Id == jugador.Id)
+            || Suplentes.Exists(s => s.Id == jugador.Id))
+                throw new InvalidOperationException("Un jugador no puede repetirse en una plantilla.");
 
             destino.Add(jugador);
         }
