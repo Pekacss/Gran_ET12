@@ -4,13 +4,12 @@ using Xunit;
 
 namespace TestRepositories
 {
-	public class TestRepoPlantilla
+	public class TestRepoPlantilla : TestRepoBase
 	{
 		[Fact]
-		[Trait("Category", "Integration")]
 		public void PuedeAgregarConsultarYEliminarPlantilla()
 		{
-			RepoPlantilla repositorio = new RepoPlantilla(TestRepositorioSupport.CrearConexion());
+			RepoPlantilla repositorio = new RepoPlantilla(_conexion);
 			Plantilla plantilla = repositorio.Agregar(new Plantilla
 			{
 				IdUsuario = 1,
