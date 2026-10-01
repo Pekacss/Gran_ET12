@@ -4,13 +4,12 @@ using Xunit;
 
 namespace TestRepositories
 {
-	public class TestRepoPuntuacion
+	public class TestRepoPuntuacion : TestRepoBase
 	{
 		[Fact]
-		[Trait("Category", "Integration")]
 		public void PuedeConsultarAgregarYEliminarPorClaveCompuesta()
 		{
-			RepoPuntuacion repositorio = new RepoPuntuacion(TestRepositorioSupport.CrearConexion());
+			RepoPuntuacion repositorio = new RepoPuntuacion(_conexion);
 			Puntuacion puntuacion = new Puntuacion { Fecha = 49, IdJugador = 1, Puntaje = 9.5m };
 			try
 			{

@@ -4,16 +4,12 @@ using Xunit;
 
 namespace TestRepositories
 {
-    public class TestDBConnection
+    public class TestDBConnection : TestRepoBase
     {
         [Fact]
-        [Trait("Category", "Integration")] // Requiere la base de datos activa.
         public void PuedeAbrirConexionMySql()
         {
-            // Requiere MySQL activo en localhost.
-            DBConnection conexionDb = TestRepositorioSupport.CrearConexion();
-
-            using var conexion = conexionDb.CrearConexion();
+            using var conexion = _conexion.CrearConexion();
             conexion.Open();
 
             Assert.Equal(ConnectionState.Open, conexion.State);

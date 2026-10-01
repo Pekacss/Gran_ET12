@@ -3,13 +3,12 @@ using Xunit;
 
 namespace TestRepositories
 {
-	public class TestRepoPosicion
+	public class TestRepoPosicion : TestRepoBase
 	{
 		[Fact]
-		[Trait("Category", "Integration")]
 		public void PuedeObtenerPosicionesYSusJugadores()
 		{
-			RepoPosicion repositorio = new RepoPosicion(TestRepositorioSupport.CrearConexion());
+			RepoPosicion repositorio = new RepoPosicion(_conexion);
 
 			Assert.Equal("Arquero", repositorio.ObtenerPorId(1)!.Nombre);
 			Assert.Contains(repositorio.ObtenerTodos(), posicion => posicion.Id == 1);

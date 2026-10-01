@@ -5,13 +5,12 @@ using Xunit;
 
 namespace TestRepositories
 {
-	public class TestRepoEquipo
+	public class TestRepoEquipo : TestRepoBase
 	{
 		[Fact]
-		[Trait("Category", "Integration")]
 		public void PuedeAgregarBuscarConsultarJugadoresYEliminarEquipo()
 		{
-			RepoEquipo repositorio = new RepoEquipo(TestRepositorioSupport.CrearConexion());
+			RepoEquipo repositorio = new RepoEquipo(_conexion);
 			Equipo equipo = repositorio.Agregar(new Equipo { Nombre = "Repo " + Guid.NewGuid().ToString("N") });
 
 			Assert.NotEqual(0, equipo.Id);

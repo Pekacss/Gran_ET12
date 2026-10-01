@@ -5,15 +5,13 @@ using Xunit;
 
 namespace TestRepositories
 {
-	public class TestRepoJugador
+	public class TestRepoJugador : TestRepoBase
 	{
 		[Fact]
-		[Trait("Category", "Integration")]
 		public void PuedeAgregarBuscarRelacionesYEliminarJugador()
 		{
-			DBConnection conexion = TestRepositorioSupport.CrearConexion();
-			RepoEquipo repositorioEquipo = new RepoEquipo(conexion);
-			RepoJugador repositorio = new RepoJugador(conexion);
+			RepoEquipo repositorioEquipo = new RepoEquipo(_conexion);
+			RepoJugador repositorio = new RepoJugador(_conexion);
 			Equipo equipo = repositorioEquipo.Agregar(new Equipo { Nombre = "Equipo " + Guid.NewGuid().ToString("N") });
 			Jugador jugador = new Jugador
 			{

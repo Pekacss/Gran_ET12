@@ -5,13 +5,12 @@ using Xunit;
 
 namespace TestRepositories
 {
-	public class TestRepoUsuario
+	public class TestRepoUsuario : TestRepoBase
 	{
 		[Fact]
-		[Trait("Category", "Integration")]
 		public void PuedeAgregarBuscarPorIdEmailYEliminarUsuario()
 		{
-			RepoUsuario repositorio = new RepoUsuario(TestRepositorioSupport.CrearConexion());
+			RepoUsuario repositorio = new RepoUsuario(_conexion);
 			Usuario usuario = new Usuario
 			{
 				Nombre = "Test",

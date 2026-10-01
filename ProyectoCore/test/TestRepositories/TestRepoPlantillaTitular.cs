@@ -4,15 +4,13 @@ using Xunit;
 
 namespace TestRepositories
 {
-	public class TestRepoPlantillaTitular
+	public class TestRepoPlantillaTitular : TestRepoBase
 	{
 		[Fact]
-		[Trait("Category", "Integration")]
 		public void PuedeAgregarBuscarJugadoresYEliminarTitular()
 		{
-			DBConnection conexion = TestRepositorioSupport.CrearConexion();
-			RepoPlantilla repoPlantilla = new RepoPlantilla(conexion);
-			RepoPlantillaTitular repositorio = new RepoPlantillaTitular(conexion);
+			RepoPlantilla repoPlantilla = new RepoPlantilla(_conexion);
+			RepoPlantillaTitular repositorio = new RepoPlantillaTitular(_conexion);
 			Plantilla plantilla = repoPlantilla.Agregar(new Plantilla { IdUsuario = 1, Fecha = 48, Nombre = "Titular test" });
 
 			try
