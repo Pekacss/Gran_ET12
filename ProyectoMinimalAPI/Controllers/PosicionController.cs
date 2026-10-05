@@ -21,8 +21,6 @@ namespace Controllers
         {
             try
             {
-                if (!posicion.EsValida())
-                    return BadRequest();
                 var nuevaPosicion = _service.Agregar(posicion);
                 return Ok(nuevaPosicion);
             }

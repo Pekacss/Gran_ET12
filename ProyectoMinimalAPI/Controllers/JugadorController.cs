@@ -21,8 +21,6 @@ namespace Controllers
         {
             try
             {
-                if (!jugador.EsValido())
-                    return BadRequest();
                 var nuevoJugador = _service.Agregar(jugador);
                 return Ok(nuevoJugador);
             }

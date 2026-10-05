@@ -21,12 +21,6 @@ namespace Controllers
         {
             try
             {
-                if (plantillaTitular.Id == 0)
-                    return BadRequest();
-                if (plantillaTitular.IdPlantilla == 0)
-                    return BadRequest();
-                if (plantillaTitular.IdJugador == 0)
-                    return BadRequest();
                 var nuevaPlantillaTitular = _service.Agregar(plantillaTitular);
                 return Ok(nuevaPlantillaTitular);
             }

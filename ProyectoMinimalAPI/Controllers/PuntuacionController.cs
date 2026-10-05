@@ -21,8 +21,6 @@ namespace Controllers
         {
             try
             {
-                if (puntuacion.EsValida())
-                    return BadRequest();
                 var nuevaPuntuacion = _service.Agregar(puntuacion);
                 return Ok(nuevaPuntuacion);
             }

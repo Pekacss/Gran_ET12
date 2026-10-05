@@ -21,8 +21,6 @@ namespace Controllers
         {
             try
             {
-                if (!plantilla.EsValida())
-                    return BadRequest();
                 var nuevaPlantilla = _service.Agregar(plantilla);
                 return Ok(nuevaPlantilla);
             }

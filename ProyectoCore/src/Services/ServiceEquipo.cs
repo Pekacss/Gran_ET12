@@ -11,6 +11,10 @@ public class ServiceEquipo : IRepoEquipo
 
     public Equipo Agregar(Equipo equipo)
     {
+        if (!equipo.EsValido())
+        {
+            throw new ArgumentException("El equipo debe tener un nombre.", nameof(equipo));
+        }
         return _repoEquipo.Agregar(equipo);
     }
 

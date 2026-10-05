@@ -21,8 +21,6 @@ namespace Controllers
         {
             try
             {
-                if (!equipo.EsValido())
-                    return BadRequest();
                 var nuevoEquipo = _service.Agregar(equipo);
                 return Ok(nuevoEquipo);
             }

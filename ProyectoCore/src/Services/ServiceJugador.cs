@@ -18,6 +18,10 @@ namespace Services
 
         public Jugador Agregar(Jugador jugador)
         {
+            if (!jugador.EsValido())
+            {
+                throw new ArgumentException("El jugador no es válido.", nameof(jugador));
+            }
             return _repoJugador.Agregar(jugador);
         }
 

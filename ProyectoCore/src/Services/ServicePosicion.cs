@@ -18,6 +18,10 @@ namespace Services
 
         public Posicion Agregar(Posicion posicion)
         {
+            if (!posicion.EsValida())
+            {
+                throw new ArgumentException("La posición no es válida.", nameof(posicion));
+            }
             return _repoPosicion.Agregar(posicion);
         }
 

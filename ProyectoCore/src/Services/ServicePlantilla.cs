@@ -18,6 +18,10 @@ namespace Services
 
         public Plantilla Agregar(Plantilla plantilla)
         {
+            if (!plantilla.EsValida())
+            {
+                throw new ArgumentException("La plantilla no es válida.", nameof(plantilla));
+            }
             return _repoPlantilla.Agregar(plantilla);
         }
 

@@ -18,6 +18,10 @@ namespace Services
 
         public Puntuacion Agregar(Puntuacion puntuacion)
         {
+            if (!puntuacion.EsValida())
+            {
+                throw new ArgumentException("La puntuación no es válida.", nameof(puntuacion));
+            }
             return _repoPuntuacion.Agregar(puntuacion);
         }
 

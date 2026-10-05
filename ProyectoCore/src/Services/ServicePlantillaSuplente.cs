@@ -18,6 +18,18 @@ namespace Services
 
         public PlantillaSuplente Agregar(PlantillaSuplente plantillaSuplente)
         {
+            if (plantillaSuplente.Id == 0)
+            {
+                throw new ArgumentException("El Id de la plantilla suplente debe ser distinto de 0.", nameof(plantillaSuplente));
+            }
+            if (plantillaSuplente.IdPlantilla == 0)
+            {
+                throw new ArgumentException("El IdPlantilla debe ser distinto de 0.", nameof(plantillaSuplente));
+            }
+            if (plantillaSuplente.IdJugador == 0)
+            {
+                throw new ArgumentException("El IdJugador debe ser distinto de 0.", nameof(plantillaSuplente));
+            }
             return _repoPlantillaSuplente.Agregar(plantillaSuplente);
         }
 
