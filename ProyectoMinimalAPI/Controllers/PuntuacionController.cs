@@ -19,65 +19,110 @@ namespace Controllers
         [HttpPost]
         public ActionResult<Puntuacion> Agregar(Puntuacion puntuacion)
         {
-            if (puntuacion.Fecha == 0)
-                return BadRequest();
-            if (puntuacion.IdJugador == 0)
-                return BadRequest();
-            if (puntuacion.Puntaje == 0)
-                return BadRequest();
-            var nuevaPuntuacion = _service.Agregar(puntuacion);
-            return Ok(nuevaPuntuacion);
+            try
+            {
+                if (puntuacion.EsValida())
+                    return BadRequest();
+                var nuevaPuntuacion = _service.Agregar(puntuacion);
+                return Ok(nuevaPuntuacion);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
         public ActionResult<List<Puntuacion>> Obtener()
         {
-            var puntuaciones = _service.ObtenerTodos();
-            return Ok(puntuaciones);
+            try
+            {
+                var puntuaciones = _service.ObtenerTodos();
+                return Ok(puntuaciones);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
         
         [HttpGet("fecha/{fecha}")]
         public ActionResult<Puntuacion> ObtenerPorFecha(byte fecha)
         {
-            var puntuacion = _service.ObtenerPorFecha(fecha);
-            if (puntuacion == null)
+            try
             {
-                return NotFound();
+                var puntuacion = _service.ObtenerPorFecha(fecha);
+                if (puntuacion == null)
+                    return NotFound();
+                return Ok(puntuacion);
             }
-            return Ok(puntuacion);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("jugador/{id}")]
         public ActionResult<Puntuacion> ObtenerPorJugador(ushort id)
         {
-            var puntuacion = _service.ObtenerPorJugador(id);
-            if (puntuacion == null)
+            try
             {
-                return NotFound();
+                var puntuacion = _service.ObtenerPorJugador(id);
+                if (puntuacion == null)
+                    return NotFound();
+                return Ok(puntuacion);
             }
-            return Ok(puntuacion);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("fecha/{fecha}/jugador/{id}")]
         public ActionResult<Puntuacion> ObtenerPorFechaJugador(byte fecha, ushort id)
         {
-            var puntuacion = _service.ObtenerPorFechaJugador(fecha, id);
-            if (puntuacion == null)
+            try
             {
-                return NotFound();
+                var puntuacion = _service.ObtenerPorFechaJugador(fecha, id);
+                if (puntuacion == null)
+                    return NotFound();
+                
+                return Ok(puntuacion);
             }
-            return Ok(puntuacion);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpDelete("fecha/{fecha}/jugador/{idJugador}")]
         public IActionResult Eliminar(byte fecha, ushort idJugador)
         {
-            var eliminado = _service.Eliminar(fecha, idJugador);
-            if (!eliminado)
+            try
             {
-                return NotFound();
+                var eliminado = _service.Eliminar(fecha, idJugador);
+                if (!eliminado)
+                {
+                    return NotFound();
+                }
+                return NoContent();
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

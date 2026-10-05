@@ -19,46 +19,94 @@ namespace Controllers
         [HttpPost]
         public ActionResult<Equipo> Agregar(Equipo equipo)
         {
-            if (!equipo.EsValido())
-                return BadRequest();
-            var nuevoEquipo = _service.Agregar(equipo);
-            return Ok(nuevoEquipo);
+            try
+            {
+                if (!equipo.EsValido())
+                    return BadRequest();
+                var nuevoEquipo = _service.Agregar(equipo);
+                return Ok(nuevoEquipo);
+            }
+            catch (Exception ex)
+            {
+                //Tengo que ver que tipo de excepcion rebota
+                // 500: Errores en la capa de datos o lógica interna
+                // 400: Errores de validación o argumentos incorrectos
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
         public ActionResult<List<Equipo>> Obtener()
         {
-            var equipos = _service.ObtenerTodos();
-            return Ok(equipos);
+            try
+            {
+                var equipos = _service.ObtenerTodos();
+                return Ok(equipos);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public ActionResult<Equipo> ObtenerPorId(byte id)
         {
-            var equipo = _service.ObtenerPorId(id);
-            if (equipo == null)
+            try
             {
-                return NotFound();
+                var equipo = _service.ObtenerPorId(id);
+                if (equipo == null)
+                {
+                    return NotFound();
+                }
+                return Ok(equipo);
             }
-            return Ok(equipo);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult Eliminar(byte id)
         {
-            var eliminado = _service.Eliminar(id);
-            if (!eliminado)
+            try
             {
-                return NotFound();
+                var eliminado = _service.Eliminar(id);
+                if (!eliminado)
+                {
+                    return NotFound();
+                }
+                return NoContent();
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("{id}/jugadores")]
         public ActionResult<List<Jugador>> ObtenerJugadoresPorEquipo(byte id)
         {
-            var jugadores = _service.ObtenerJugadoresPorEquipo(id);
-            return Ok(jugadores);
+            try
+            {
+                var jugadores = _service.ObtenerJugadoresPorEquipo(id);
+                return Ok(jugadores);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

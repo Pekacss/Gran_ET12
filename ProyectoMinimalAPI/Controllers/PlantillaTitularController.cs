@@ -2,7 +2,7 @@ using System;
 using Models;
 using Services;
 using Microsoft.AspNetCore.Mvc;
-
+//ten q catryea tod
 namespace Controllers
 {
     [ApiController]
@@ -19,50 +19,95 @@ namespace Controllers
         [HttpPost]
         public ActionResult<PlantillaTitular> Agregar(PlantillaTitular plantillaTitular)
         {
-            if (plantillaTitular.Id == 0)
-                return BadRequest();
-            if (plantillaTitular.IdPlantilla == 0)
-                return BadRequest();
-            if (plantillaTitular.IdJugador == 0)
-                return BadRequest();
-            var nuevaPlantillaTitular = _service.Agregar(plantillaTitular);
-            return Ok(nuevaPlantillaTitular);
+            try
+            {
+                if (plantillaTitular.Id == 0)
+                    return BadRequest();
+                if (plantillaTitular.IdPlantilla == 0)
+                    return BadRequest();
+                if (plantillaTitular.IdJugador == 0)
+                    return BadRequest();
+                var nuevaPlantillaTitular = _service.Agregar(plantillaTitular);
+                return Ok(nuevaPlantillaTitular);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
         public ActionResult<List<PlantillaTitular>> Obtener()
         {
-            var plantillasTitulares = _service.ObtenerTodos();
-            return Ok(plantillasTitulares);
+            try
+            {
+                var plantillasTitulares = _service.ObtenerTodos();
+                return Ok(plantillasTitulares);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public ActionResult<PlantillaTitular> ObtenerPorId(int id)
         {
-            var plantillaTitular = _service.ObtenerPorId(id);
-            if (plantillaTitular == null)
+            try
             {
-                return NotFound();
+                var plantillaTitular = _service.ObtenerPorId(id);
+                if (plantillaTitular == null)
+                {
+                    return NotFound();
+                }
+                return Ok(plantillaTitular);
             }
-            return Ok(plantillaTitular);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("titulares/{id}")]
         public ActionResult<List<Jugador>> ObtenerTitularesPlantilla(int id)
         {
-            var titulares = _service.ObtenerTitularesPlantilla(id);
-            return Ok(titulares);
+            try
+            {
+                var titulares = _service.ObtenerTitularesPlantilla(id);
+                return Ok(titulares);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult Eliminar(int id)
         {
-            var eliminado = _service.Eliminar(id);
-            if (!eliminado)
+            try
             {
-                return NotFound();
+                var eliminado = _service.Eliminar(id);
+                if (!eliminado)
+                {
+                    return NotFound();
+                }
+                return NoContent();
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

@@ -19,88 +19,167 @@ namespace Controllers
         [HttpPost]
         public ActionResult<Plantilla> Agregar(Plantilla plantilla)
         {
-            if (plantilla.Id == 0)
-                return BadRequest();
-            if (plantilla.Fecha == 0)
-                return BadRequest();
-            var nuevaPlantilla = _service.Agregar(plantilla);
-            return Ok(nuevaPlantilla);
+            try
+            {
+                if (!plantilla.EsValida())
+                    return BadRequest();
+                var nuevaPlantilla = _service.Agregar(plantilla);
+                return Ok(nuevaPlantilla);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
         public ActionResult<List<Plantilla>> ObtenerTodos()
         {
-            var plantillas = _service.ObtenerTodos();
-            return Ok(plantillas);
+            try
+            {
+                var plantillas = _service.ObtenerTodos();
+                return Ok(plantillas);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("usuario/{id}")]
         public ActionResult<Plantilla> ObtenerPorIdUsuario(ushort id)
         {
-            var plantilla = _service.ObtenerPorIdUsuario(id);
-            if (plantilla == null)
+            try
             {
-                return NotFound();
+                var plantilla = _service.ObtenerPorIdUsuario(id);
+                if (plantilla == null)
+                {
+                    return NotFound();
+                }
+                return Ok(plantilla);
             }
-            return Ok(plantilla);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("fecha/{fecha}")]
         public ActionResult<Plantilla> ObtenerPorFecha(byte fecha)
         {
-            var plantilla = _service.ObtenerPorFecha(fecha);
-            if (plantilla == null)
+            try
             {
-                return NotFound();
+                var plantilla = _service.ObtenerPorFecha(fecha);
+                if (plantilla == null)
+                {
+                    return NotFound();
+                }
+                return Ok(plantilla);
             }
-            return Ok(plantilla);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("nombre/{nombre}")]
         public ActionResult<Plantilla> ObtenerPorNombre(string nombre)
         {
-            var plantilla = _service.ObtenerPorNombre(nombre);
-            if (plantilla == null)
+            try
             {
-                return NotFound();
+                var plantilla = _service.ObtenerPorNombre(nombre);
+                if (plantilla == null)
+                {
+                    return NotFound();
+                }
+                return Ok(plantilla);
             }
-            return Ok(plantilla);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public ActionResult<Plantilla> ObtenerPorId(int id)
         {
-            var plantilla = _service.ObtenerPorId(id);
-            if (plantilla == null)
+            try
             {
-                return NotFound();
+                var plantilla = _service.ObtenerPorId(id);
+                if (plantilla == null)
+                {
+                    return NotFound();
+                }
+                return Ok(plantilla);
             }
-            return Ok(plantilla);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("{id}/jugadores")]
         public ActionResult<List<Jugador>> ObtenerJugadoresPorPlantilla(int id)
         {
-            var jugadores = _service.ObtenerJugadoresPorPlantilla(id);
-            return Ok(jugadores);
+            try
+            {
+                var jugadores = _service.ObtenerJugadoresPorPlantilla(id);
+                return Ok(jugadores);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("{id}/calificacion")]
         public ActionResult<decimal> ObtenerCalificacionPlantilla(int id)
         {
-            var calificacion = _service.ObtenerCalificacionPlantilla(id);
-            return Ok(calificacion);
+            try
+            {
+                var calificacion = _service.ObtenerCalificacionPlantilla(id);
+                return Ok(calificacion);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult Eliminar(int id)
         {
-            var eliminado = _service.Eliminar(id);
-            if (!eliminado)
+            try
             {
-                return NotFound();
+                var eliminado = _service.Eliminar(id);
+                if (!eliminado)
+                {
+                    return NotFound();
+                }
+                return NoContent();
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

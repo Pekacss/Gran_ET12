@@ -19,61 +19,115 @@ namespace Controllers
         [HttpPost]
         public ActionResult<Jugador> Agregar(Jugador jugador)
         {
-            if (!jugador.EsValido())
-                return BadRequest();
-            var nuevoJugador = _service.Agregar(jugador);
-            return Ok(nuevoJugador);
+            try
+            {
+                if (!jugador.EsValido())
+                    return BadRequest();
+                var nuevoJugador = _service.Agregar(jugador);
+                return Ok(nuevoJugador);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
         public ActionResult<List<Jugador>> Obtener()
         {
-            var jugadores = _service.ObtenerTodos();
-            return Ok(jugadores);
+            try
+            {
+                var jugadores = _service.ObtenerTodos();
+                return Ok(jugadores);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public ActionResult<Jugador> ObtenerPorId(ushort id)
         {
-            var jugador = _service.ObtenerPorId(id);
-            if (jugador == null)
+            try
             {
-                return NotFound();
+                var jugador = _service.ObtenerPorId(id);
+                if (jugador == null)
+                {
+                    return NotFound();
+                }
+                return Ok(jugador);
             }
-            return Ok(jugador);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("equipo/{id}")]
         public ActionResult<Equipo> ObtenerEquipoPorJugador(ushort id)
         {
-            var equipo = _service.ObtenerEquipoPorJugador(id);
-            if (equipo == null)
+            try
             {
-                return NotFound();
+                var equipo = _service.ObtenerEquipoPorJugador(id);
+                if (equipo == null)
+                {
+                    return NotFound();
+                }
+                return Ok(equipo);
             }
-            return Ok(equipo);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("posicion/{id}")]
         public ActionResult<Posicion> ObtenerPosicionPorJugador(ushort id)
         {
-            var posicion = _service.ObtenerPosicionPorJugador(id);
-            if (posicion == null)
+            try
             {
-                return NotFound();
+                var posicion = _service.ObtenerPosicionPorJugador(id);
+                if (posicion == null)
+                {
+                    return NotFound();
+                }
+                return Ok(posicion);
             }
-            return Ok(posicion);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult Eliminar(ushort id)
         {
-            var eliminado = _service.Eliminar(id);
-            if (!eliminado)
+            try
             {
-                return NotFound();
+                var eliminado = _service.Eliminar(id);
+                if (!eliminado)
+                {
+                    return NotFound();
+                }
+                return NoContent();
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

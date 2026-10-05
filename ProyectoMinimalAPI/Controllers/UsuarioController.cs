@@ -32,38 +32,24 @@ namespace Controllers
                     nuevoUsuario.Administrador
                 });
             }
-            catch (ArgumentException)
+            catch (Exception ex)
             {
-                return BadRequest();
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
         [HttpPost("login")]
         public ActionResult<object> IniciarSesion(Usuario credenciales)
         {
-            Usuario? usuario = _service.IniciarSesion(credenciales.Email, credenciales.Contraseña);
-            if (usuario == null)
-                return Unauthorized();
-
-            return Ok(new
+            try
             {
-                usuario.Id,
-                usuario.Nombre,
-                usuario.Apellido,
-                usuario.Email,
-                usuario.FechaNacimiento,
-                usuario.Administrador
-            });
-        }
+                Usuario? usuario = _service.IniciarSesion(credenciales.Email, credenciales.Contraseña);
+                if (usuario == null)
+                    return Unauthorized();
 
-        [HttpGet]
-        public ActionResult<List<object>> Obtener()
-        {
-            var usuarios = _service.ObtenerTodos();
-            List<object> respuesta = new List<object>();
-            foreach (Usuario usuario in usuarios)
-            {
-                respuesta.Add(new
+                return Ok(new
                 {
                     usuario.Id,
                     usuario.Nombre,
@@ -73,38 +59,90 @@ namespace Controllers
                     usuario.Administrador
                 });
             }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
 
-            return Ok(respuesta);
+        [HttpGet]
+        public ActionResult<List<object>> Obtener()
+        {
+            try
+            {
+                var usuarios = _service.ObtenerTodos();
+                List<object> respuesta = new List<object>();
+                foreach (Usuario usuario in usuarios)
+                {
+                    respuesta.Add(new
+                    {
+                        usuario.Id,
+                        usuario.Nombre,
+                        usuario.Apellido,
+                        usuario.Email,
+                        usuario.FechaNacimiento,
+                        usuario.Administrador
+                    });
+                }
+    
+                return Ok(respuesta);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public ActionResult<object> ObtenerPorId(ushort id)
         {
-            var usuario = _service.ObtenerPorId(id);
-            if (usuario == null)
+            try
             {
-                return NotFound();
+                var usuario = _service.ObtenerPorId(id);
+                if (usuario == null)
+                {
+                    return NotFound();
+                }
+                return Ok(new
+                {
+                    usuario.Id,
+                    usuario.Nombre,
+                    usuario.Apellido,
+                    usuario.Email,
+                    usuario.FechaNacimiento,
+                    usuario.Administrador
+                });
             }
-            return Ok(new
+            catch (Exception ex)
             {
-                usuario.Id,
-                usuario.Nombre,
-                usuario.Apellido,
-                usuario.Email,
-                usuario.FechaNacimiento,
-                usuario.Administrador
-            });
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult Eliminar(ushort id)
         {
-            var eliminado = _service.Eliminar(id);
-            if (!eliminado)
+            try
             {
-                return NotFound();
+                var eliminado = _service.Eliminar(id);
+                if (!eliminado)
+                {
+                    return NotFound();
+                }
+                return NoContent();
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException || ex is InvalidOperationException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
