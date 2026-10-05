@@ -17,7 +17,7 @@ namespace Models
                 && !string.IsNullOrWhiteSpace(Email)
                 && FechaNacimiento != DateTime.MinValue
                 && !string.IsNullOrWhiteSpace(Contraseña)
-                && Contraseña.Length == 64;
+                && Contraseña.Length >= 60;
         }
 
         public void Validar()
