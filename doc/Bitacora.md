@@ -68,7 +68,16 @@ Recuperacion usada: respaldar el archivo local roto fuera de refs, restaurar mai
 Reemplazar <HASH> por el hash completo obtenido con git ls-remote origin main. Si ese archivo de referencia no existe o la rama tiene otro nombre, detenerse y revisar antes de mover o crear referencias. -->
 
 Bitacora_08 = {
-    fecha = '28-09-2026'
-    titulo = "Tests de Models y conexion MySQL"
+    fecha = '28-09-2026',
+    titulo = "Tests de Models y conexion MySQL",
     descripcion = "Rehice los tests de Models para probar los metodos de validacion y las reglas de dominio que implementa cada clase. En PlantillaTitular y PlantillaSuplente, que no tienen metodos propios, deje pruebas simples de sus propiedades. Tambien simplifique el test de conexion a un Fact comun. Los tests de integracion requieren MySQL activo y GRAN_ET12_CONNECTION_STRING configurada. Entonces Marque los tests de repositorio como Integration y deje los tests unitarios separables por categoria. Aprendi que un test debe comprobar comportamiento existente en la clase, y una prueba de conexion permite confirmar que se pudo abrir el enlace con MySQL."
 };
+
+Bitacora_09 = {
+    fecha = '05-10-26',
+    titulo = "Complicando controllers y simplificando encriptacion"
+    descripcion = "Catchtrye los controllers y simplifique la encriptacion de contraseña en la capa de servicio con ByCrypt, como tenia antes. Antes me podia llegar a explotar el programa en el frontend, ahora con los catch en la capa de controller simplemente me da una excepcion. Aprendi los tipos de errores en http, porqu necesitaba hacer el condicional en el catch:
+    - 500: Errores en la capa de datos o lógica interna
+    - 400: Errores de validación o argumentos incorrectos
+    Y que menos es mas, con encriptar la contrasña en el hash de 60 es bastntito mas que suficiente (Ademas asi lo pidio el profe)."
+}
