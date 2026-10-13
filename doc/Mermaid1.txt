@@ -1,0 +1,44 @@
+classDiagram
+    class Usuario {
+        +nombre
+        +apellido
+        +correo
+    }
+
+    class Plantilla {
+        +nombre
+        +presupuestoMaximo
+        +cantidadMaximaJugadores
+    }
+
+    class Jugador {
+        +nombre
+        +apellido
+        +apodo
+        +fechaNacimiento
+        +cotizacion
+    }
+
+    class Equipo {
+        +nombre
+    }
+
+    class Posicion {
+        +nombre
+    }
+
+    class IntegrantePlantilla {
+        +rol
+    }
+
+    class Puntuacion {
+        +fecha
+        +nota
+    }
+
+    Usuario "1" --> "0..*" Plantilla : crea
+    Plantilla "1" --> "0..*" IntegrantePlantilla : contiene
+    IntegrantePlantilla "0..*" --> "1" Jugador : elige
+    Equipo "1" --> "0..*" Jugador : tiene
+    Posicion "1" --> "0..*" Jugador : clasifica
+    Jugador "1" --> "0..*" Puntuacion : recibe
