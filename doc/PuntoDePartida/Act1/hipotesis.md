@@ -30,3 +30,18 @@ Estas son ideas iniciales, no decisiones definitivas. Habrá que confirmar dónd
 - Si un titular no tiene puntuación en una fecha, ¿se cuenta como cero o se deja sin registro?
 - ¿Un mismo jugador puede estar en plantillas de distintos usuarios?
 - ¿Las reglas se controlan en un solo lugar o también al guardar los datos?
+
+## Recorrido de las solicitudes en el proyecto
+
+El diagrama muestra cómo viajan las solicitudes por las clases que existen actualmente. Son varias llamadas HTTP independientes: buscar un jugador, crear la plantilla, agregar titulares o suplentes, cargar puntuaciones y consultar la calificación.
+
+[Diagram.png]
+
+### Qué representa y qué falta comprobar
+
+- Los datos de una plantilla y sus integrantes se envían en solicitudes distintas. `PlantillaTitular` y `PlantillaSuplente` guardan los identificadores de la plantilla y del jugador.
+- Al consultar la calificación, la API recibe el identificador de la plantilla. La consulta de MySQL suma las puntuaciones de sus titulares para la fecha guardada en esa plantilla; no recibe la fecha como parte de esa ruta.
+- El servicio de plantilla comprueba `Plantilla.EsValida()` antes de guardarla, mientras que el repositorio de plantilla guarda usuario, fecha y nombre. Hay que revisar cómo se completa una plantilla antes de poder superar esa validación.
+- Los servicios de titulares y suplentes también comprueban que el identificador propio (`Id`) no sea cero, aunque el repositorio asigna ese identificador al insertar. Conviene verificar y corregir este flujo.
+- La ruta para cargar puntuaciones está disponible, pero no se observa en el controlador una comprobación de que quien la usa sea administrador.
+- En esta arquitectura, cada servicio recibe una interfaz `IRepo...` y delega en el repositorio correspondiente. Los servicios también declaran implementar esa interfaz.
