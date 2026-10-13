@@ -1,0 +1,447 @@
+classDiagram
+    %% Diagrama completo basado en las clases del repositorio.
+    %% Relaciones del dominio representadas por las claves de la base de datos.
+
+    class Usuario {
+        +ushort Id
+        +string Nombre
+        +string Apellido
+        +string Email
+        +DateTime FechaNacimiento
+        +bool Administrador
+        +string Contraseña
+        +EsValido() bool
+        +Validar() void
+        +ValidarAdministrador() void
+        +EsAdministrador() bool
+    }
+
+    class Equipo {
+        +byte Id
+        +string Nombre
+        +EsValido() bool
+        +Validar() void
+    }
+
+    class Posicion {
+        +byte Id
+        +string Nombre
+        +Arquero byte
+        +Defensor byte
+        +Mediocampista byte
+        +Delantero byte
+        +EsValida() bool
+        +Validar() void
+    }
+
+    class Jugador {
+        +ushort Id
+        +string Nombre
+        +string Apellido
+        +string Apodo
+        +DateTime FechaNacimiento
+        +byte IdEquipo
+        +decimal Cotizacion
+        +byte IdPosicion
+        +CotizacionMaxima decimal
+        +EsValido() bool
+        +Validar() void
+    }
+
+    class Plantilla {
+        +int Id
+        +ushort IdUsuario
+        +byte Fecha
+        +string Nombre
+        +decimal PresupuestoMaximo
+        +int CantidadMaximaJugadores
+        +CantidadMaximaJugadoresPredeterminada int
+        +List~Jugador~ Titulares
+        +List~Jugador~ Suplentes
+        +AgregarTitular(Jugador) void
+        +AgregarSuplente(Jugador) void
+        +ObtenerPresupuesto() decimal
+        +PresupuestoValido() bool
+        +CantidadJugadoresValida() bool
+        +FormacionTitularValida() bool
+        +EsValida() bool
+        +PuntajeFecha(byte, List~Puntuacion~) decimal
+    }
+
+    note for Plantilla "Nombre y PresupuestoMaximo son anulables en el modelo."
+
+    class PlantillaTitular {
+        +int Id
+        +int IdPlantilla
+        +ushort IdJugador
+    }
+
+    class PlantillaSuplente {
+        +int Id
+        +int IdPlantilla
+        +ushort IdJugador
+    }
+
+    class Puntuacion {
+        +byte Fecha
+        +ushort IdJugador
+        +decimal Puntaje
+        +EsValida() bool
+        +Validar() void
+    }
+
+    class IRepoUsuario {
+        <<interface>>
+        +ObtenerTodos()
+        +ObtenerPorId(ushort)
+        +ObtenerPorEmail(string)
+        +Agregar(Usuario)
+        +Eliminar(ushort)
+    }
+    class IRepoEquipo {
+        <<interface>>
+        +ObtenerTodos()
+        +ObtenerPorId(byte)
+        +ObtenerJugadoresPorEquipo(byte)
+        +Agregar(Equipo)
+        +Eliminar(byte)
+    }
+    class IRepoPosicion {
+        <<interface>>
+        +ObtenerTodos()
+        +ObtenerPorId(byte)
+        +ObtenerJugadoresPorPosicion(byte)
+        +Agregar(Posicion)
+        +Eliminar(byte)
+    }
+    class IRepoJugador {
+        <<interface>>
+        +ObtenerTodos()
+        +ObtenerPorId(ushort)
+        +ObtenerEquipoPorJugador(ushort)
+        +ObtenerPosicionPorJugador(ushort)
+        +Agregar(Jugador)
+        +Eliminar(ushort)
+    }
+    class IRepoPlantilla {
+        <<interface>>
+        +ObtenerTodos()
+        +ObtenerPorIdUsuario(ushort)
+        +ObtenerPorFecha(byte)
+        +ObtenerPorNombre(string)
+        +ObtenerPorId(int)
+        +ObtenerJugadoresPorPlantilla(int)
+        +ObtenerCalificacionPlantilla(int)
+        +Agregar(Plantilla)
+        +Eliminar(int)
+    }
+    class IRepoPlantillaTitular {
+        <<interface>>
+        +ObtenerTodos()
+        +ObtenerPorId(int)
+        +ObtenerTitularesPlantilla(int)
+        +Agregar(PlantillaTitular)
+        +Eliminar(int)
+    }
+    class IRepoPlantillaSuplente {
+        <<interface>>
+        +ObtenerTodos()
+        +ObtenerPorId(int)
+        +ObtenerSuplentesPlantilla(int)
+        +Agregar(PlantillaSuplente)
+        +Eliminar(int)
+    }
+    class IRepoPuntuacion {
+        <<interface>>
+        +ObtenerTodos()
+        +ObtenerPorFecha(byte)
+        +ObtenerPorJugador(ushort)
+        +ObtenerPorFechaJugador(byte, ushort)
+        +Agregar(Puntuacion)
+        +Eliminar(byte, ushort)
+    }
+
+    class RepoUsuario {
+        -DBConnection _dbConnection
+        +RepoUsuario(DBConnection)
+        +Agregar(Usuario)
+        +ObtenerTodos()
+        +ObtenerPorId(ushort)
+        +ObtenerPorEmail(string)
+        +Eliminar(ushort)
+    }
+    class RepoEquipo {
+        -DBConnection _dbConnection
+        +RepoEquipo(DBConnection)
+        +Agregar(Equipo)
+        +ObtenerTodos()
+        +ObtenerPorId(byte)
+        +ObtenerJugadoresPorEquipo(byte)
+        +Eliminar(byte)
+    }
+    class RepoPosicion {
+        -DBConnection _dbConnection
+        +RepoPosicion(DBConnection)
+        +Agregar(Posicion)
+        +ObtenerTodos()
+        +ObtenerPorId(byte)
+        +ObtenerJugadoresPorPosicion(byte)
+        +Eliminar(byte)
+    }
+    class RepoJugador {
+        -DBConnection _dbConnection
+        +RepoJugador(DBConnection)
+        +Agregar(Jugador)
+        +ObtenerTodos()
+        +ObtenerPorId(ushort)
+        +ObtenerEquipoPorJugador(ushort)
+        +ObtenerPosicionPorJugador(ushort)
+        +Eliminar(ushort)
+    }
+    class RepoPlantilla {
+        -DBConnection _dbConnection
+        +RepoPlantilla(DBConnection)
+        +Agregar(Plantilla)
+        +ObtenerTodos()
+        +ObtenerPorIdUsuario(ushort)
+        +ObtenerPorFecha(byte)
+        +ObtenerPorNombre(string)
+        +ObtenerPorId(int)
+        +ObtenerJugadoresPorPlantilla(int)
+        +ObtenerCalificacionPlantilla(int)
+        +Eliminar(int)
+    }
+    class RepoPlantillaTitular {
+        -DBConnection _dbConnection
+        +RepoPlantillaTitular(DBConnection)
+        +Agregar(PlantillaTitular)
+        +ObtenerTodos()
+        +ObtenerPorId(int)
+        +ObtenerTitularesPlantilla(int)
+        +Eliminar(int)
+    }
+    class RepoPlantillaSuplente {
+        -DBConnection _dbConnection
+        +RepoPlantillaSuplente(DBConnection)
+        +Agregar(PlantillaSuplente)
+        +ObtenerTodos()
+        +ObtenerPorId(int)
+        +ObtenerSuplentesPlantilla(int)
+        +Eliminar(int)
+    }
+    class RepoPuntuacion {
+        -DBConnection _dbConnection
+        +RepoPuntuacion(DBConnection)
+        +Agregar(Puntuacion)
+        +ObtenerTodos()
+        +ObtenerPorFecha(byte)
+        +ObtenerPorJugador(ushort)
+        +ObtenerPorFechaJugador(byte, ushort)
+        +Eliminar(byte, ushort)
+    }
+
+    class ServiceUsuario {
+        -IRepoUsuario _repoUsuario
+        +Agregar(Usuario)
+        +ObtenerTodos()
+        +ObtenerPorId(ushort)
+        +ObtenerPorEmail(string)
+        +IniciarSesion(string, string)
+        +Eliminar(ushort)
+    }
+    class ServiceEquipo {
+        -IRepoEquipo _repoEquipo
+        +Agregar(Equipo)
+        +ObtenerTodos()
+        +ObtenerPorId(byte)
+        +ObtenerJugadoresPorEquipo(byte)
+        +Eliminar(byte)
+    }
+    class ServicePosicion {
+        -IRepoPosicion _repoPosicion
+        +Agregar(Posicion)
+        +ObtenerTodos()
+        +ObtenerPorId(byte)
+        +ObtenerJugadoresPorPosicion(byte)
+        +Eliminar(byte)
+    }
+    class ServiceJugador {
+        -IRepoJugador _repoJugador
+        +Agregar(Jugador)
+        +ObtenerTodos()
+        +ObtenerPorId(ushort)
+        +ObtenerEquipoPorJugador(ushort)
+        +ObtenerPosicionPorJugador(ushort)
+        +Eliminar(ushort)
+    }
+    class ServicePlantilla {
+        -IRepoPlantilla _repoPlantilla
+        +Agregar(Plantilla)
+        +ObtenerTodos()
+        +ObtenerPorIdUsuario(ushort)
+        +ObtenerPorFecha(byte)
+        +ObtenerPorNombre(string)
+        +ObtenerPorId(int)
+        +ObtenerJugadoresPorPlantilla(int)
+        +ObtenerCalificacionPlantilla(int)
+        +Eliminar(int)
+    }
+    class ServicePlantillaTitular {
+        -IRepoPlantillaTitular _repoPlantillaTitular
+        +Agregar(PlantillaTitular)
+        +ObtenerTodos()
+        +ObtenerPorId(int)
+        +ObtenerTitularesPlantilla(int)
+        +Eliminar(int)
+    }
+    class ServicePlantillaSuplente {
+        -IRepoPlantillaSuplente _repoPlantillaSuplente
+        +Agregar(PlantillaSuplente)
+        +ObtenerTodos()
+        +ObtenerPorId(int)
+        +ObtenerSuplentesPlantilla(int)
+        +Eliminar(int)
+    }
+    class ServicePuntuacion {
+        -IRepoPuntuacion _repoPuntuacion
+        +Agregar(Puntuacion)
+        +ObtenerTodos()
+        +ObtenerPorFecha(byte)
+        +ObtenerPorJugador(ushort)
+        +ObtenerPorFechaJugador(byte, ushort)
+        +Eliminar(byte, ushort)
+    }
+
+    class EquipoController {
+        -ServiceEquipo _service
+        +Agregar(Equipo)
+        +Obtener()
+        +ObtenerPorId(byte)
+        +ObtenerJugadoresPorEquipo(byte)
+        +Eliminar(byte)
+    }
+    class JugadorController {
+        -ServiceJugador _service
+        +Agregar(Jugador)
+        +Obtener()
+        +ObtenerPorId(ushort)
+        +ObtenerEquipoPorJugador(ushort)
+        +ObtenerPosicionPorJugador(ushort)
+        +Eliminar(ushort)
+    }
+    class PosicionController {
+        -ServicePosicion _service
+        +Agregar(Posicion)
+        +Obtener()
+        +ObtenerPorId(byte)
+        +ObtenerJugadoresPorPosicion(byte)
+        +Eliminar(byte)
+    }
+    class PlantillaController {
+        -ServicePlantilla _service
+        +Agregar(Plantilla)
+        +ObtenerTodos()
+        +ObtenerPorIdUsuario(ushort)
+        +ObtenerPorFecha(byte)
+        +ObtenerPorNombre(string)
+        +ObtenerPorId(int)
+        +ObtenerJugadoresPorPlantilla(int)
+        +ObtenerCalificacionPlantilla(int)
+        +Eliminar(int)
+    }
+    class PlantillaTitularController {
+        -ServicePlantillaTitular _service
+        +Agregar(PlantillaTitular)
+        +Obtener()
+        +ObtenerPorId(int)
+        +ObtenerTitularesPlantilla(int)
+        +Eliminar(int)
+    }
+    class PlantillaSuplenteController {
+        -ServicePlantillaSuplente _service
+        +Agregar(PlantillaSuplente)
+        +Obtener()
+        +ObtenerPorId(int)
+        +ObtenerSuplentesPlantilla(int)
+        +Eliminar(int)
+    }
+    class PuntuacionController {
+        -ServicePuntuacion _service
+        +Agregar(Puntuacion)
+        +Obtener()
+        +ObtenerPorFecha(byte)
+        +ObtenerPorJugador(ushort)
+        +ObtenerPorFechaJugador(byte, ushort)
+        +Eliminar(byte, ushort)
+    }
+    class UsuarioController {
+        -ServiceUsuario _service
+        +Agregar(Usuario)
+        +IniciarSesion(Usuario)
+        +Obtener()
+        +ObtenerPorId(ushort)
+        +Eliminar(ushort)
+    }
+
+    class DBConnection {
+        -string _connectionString
+        +DBConnection(string)
+        +CrearConexion() MySqlConnection
+    }
+
+    %% Relaciones de datos
+    Usuario "1" --> "0..*" Plantilla : posee
+    Equipo "1" --> "0..*" Jugador : tiene
+    Posicion "1" --> "0..*" Jugador : clasifica
+    Plantilla "1" --> "0..*" PlantillaTitular : contiene
+    Plantilla "1" --> "0..*" PlantillaSuplente : contiene
+    Jugador "1" --> "0..*" PlantillaTitular : integra
+    Jugador "1" --> "0..*" PlantillaSuplente : integra
+    Jugador "1" --> "0..*" Puntuacion : recibe
+
+    %% Implementación de interfaces por servicios y repositorios
+    ServiceUsuario ..|> IRepoUsuario
+    ServiceEquipo ..|> IRepoEquipo
+    ServicePosicion ..|> IRepoPosicion
+    ServiceJugador ..|> IRepoJugador
+    ServicePlantilla ..|> IRepoPlantilla
+    ServicePlantillaTitular ..|> IRepoPlantillaTitular
+    ServicePlantillaSuplente ..|> IRepoPlantillaSuplente
+    ServicePuntuacion ..|> IRepoPuntuacion
+
+    RepoUsuario ..|> IRepoUsuario
+    RepoEquipo ..|> IRepoEquipo
+    RepoPosicion ..|> IRepoPosicion
+    RepoJugador ..|> IRepoJugador
+    RepoPlantilla ..|> IRepoPlantilla
+    RepoPlantillaTitular ..|> IRepoPlantillaTitular
+    RepoPlantillaSuplente ..|> IRepoPlantillaSuplente
+    RepoPuntuacion ..|> IRepoPuntuacion
+
+    %% Dependencias entre capas
+    ServiceUsuario --> IRepoUsuario : usa
+    ServiceEquipo --> IRepoEquipo : usa
+    ServicePosicion --> IRepoPosicion : usa
+    ServiceJugador --> IRepoJugador : usa
+    ServicePlantilla --> IRepoPlantilla : usa
+    ServicePlantillaTitular --> IRepoPlantillaTitular : usa
+    ServicePlantillaSuplente --> IRepoPlantillaSuplente : usa
+    ServicePuntuacion --> IRepoPuntuacion : usa
+
+    RepoUsuario --> DBConnection : usa
+    RepoEquipo --> DBConnection : usa
+    RepoPosicion --> DBConnection : usa
+    RepoJugador --> DBConnection : usa
+    RepoPlantilla --> DBConnection : usa
+    RepoPlantillaTitular --> DBConnection : usa
+    RepoPlantillaSuplente --> DBConnection : usa
+    RepoPuntuacion --> DBConnection : usa
+
+    UsuarioController --> ServiceUsuario : usa
+    EquipoController --> ServiceEquipo : usa
+    PosicionController --> ServicePosicion : usa
+    JugadorController --> ServiceJugador : usa
+    PlantillaController --> ServicePlantilla : usa
+    PlantillaTitularController --> ServicePlantillaTitular : usa
+    PlantillaSuplenteController --> ServicePlantillaSuplente : usa
+    PuntuacionController --> ServicePuntuacion : usa

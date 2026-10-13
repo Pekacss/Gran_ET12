@@ -1,44 +1,101 @@
 classDiagram
+    %% Modelo de dominio basado en los modelos del repositorio.
+    %% Las relaciones representan vínculos de datos, no propiedades de navegación.
+    %% Nombre y PresupuestoMaximo de Plantilla son anulables.
+
     class Usuario {
-        +nombre
-        +apellido
-        +correo
-    }
-
-    class Plantilla {
-        +nombre
-        +presupuestoMaximo
-        +cantidadMaximaJugadores
-    }
-
-    class Jugador {
-        +nombre
-        +apellido
-        +apodo
-        +fechaNacimiento
-        +cotizacion
+        +ushort Id
+        +string Nombre
+        +string Apellido
+        +string Email
+        +DateTime FechaNacimiento
+        +bool Administrador
+        +string Contraseña
+        +EsValido() bool
+        +Validar() void
+        +ValidarAdministrador() void
+        +EsAdministrador() bool
     }
 
     class Equipo {
-        +nombre
+        +byte Id
+        +string Nombre
+        +EsValido() bool
+        +Validar() void
     }
 
     class Posicion {
-        +nombre
+        +byte Id
+        +string Nombre
+        +Arquero byte
+        +Defensor byte
+        +Mediocampista byte
+        +Delantero byte
+        +EsValida() bool
+        +Validar() void
     }
 
-    class IntegrantePlantilla {
-        +rol
+    class Jugador {
+        +ushort Id
+        +string Nombre
+        +string Apellido
+        +string Apodo
+        +DateTime FechaNacimiento
+        +byte IdEquipo
+        +decimal Cotizacion
+        +byte IdPosicion
+        +CotizacionMaxima decimal
+        +EsValido() bool
+        +Validar() void
+    }
+
+    class Plantilla {
+        +int Id
+        +ushort IdUsuario
+        +byte Fecha
+        +string Nombre
+        +decimal PresupuestoMaximo
+        +int CantidadMaximaJugadores
+        +CantidadMaximaJugadoresPredeterminada int
+        +List~Jugador~ Titulares
+        +List~Jugador~ Suplentes
+        +AgregarTitular(Jugador) void
+        +AgregarSuplente(Jugador) void
+        +ObtenerPresupuesto() decimal
+        +PresupuestoValido() bool
+        +CantidadJugadoresValida() bool
+        +FormacionTitularValida() bool
+        +EsValida() bool
+        +PuntajeFecha(byte, List~Puntuacion~) decimal
+    }
+
+    note for Plantilla "Nombre y PresupuestoMaximo son anulables en el modelo."
+
+    class PlantillaTitular {
+        +int Id
+        +int IdPlantilla
+        +ushort IdJugador
+    }
+
+    class PlantillaSuplente {
+        +int Id
+        +int IdPlantilla
+        +ushort IdJugador
     }
 
     class Puntuacion {
-        +fecha
-        +nota
+        +byte Fecha
+        +ushort IdJugador
+        +decimal Puntaje
+        +EsValida() bool
+        +Validar() void
     }
 
     Usuario "1" --> "0..*" Plantilla : crea
-    Plantilla "1" --> "0..*" IntegrantePlantilla : contiene
-    IntegrantePlantilla "0..*" --> "1" Jugador : elige
-    Equipo "1" --> "0..*" Jugador : tiene
+    Equipo "1" --> "0..*" Jugador : integra
     Posicion "1" --> "0..*" Jugador : clasifica
+    Plantilla "1" --> "0..*" PlantillaTitular : contiene
+    Plantilla "1" --> "0..*" PlantillaSuplente : contiene
+    Jugador "1" --> "0..*" PlantillaTitular : elegido como titular
+    Jugador "1" --> "0..*" PlantillaSuplente : elegido como suplente
     Jugador "1" --> "0..*" Puntuacion : recibe

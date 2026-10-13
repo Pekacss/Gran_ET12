@@ -10,8 +10,6 @@ Un usuario arma una plantilla con futbolistas y consulta los puntos obtenidos po
 - **Integrante de plantilla:** relaciona un jugador con una plantilla e indica si es titular o suplente. El rol pertenece a la elección del usuario, no a los datos propios del futbolista.
 - **Puntuación:** jugador, fecha y nota. Un jugador puede no tener puntuación en una fecha.
 
-El primer dibujo de estas relaciones está en [DiagramaDeClases]
-
 ## ¿Qué podría salir mal?
 - Elegir dos veces al mismo jugador o superar el presupuesto o la cantidad máxima.
 - Armar una formación con posiciones incorrectas o con jugadores faltantes.
