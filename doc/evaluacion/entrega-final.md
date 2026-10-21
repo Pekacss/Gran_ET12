@@ -15,7 +15,7 @@ Se compararon las hipótesis iniciales con la arquitectura y las reglas del proy
 El proyecto ya usa .NET 10, Dapper, MySQL, modelos, servicios, repositorios, pruebas y controladores. Se ajustaron el presupuesto predeterminado a 100 millones, la creación gradual de plantillas y el manejo de hashes BCrypt. Se agregó un script de permisos MySQL con claves de ejemplo para reemplazar localmente.
 
 - [Resolución de producción](../produccion/resolucion.md)
-- [Matriz de acciones y permisos](../produccion/matriz-usuarios.md)
+- [Matriz de usuarios](../matriz-usuarios.md)
 - [Permisos MySQL](../produccion/permisos.md)
 
 ## Evaluación

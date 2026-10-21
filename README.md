@@ -96,7 +96,7 @@ Get-Content -Raw "$env:TEMP/04 Usuarios.local.sql" | & $mysql -u root -p
 
 `00 DDL.sql` crea el esquema; `01 SP.sql`, los procedimientos; `02 Triggers.sql`, las reglas de persistencia; `03 Inserts.sql`, datos ficticios; y `04 Usuarios.sql`, usuarios de aplicación más las cuentas MySQL `admin` y `usuario`. Esta última cuenta solo tiene `SELECT`; reemplazar las dos claves del archivo temporal antes de ejecutarlo.
 
-No guardar contraseñas reales en Git. La matriz de acciones y la comprobación de la cuenta `usuario` están en [doc/produccion/matriz-usuarios.md](doc/produccion/matriz-usuarios.md) y [doc/produccion/permisos.md](doc/produccion/permisos.md).
+No guardar contraseñas reales en Git. La [matriz de usuarios](doc/matriz-usuarios.md) y la [comprobación de permisos MySQL](doc/produccion/permisos.md) describen las acciones y accesos.
 
 ### Configurar e iniciar la API
 
