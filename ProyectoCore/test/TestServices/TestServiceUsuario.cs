@@ -12,7 +12,7 @@ namespace TestServices
 		[Theory]
 		[InlineData(true)]
 		[InlineData(false)]
-		public void AgregarGuardaHashDe64CaracteresYLoginConservaAdministrador(bool administrador)
+		public void AgregarGuardaHashVerificableYLoginConservaAdministrador(bool administrador)
 		{
 			MockeoUsuario mock = new MockeoUsuario();
 			ServiceUsuario servicio = new ServiceUsuario(mock);
@@ -21,8 +21,7 @@ namespace TestServices
 			servicio.Agregar(usuario);
 
 			Assert.NotEqual("clave-prueba", mock.UsuarioGuardado!.Contraseña);
-			Assert.Equal(64, mock.UsuarioGuardado.Contraseña.Length);
-			Assert.Equal(48, Convert.FromBase64String(mock.UsuarioGuardado.Contraseña).Length);
+			Assert.True(BCrypt.Net.BCrypt.Verify("clave-prueba", mock.UsuarioGuardado.Contraseña));
 			Assert.True(mock.UsuarioGuardado.EsValido());
 
 			Usuario? usuarioAutenticado = servicio.IniciarSesion(usuario.Email, "clave-prueba");

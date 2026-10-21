@@ -6,24 +6,24 @@ namespace TestModels
     public class TestUsuario
     {
         [Fact]
-        public void ContraseñaDe64CaracteresEsValida()
+        public void ContraseñaNoVaciaEsValida()
         {
             Usuario usuario = new Usuario();
             usuario.Nombre = "Thiago";
             usuario.Apellido = "Rojas";
             usuario.Email = "thiago@email.com";
             usuario.FechaNacimiento = new DateTime(2008, 5, 10);
-            usuario.Contraseña = new string('a', 64);
+            usuario.Contraseña = new string('a', 60);
 
             Assert.True(usuario.EsValido());
             usuario.Validar();
         }
 
         [Fact]
-        public void ContraseñaConLongitudIncorrectaEsInvalida()
+        public void ContraseñaVaciaEsInvalida()
         {
             Usuario usuario = new Usuario();
-            usuario.Contraseña = "123456";
+            usuario.Contraseña = string.Empty;
 
             Assert.False(usuario.EsValido());
             Assert.Throws<ArgumentException>(() => usuario.Validar());

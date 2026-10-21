@@ -10,7 +10,8 @@ namespace Models
         public string? Nombre { get; set; }
 
         public const int CantidadMaximaJugadoresPredeterminada = 20;
-        public decimal? PresupuestoMaximo { get; set; }
+        public const decimal PresupuestoMaximoPredeterminado = 100000000m;
+        public decimal PresupuestoMaximo { get; set; } = PresupuestoMaximoPredeterminado;
         public int CantidadMaximaJugadores { get; set; } = CantidadMaximaJugadoresPredeterminada;
 
         private readonly List<Jugador> _titulares = new List<Jugador>();
@@ -49,13 +50,22 @@ namespace Models
 
         public bool PresupuestoValido()
         {
-            return !PresupuestoMaximo.HasValue || ObtenerPresupuesto() <= PresupuestoMaximo.Value;
+            return ObtenerPresupuesto() <= PresupuestoMaximo;
         }
 
         public bool CantidadJugadoresValida()
         {
             return CantidadMaximaJugadores > 0
                 && _titulares.Count + _suplentes.Count <= CantidadMaximaJugadores;
+        }
+
+        public bool DatosDeCreacionValidos()
+        {
+            return IdUsuario != 0
+                && Fecha > 0
+                && Fecha < 50
+                && CantidadJugadoresValida()
+                && PresupuestoValido();
         }
 
         public bool FormacionTitularValida()

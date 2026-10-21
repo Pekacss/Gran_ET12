@@ -15,7 +15,7 @@ namespace TestServices
             MockeoPlantilla mock = new MockeoPlantilla();
             ServicePlantilla service = new ServicePlantilla(mock);
 
-            Plantilla plantilla = new Plantilla();
+            Plantilla plantilla = new Plantilla { IdUsuario = 1, Fecha = 1 };
             Jugador jugador = CrearJugador(1, Posicion.Arquero, 100m);
             plantilla.AgregarTitular(jugador);
 
@@ -38,6 +38,17 @@ namespace TestServices
 
             Assert.Same(plantilla, resultado);
             Assert.Contains(plantilla, repoFake.Agregados);
+        }
+
+        [Fact]
+        public void AgregarRechazaFechaInvalida()
+        {
+            MockeoPlantilla repoFake = new MockeoPlantilla();
+            ServicePlantilla service = new ServicePlantilla(repoFake);
+            Plantilla plantilla = new Plantilla { IdUsuario = 1, Fecha = 50 };
+
+            Assert.Throws<ArgumentException>(() => service.Agregar(plantilla));
+            Assert.Empty(repoFake.Agregados);
         }
 
         [Fact]

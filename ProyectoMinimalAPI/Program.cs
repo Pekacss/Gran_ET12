@@ -12,7 +12,7 @@ builder.Services.AddSingleton<DBConnection>(serviceProvider =>
 {
     string? connectionString = builder.Configuration.GetConnectionString("GranET12");
     if (string.IsNullOrWhiteSpace(connectionString))
-        throw new InvalidOperationException("Complete la cadena ConnectionStrings:GranET12 en appsettings.Development.json.");
+        throw new InvalidOperationException("Defina la variable de entorno ConnectionStrings__GranET12 con la cadena de conexión local.");
 
     return new DBConnection(connectionString);
 });

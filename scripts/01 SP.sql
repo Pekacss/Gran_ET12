@@ -51,7 +51,7 @@ DELIMITER ?
 
     CREATE PROCEDURE sp_Usuario_Agregar(
         IN p_Nombre VARCHAR(50), IN p_Apellido VARCHAR(50), IN p_Email VARCHAR(100),
-        IN p_FechaNacimiento DATE, IN p_Administrador BOOLEAN, IN p_Contrasena CHAR(64)
+        IN p_FechaNacimiento DATE, IN p_Administrador BOOLEAN, IN p_Contrasena VARCHAR(64)
     )
     BEGIN
         INSERT INTO Usuario (Nombre, Apellido, Email, FechaNacimiento, Administrador, Contrasena)

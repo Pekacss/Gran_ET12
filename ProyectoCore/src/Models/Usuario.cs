@@ -33,9 +33,9 @@ namespace Models
             {
                 throw new ArgumentException("El usuario debe tener fecha de nacimiento.");
             }
-            if (string.IsNullOrWhiteSpace(Contraseña) || Contraseña.Length != 64)
+            if (string.IsNullOrWhiteSpace(Contraseña))
             {
-                throw new ArgumentException("La contraseña almacenada debe tener exactamente 64 caracteres.", nameof(Contraseña));
+                throw new ArgumentException("El usuario debe tener una contraseña almacenada.", nameof(Contraseña));
             }
         }
 

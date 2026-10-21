@@ -29,4 +29,4 @@ La hipótesis de [PuntoDePartida/Act1/hipotesis.md](PuntoDePartida/Act1/hipotesi
 - Para evitar repetir un futbolista, `Plantilla` revisa si ya figura como titular o suplente. La base de datos también puede reforzar esta regla con una restricción única.
 - Si falta la puntuación de un jugador en una fecha, el cálculo actual de la plantilla suma cero por ese jugador.
 - Validar datos significa revisar reglas del programa, como el rango de la puntuación. Verificar permisos MySQL significa comprobar qué operaciones permite la cuenta de base de datos. Son controles distintos.
-- Las cuentas MySQL administrador e invitado no son roles de autenticación HTTP.
+- Las cuentas MySQL `admin` y `usuario` no son roles de autenticación HTTP. En la aplicación, el administrador se identifica con `Usuario.Administrador`; el usuario común tiene ese valor en `false`.

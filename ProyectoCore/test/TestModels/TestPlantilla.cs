@@ -38,6 +38,15 @@ namespace TestModels
         }
 
         [Fact]
+        public void DatosDeCreacionValidosNoExigenFormacionCompleta()
+        {
+            Plantilla plantilla = new Plantilla { IdUsuario = 1, Fecha = 1 };
+
+            Assert.True(plantilla.DatosDeCreacionValidos());
+            Assert.False(plantilla.EsValida());
+        }
+
+        [Fact]
         public void PresupuestoIncluyeTitularesYSuplentes()
         {
             Plantilla plantilla = new Plantilla();
@@ -58,12 +67,12 @@ namespace TestModels
         }
 
         [Fact]
-        public void PresupuestoEsValidoCuandoNoSeDefinioUnMaximo()
+        public void PresupuestoMaximoPredeterminadoEsCienMillones()
         {
             Plantilla plantilla = new Plantilla();
             plantilla.AgregarTitular(CrearJugador(1, Posicion.Arquero, 1000000m));
 
-            Assert.Null(plantilla.PresupuestoMaximo);
+            Assert.Equal(100000000m, plantilla.PresupuestoMaximo);
             Assert.True(plantilla.PresupuestoValido());
         }
 

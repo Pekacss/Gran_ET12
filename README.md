@@ -58,7 +58,7 @@ La solución de este TP tiene que estar subida en un repositorio Público de Git
 
 Sobre las tecnologías 💻
 Para el desarrollo de este proyecto, se tiene que usar las tecnologías vistas en clase.
-C# compilado mediante el SDK .NET versión 8 (la LST).
+C# compilado mediante el SDK .NET 10.
 MySQL 8.0.X
 Para poder tener una visión integrada del proyecto, les recomendamos trabajar con el editor VSCode. Si van a tener que usar el IDE Visual Studio para el diseño y programación de los formularios en WinForms.
 Con respecto a la elaboración de la documentación, pueden optar por imágenes estáticas o documentación proveniente de Mermaid.js
@@ -70,3 +70,79 @@ El mismo tiene que estar armado como se describió en su correspondiente reposit
 Se tiene que cumplir con los requisitos funcionales establecidos para cada nivel de profundidad solicitado.
 La documentación tiene que estar presentada en tiempo y forma.
 Una vez que se verifique el cumplimiento de los puntos anteriores, se procede a la presentación y defensa oral/escrita del TP (según adecuación del plan).
+
+## Ejecución local y evaluación
+
+### Requisitos
+
+- SDK .NET 10.
+- MySQL 8 iniciado. XAMPP incluye MariaDB, por lo que hay que confirmar la versión usada.
+- Cliente `mysql` y herramienta `mysqldump`. En XAMPP suelen estar en `C:\xampp\mysql\bin`.
+
+### Preparar la base
+
+Desde PowerShell, en la raíz del repositorio, ejecutar los scripts en este orden:
+
+```powershell
+$mysql = "C:\xampp\mysql\bin\mysql.exe"
+Get-Content -Raw "scripts/00 DDL.sql" | & $mysql -u root -p
+Get-Content -Raw "scripts/01 SP.sql" | & $mysql -u root -p
+Get-Content -Raw "scripts/02 Triggers.sql" | & $mysql -u root -p
+Get-Content -Raw "scripts/03 Inserts.sql" | & $mysql -u root -p
+Copy-Item "scripts/04 Usuarios.sql" "$env:TEMP/04 Usuarios.local.sql"
+# Reemplazar las claves de ejemplo del archivo temporal antes de ejecutarlo.
+Get-Content -Raw "$env:TEMP/04 Usuarios.local.sql" | & $mysql -u root -p
+```
+
+`00 DDL.sql` crea el esquema; `01 SP.sql`, los procedimientos; `02 Triggers.sql`, las reglas de persistencia; `03 Inserts.sql`, datos ficticios; y `04 Usuarios.sql`, usuarios de aplicación más las cuentas MySQL `admin` y `usuario`. Esta última cuenta solo tiene `SELECT`; reemplazar las dos claves del archivo temporal antes de ejecutarlo.
+
+No guardar contraseñas reales en Git. La matriz de acciones y la comprobación de la cuenta `usuario` están en [doc/produccion/matriz-usuarios.md](doc/produccion/matriz-usuarios.md) y [doc/produccion/permisos.md](doc/produccion/permisos.md).
+
+### Configurar e iniciar la API
+
+La cadena no se guarda en `appsettings.Development.json`. Definirla localmente en PowerShell, reemplazando los valores entre corchetes:
+
+```powershell
+$env:ConnectionStrings__GranET12 = "Server=localhost;Port=3306;Database=bd_GranET12;User ID=[USUARIO];Password=[CLAVE];"
+dotnet run --project ProyectoMinimalAPI/Gran_ET12.csproj --launch-profile http
+```
+
+En desarrollo, Scalar queda disponible en `http://localhost:5179/scalar/v1` y el documento OpenAPI en `http://localhost:5179/openapi/v1.json`. El proyecto configura OpenAPI y Scalar; no Swagger UI.
+
+### Ejecutar pruebas
+
+```powershell
+dotnet test ProyectoCore/test/ProyectoCoreTest.csproj
+```
+
+Las pruebas de repositorio requieren MySQL iniciado y preparado con los scripts. Para repetir solo los grupos de modelos y servicios que no dependen de la base:
+
+```powershell
+dotnet test ProyectoCore/test/ProyectoCoreTest.csproj --filter 'FullyQualifiedName~TestModels|FullyQualifiedName~TestServices'
+```
+
+Si una prueba falla, conservar el resultado y corregirlo antes de presentar la etapa.
+
+### Crear y restaurar un backup
+
+El archivo de entrega se generó con `mysqldump` desde una base temporal con datos ficticios. Para repetirlo en este entorno, XAMPP debe estar iniciado:
+
+```powershell
+New-Item -ItemType Directory -Force backup | Out-Null
+$mysqldump = "C:\xampp\mysql\bin\mysqldump.exe"
+& $mysqldump -u root --routines --triggers --result-file=backup/torneo.sql bd_granet12_restauracion_final_20261020
+```
+
+Para probarlo, crear una base vacía de evaluación y restaurar allí el archivo:
+
+```powershell
+$mysql = "C:\xampp\mysql\bin\mysql.exe"
+& $mysql -u root -e "CREATE DATABASE bd_GranET12_prueba;"
+& $mysql -u root bd_GranET12_prueba -e "source backup/torneo.sql"
+```
+
+Comprobar tablas y datos con `SHOW TABLES` y consultas `SELECT COUNT(*)` a `Equipo`, `Jugador` y `Usuario`. Registrar los conteos y el resultado real en [doc/evaluacion/restauracion.md](doc/evaluacion/restauracion.md). No incluir cuentas de MySQL ni credenciales en el backup.
+
+### Estado de entregas y defensa
+
+El documento principal y la reflexión están en [doc/evaluacion/entrega-final.md](doc/evaluacion/entrega-final.md) y [doc/evaluacion/reflexion-final.md](doc/evaluacion/reflexion-final.md). El estado de los hitos está en [doc/evaluacion/entregas.md](doc/evaluacion/entregas.md). La consigna menciona doce endpoints, pero el contrato disponible enumera diez; confirmar las dos operaciones faltantes antes de incorporarlas.

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Usuario
     Email VARCHAR(100) NOT NULL,
     FechaNacimiento DATE NOT NULL,
     Administrador BOOLEAN NOT NULL DEFAULT FALSE,
-    Contrasena CHAR(64) NOT NULL,
+    Contrasena VARCHAR(64) NOT NULL,
     PRIMARY KEY (Id),
     UNIQUE (Email)
 );

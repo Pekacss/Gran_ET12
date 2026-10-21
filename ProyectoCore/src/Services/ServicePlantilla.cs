@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using Repositories;
 using Interfaces;
 using Models;
@@ -18,9 +17,9 @@ namespace Services
 
         public Plantilla Agregar(Plantilla plantilla)
         {
-            if (!plantilla.EsValida())
+            if (!plantilla.DatosDeCreacionValidos())
             {
-                throw new ArgumentException("La plantilla no es válida.", nameof(plantilla));
+                throw new ArgumentException("Los datos iniciales de la plantilla no son válidos.", nameof(plantilla));
             }
             return _repoPlantilla.Agregar(plantilla);
         }

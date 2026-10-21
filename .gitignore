@@ -286,6 +286,9 @@ Generated_Code/
 # because we have git ;-)
 _UpgradeReport_Files/
 Backup*/
+!backup/
+backup/*
+!backup/torneo.sql
 UpgradeLog*.XML
 UpgradeLog*.htm
 ServiceFabricBackup/

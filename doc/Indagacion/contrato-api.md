@@ -2,7 +2,7 @@
 
 Este contrato propone las operaciones indicadas en la consigna. Los nombres de los datos siguen los modelos del proyecto (`Jugador`, `Usuario`, `Plantilla` y `Puntuacion`). Las respuestas son ejemplos. Las rutas se conservan porque la consigna las especifica; actualmente los controladores usan `api/[controller]` y no todas estas operaciones están implementadas.
 
-En escrituras: `400` indica datos inválidos; `404`, un recurso inexistente; y `409`, un duplicado cuando corresponda. Las cuentas MySQL administrador e invitado no son roles de autenticación HTTP. Los estados `201` de las altas son los acordados para este contrato; actualmente algunos controladores responden `200`.
+En escrituras: `400` indica datos inválidos; `404`, un recurso inexistente; y `409`, un duplicado cuando corresponda. Las cuentas MySQL `admin` y `usuario` no son roles HTTP. Los estados `201` de las altas son los acordados para este contrato; actualmente algunos controladores responden `200`.
 
 ## 1. GET /api/equipos
 
