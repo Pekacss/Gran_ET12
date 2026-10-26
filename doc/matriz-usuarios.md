@@ -1,22 +1,22 @@
 # Matriz de usuarios
 
-La matriz separa permisos por clase y por acción. `Admin` es el usuario de aplicación con `Usuario.Administrador = true`; `Usuario` es una cuenta común (`false`). “Propias” significa que el usuario común solo opera sobre sus datos o plantillas.
+`Admin`: `Usuario.Administrador = true`. `Usuario`: valor `false`. La matriz describe las reglas previstas; la API aún no aplica autorización HTTP.
 
-Estos permisos describen la regla prevista. La API todavía no implementa autenticación y autorización HTTP para hacerlos cumplir.
+**Leyenda:** Sí = permitido · No = prohibido · Propias = solo datos o plantillas del usuario.
 
 ## Usuario
 
 | Acción | Admin | Usuario |
-| --- | --- | --- |
-| Crear | Sí | Sí, al registrarse |
-| Ver | Todos | Solo su cuenta |
-| Modificar | Todas las cuentas | Solo sus datos |
-| Eliminar | Todas las cuentas | Solo su cuenta |
+|:--|:--:|:--:|
+| Crear cuenta | Sí | Sí |
+| Ver cuentas | Todas | Propias |
+| Modificar cuenta | Todas | Propias |
+| Eliminar cuenta | Todas | Propias |
 
 ## Equipo
 
 | Acción | Admin | Usuario |
-| --- | --- | --- |
+|:--|:--:|:--:|
 | Crear | Sí | No |
 | Ver | Sí | Sí |
 | Modificar | Sí | No |
@@ -25,7 +25,7 @@ Estos permisos describen la regla prevista. La API todavía no implementa autent
 ## Posicion
 
 | Acción | Admin | Usuario |
-| --- | --- | --- |
+|:--|:--:|:--:|
 | Crear | Sí | No |
 | Ver | Sí | Sí |
 | Modificar | Sí | No |
@@ -34,16 +34,16 @@ Estos permisos describen la regla prevista. La API todavía no implementa autent
 ## Jugador (futbolista)
 
 | Acción | Admin | Usuario |
-| --- | --- | --- |
+|:--|:--:|:--:|
 | Crear | Sí | No |
 | Ver | Sí | Sí |
-| Modificar datos y cotización | Sí | No |
+| Modificar datos o cotización | Sí | No |
 | Eliminar | Sí | No |
 
 ## Puntuacion
 
 | Acción | Admin | Usuario |
-| --- | --- | --- |
+|:--|:--:|:--:|
 | Crear | Sí | No |
 | Ver | Sí | Sí |
 | Modificar | Sí | No |
@@ -52,37 +52,35 @@ Estos permisos describen la regla prevista. La API todavía no implementa autent
 ## Plantilla
 
 | Acción | Admin | Usuario |
-| --- | --- | --- |
-| Crear | Sí | Sí, propia |
-| Ver | Todas | Solo propias |
-| Modificar | Todas | Solo propias |
-| Eliminar | Todas | Solo propias |
+|:--|:--:|:--:|
+| Crear | Sí | Propias |
+| Ver | Todas | Propias |
+| Modificar | Todas | Propias |
+| Eliminar | Todas | Propias |
 
 ## PlantillaTitular
 
 | Acción | Admin | Usuario |
-| --- | --- | --- |
-| Agregar titular | Sí | Sí, en plantilla propia |
-| Ver titulares | Sí | Sí, en plantilla propia |
-| Cambiar condición | Sí | Sí, en plantilla propia |
-| Quitar titular | Sí | Sí, en plantilla propia |
+|:--|:--:|:--:|
+| Agregar titular | Sí | En propias |
+| Ver titulares | Sí | En propias |
+| Cambiar condición | Sí | En propias |
+| Quitar titular | Sí | En propias |
 
 ## PlantillaSuplente
 
 | Acción | Admin | Usuario |
-| --- | --- | --- |
-| Agregar suplente | Sí | Sí, en plantilla propia |
-| Ver suplentes | Sí | Sí, en plantilla propia |
-| Cambiar condición | Sí | Sí, en plantilla propia |
-| Quitar suplente | Sí | Sí, en plantilla propia |
+|:--|:--:|:--:|
+| Agregar suplente | Sí | En propias |
+| Ver suplentes | Sí | En propias |
+| Cambiar condición | Sí | En propias |
+| Quitar suplente | Sí | En propias |
 
 ## Cuentas MySQL
 
-Las cuentas de MySQL son independientes de los usuarios de la aplicación y no son roles HTTP. El script [04 Usuarios.sql](../scripts/04%20Usuarios.sql) configura:
+Estas cuentas son independientes de los usuarios de la aplicación y no son roles HTTP. Las claves de ejemplo de [04 Usuarios.sql](../scripts/04%20Usuarios.sql) deben reemplazarse localmente.
 
-| Cuenta MySQL | Crear/leer/modificar/eliminar datos | Administrar esquema |
-| --- | --- | --- |
-| `admin` | Sí | Sí, solo en `bd_GranET12` |
-| `usuario` | Solo lectura (`SELECT`) | No |
-
-Las claves del script son marcadores de ejemplo: deben reemplazarse localmente y nunca subirse a Git.
+| Cuenta | Leer datos | Escribir datos | Administrar esquema |
+|:--|:--:|:--:|:--:|
+| `admin` | Sí | Sí | Sí, solo `bd_GranET12` |
+| `usuario` | Sí (`SELECT`) | No | No |
