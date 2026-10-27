@@ -2,6 +2,7 @@ using System;
 using Models;
 using Services;
 using Microsoft.AspNetCore.Mvc;
+using dto;
 
 namespace Controllers
 {
@@ -17,12 +18,12 @@ namespace Controllers
         }
 
         [HttpPost]
-        public ActionResult<Jugador> Agregar(Jugador jugador)
+        public IActionResult Agregar(Jugador jugador)
         {
             try
             {
                 var nuevoJugador = _service.Agregar(jugador);
-                return Ok(nuevoJugador);
+                return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevoJugador.Id }, new JugadorDTO(nuevoJugador));
             }
             catch (Exception ex)
             {
@@ -33,12 +34,12 @@ namespace Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Jugador>> Obtener()
+        public IActionResult Obtener()
         {
             try
             {
                 var jugadores = _service.ObtenerTodos();
-                return Ok(jugadores);
+                return Ok(jugadores.Select(j => new JugadorDTO(j)).ToList());
             }
             catch (Exception ex)
             {
@@ -49,7 +50,7 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Jugador> ObtenerPorId(ushort id)
+        public IActionResult ObtenerPorId(ushort id)
         {
             try
             {
@@ -58,7 +59,7 @@ namespace Controllers
                 {
                     return NotFound();
                 }
-                return Ok(jugador);
+                return Ok(new JugadorDTO(jugador));
             }
             catch (Exception ex)
             {
@@ -69,7 +70,7 @@ namespace Controllers
         }
 
         [HttpGet("equipo/{id}")]
-        public ActionResult<Equipo> ObtenerEquipoPorJugador(ushort id)
+        public IActionResult ObtenerEquipoPorJugador(ushort id)
         {
             try
             {
@@ -78,7 +79,7 @@ namespace Controllers
                 {
                     return NotFound();
                 }
-                return Ok(equipo);
+                return Ok(new EquipoDTO(equipo));
             }
             catch (Exception ex)
             {
@@ -89,7 +90,7 @@ namespace Controllers
         }
 
         [HttpGet("posicion/{id}")]
-        public ActionResult<Posicion> ObtenerPosicionPorJugador(ushort id)
+        public IActionResult ObtenerPosicionPorJugador(ushort id)
         {
             try
             {
@@ -98,7 +99,7 @@ namespace Controllers
                 {
                     return NotFound();
                 }
-                return Ok(posicion);
+                return Ok(new PosicionDTO(posicion));
             }
             catch (Exception ex)
             {

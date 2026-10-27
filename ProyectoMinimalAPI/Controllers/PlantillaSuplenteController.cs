@@ -2,6 +2,7 @@ using System;
 using Models;
 using Services;
 using Microsoft.AspNetCore.Mvc;
+using dto;
 
 namespace Controllers
 {
@@ -17,12 +18,12 @@ namespace Controllers
         }
 
         [HttpPost]
-        public ActionResult<PlantillaSuplente> Agregar(PlantillaSuplente plantillaSuplente)
+        public IActionResult Agregar(PlantillaSuplente plantillaSuplente)
         {
             try
             {
                 var nuevaPlantillaSuplente = _service.Agregar(plantillaSuplente);
-                return Ok(nuevaPlantillaSuplente);
+                return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevaPlantillaSuplente.IdPlantilla }, new PlantillaSuplenteDTO(nuevaPlantillaSuplente));
             }
             catch (Exception ex)
             {
@@ -33,12 +34,12 @@ namespace Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<PlantillaSuplente>> Obtener()
+        public IActionResult Obtener()
         {
             try
             {
                 var plantillasSuplentes = _service.ObtenerTodos();
-                return Ok(plantillasSuplentes);
+                return Ok(plantillasSuplentes.Select(s => new PlantillaSuplenteDTO(s)).ToList());
             }
             catch (Exception ex)
             {
@@ -49,16 +50,16 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<PlantillaSuplente> ObtenerPorId(int id)
+        public IActionResult ObtenerPorId(int id)
         {
             try
             {
                 var plantillaSuplente = _service.ObtenerPorId(id);
-                if (plantillaSuplente == null)
+                if (plantillaSuplente == null)  
                 {
                     return NotFound();
                 }
-                return Ok(plantillaSuplente);
+                return Ok(new PlantillaSuplenteDTO(plantillaSuplente));
             }
             catch (Exception ex)
             {
@@ -69,12 +70,12 @@ namespace Controllers
         }
 
         [HttpGet("suplentes/{id}")]
-        public ActionResult<List<Jugador>> ObtenerSuplentesPlantilla(int id)
+        public IActionResult ObtenerSuplentesPlantilla(int id)
         {
             try
             {
                 var suplentes = _service.ObtenerSuplentesPlantilla(id);
-                return Ok(suplentes);
+                return Ok(suplentes.Select(s => new JugadorDTO(s)).ToList());
             }
             catch (Exception ex)
             {

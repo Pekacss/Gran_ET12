@@ -2,6 +2,7 @@ using System;
 using Models;
 using Services;
 using Microsoft.AspNetCore.Mvc;
+using dto;
 
 namespace Controllers
 {
@@ -17,12 +18,12 @@ namespace Controllers
         }
 
         [HttpPost]
-        public ActionResult<Posicion> Agregar(Posicion posicion)
+        public IActionResult Agregar(Posicion posicion)
         {
             try
             {
                 var nuevaPosicion = _service.Agregar(posicion);
-                return Ok(nuevaPosicion);
+                return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevaPosicion.Id }, new PosicionDTO(nuevaPosicion));
             }
             catch (Exception ex)
             {
@@ -33,12 +34,12 @@ namespace Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Posicion>> Obtener()
+        public IActionResult Obtener()
         {
             try
             {
                 var posiciones = _service.ObtenerTodos();
-                return Ok(posiciones);
+                return Ok(posiciones.Select(p => new PosicionDTO(p)).ToList());
             }
             catch (Exception ex)
             {
@@ -49,7 +50,7 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Posicion> ObtenerPorId(byte id)
+        public IActionResult ObtenerPorId(byte id)
         {
             try
             {
@@ -58,7 +59,7 @@ namespace Controllers
                 {
                     return NotFound();
                 }
-                return Ok(posicion);
+                return Ok(new PosicionDTO(posicion));
             }
             catch (Exception ex)
             {
@@ -69,12 +70,12 @@ namespace Controllers
         }
 
         [HttpGet("jugadores/{id}")]
-        public ActionResult<List<Jugador>> ObtenerJugadoresPorPosicion(byte id)
+        public IActionResult ObtenerJugadoresPorPosicion(byte id)
         {
             try
             {
                 var jugadores = _service.ObtenerJugadoresPorPosicion(id);
-                return Ok(jugadores);
+                return Ok(jugadores.Select(j => new JugadorDTO(j)).ToList());
             }
             catch (Exception ex)
             {

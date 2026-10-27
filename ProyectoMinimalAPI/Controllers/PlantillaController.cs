@@ -2,6 +2,8 @@ using System;
 using Models;
 using Services;
 using Microsoft.AspNetCore.Mvc;
+using dto;
+
 
 namespace Controllers
 {
@@ -17,12 +19,12 @@ namespace Controllers
         }
 
         [HttpPost]
-        public ActionResult<Plantilla> Agregar(Plantilla plantilla)
+        public IActionResult Agregar(Plantilla plantilla)
         {
             try
             {
                 var nuevaPlantilla = _service.Agregar(plantilla);
-                return Ok(nuevaPlantilla);
+                return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevaPlantilla.Id }, new PlantillaDTO(nuevaPlantilla));
             }
             catch (Exception ex)
             {
@@ -33,12 +35,12 @@ namespace Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Plantilla>> ObtenerTodos()
+        public IActionResult ObtenerTodos()
         {
             try
             {
                 var plantillas = _service.ObtenerTodos();
-                return Ok(plantillas);
+                return Ok(plantillas.Select(p => new PlantillaDTO(p)).ToList());
             }
             catch (Exception ex)
             {
@@ -49,7 +51,7 @@ namespace Controllers
         }
 
         [HttpGet("usuario/{id}")]
-        public ActionResult<Plantilla> ObtenerPorIdUsuario(ushort id)
+        public IActionResult ObtenerPorIdUsuario(ushort id)
         {
             try
             {
@@ -58,7 +60,7 @@ namespace Controllers
                 {
                     return NotFound();
                 }
-                return Ok(plantilla);
+                return Ok(new PlantillaDTO(plantilla));
             }
             catch (Exception ex)
             {
@@ -69,7 +71,7 @@ namespace Controllers
         }
 
         [HttpGet("fecha/{fecha}")]
-        public ActionResult<Plantilla> ObtenerPorFecha(byte fecha)
+        public IActionResult ObtenerPorFecha(byte fecha)
         {
             try
             {
@@ -78,7 +80,7 @@ namespace Controllers
                 {
                     return NotFound();
                 }
-                return Ok(plantilla);
+                return Ok(new PlantillaDTO(plantilla));
             }
             catch (Exception ex)
             {
@@ -89,7 +91,7 @@ namespace Controllers
         }
 
         [HttpGet("nombre/{nombre}")]
-        public ActionResult<Plantilla> ObtenerPorNombre(string nombre)
+        public IActionResult ObtenerPorNombre(string nombre)
         {
             try
             {
@@ -98,7 +100,7 @@ namespace Controllers
                 {
                     return NotFound();
                 }
-                return Ok(plantilla);
+                return Ok(new PlantillaDTO(plantilla));
             }
             catch (Exception ex)
             {
@@ -109,7 +111,7 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Plantilla> ObtenerPorId(int id)
+        public IActionResult ObtenerPorId(int id)
         {
             try
             {
@@ -118,7 +120,7 @@ namespace Controllers
                 {
                     return NotFound();
                 }
-                return Ok(plantilla);
+                return Ok(new PlantillaDTO(plantilla));
             }
             catch (Exception ex)
             {
@@ -129,12 +131,12 @@ namespace Controllers
         }
 
         [HttpGet("{id}/jugadores")]
-        public ActionResult<List<Jugador>> ObtenerJugadoresPorPlantilla(int id)
+        public IActionResult ObtenerJugadoresPorPlantilla(int id)
         {
             try
             {
                 var jugadores = _service.ObtenerJugadoresPorPlantilla(id);
-                return Ok(jugadores);
+                return Ok(jugadores.Select(j => new JugadorDTO(j)).ToList());
             }
             catch (Exception ex)
             {

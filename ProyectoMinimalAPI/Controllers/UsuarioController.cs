@@ -2,6 +2,7 @@ using System;
 using Models;
 using Services;
 using Microsoft.AspNetCore.Mvc;
+using dto;
 
 namespace Controllers
 {
@@ -17,47 +18,32 @@ namespace Controllers
         }
 
         [HttpPost]
-        public ActionResult<object> Agregar(Usuario usuario)
+        public IActionResult Agregar(Usuario usuario)
         {
+            Usuario nuevoUsuario;
             try
             {
-                var nuevoUsuario = _service.Agregar(usuario);
-                return Ok(new
-                {
-                    nuevoUsuario.Id,
-                    nuevoUsuario.Nombre,
-                    nuevoUsuario.Apellido,
-                    nuevoUsuario.Email,
-                    nuevoUsuario.FechaNacimiento,
-                    nuevoUsuario.Administrador
-                });
+                nuevoUsuario = _service.Agregar(usuario);
+                return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevoUsuario.Id }, new UsuarioPostDTO(nuevoUsuario));
             }
             catch (Exception ex)
             {
                 if (ex is ArgumentException || ex is InvalidOperationException)
                     return BadRequest(ex.Message);
                 return StatusCode(500, ex.Message);
-            }
+            } // Usamos DTO para devolver solo los datos necesarios
         }
 
         [HttpPost("login")]
-        public ActionResult<object> IniciarSesion(Usuario credenciales)
+        public IActionResult IniciarSesion(Usuario credenciales)
         {
             try
             {
                 Usuario? usuario = _service.IniciarSesion(credenciales.Email, credenciales.Contraseña);
                 if (usuario == null)
                     return Unauthorized();
-
-                return Ok(new
-                {
-                    usuario.Id,
-                    usuario.Nombre,
-                    usuario.Apellido,
-                    usuario.Email,
-                    usuario.FechaNacimiento,
-                    usuario.Administrador
-                });
+    
+                return Ok(new UsuarioLoginDTO(usuario));
             }
             catch (Exception ex)
             {
@@ -68,23 +54,15 @@ namespace Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<object>> Obtener()
+        public IActionResult Obtener()
         {
             try
             {
                 var usuarios = _service.ObtenerTodos();
-                List<object> respuesta = new List<object>();
+                List<UsuarioGetDTO> respuesta = new List<UsuarioGetDTO>();
                 foreach (Usuario usuario in usuarios)
                 {
-                    respuesta.Add(new
-                    {
-                        usuario.Id,
-                        usuario.Nombre,
-                        usuario.Apellido,
-                        usuario.Email,
-                        usuario.FechaNacimiento,
-                        usuario.Administrador
-                    });
+                    respuesta.Add(new UsuarioGetDTO(usuario));
                 }
     
                 return Ok(respuesta);
@@ -98,24 +76,16 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<object> ObtenerPorId(ushort id)
+        public IActionResult ObtenerPorId(ushort id)
         {
             try
             {
-                var usuario = _service.ObtenerPorId(id);
+                Usuario? usuario = _service.ObtenerPorId(id);
                 if (usuario == null)
                 {
                     return NotFound();
                 }
-                return Ok(new
-                {
-                    usuario.Id,
-                    usuario.Nombre,
-                    usuario.Apellido,
-                    usuario.Email,
-                    usuario.FechaNacimiento,
-                    usuario.Administrador
-                });
+                return Ok(new UsuarioGetDTO(usuario));
             }
             catch (Exception ex)
             {

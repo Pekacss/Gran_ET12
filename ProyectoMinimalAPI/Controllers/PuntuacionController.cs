@@ -17,7 +17,7 @@ namespace Controllers
         }
 
         [HttpPost]
-        public ActionResult<Puntuacion> Agregar(Puntuacion puntuacion)
+        public IActionResult Agregar(Puntuacion puntuacion)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Puntuacion>> Obtener()
+        public IActionResult Obtener()
         {
             try
             {
@@ -49,7 +49,7 @@ namespace Controllers
         }
         
         [HttpGet("fecha/{fecha}")]
-        public ActionResult<Puntuacion> ObtenerPorFecha(byte fecha)
+        public IActionResult ObtenerPorFecha(byte fecha)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace Controllers
         }
 
         [HttpGet("jugador/{id}")]
-        public ActionResult<Puntuacion> ObtenerPorJugador(ushort id)
+        public IActionResult ObtenerPorJugador(ushort id)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace Controllers
         }
 
         [HttpGet("fecha/{fecha}/jugador/{id}")]
-        public ActionResult<Puntuacion> ObtenerPorFechaJugador(byte fecha, ushort id)
+        public IActionResult ObtenerPorFechaJugador(byte fecha, ushort id)
         {
             try
             {

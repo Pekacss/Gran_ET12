@@ -1,7 +1,9 @@
 using System;
 using Models;
+using dto;
 using Services;
 using Microsoft.AspNetCore.Mvc;
+using dto;
 
 namespace Controllers
 {
@@ -17,12 +19,12 @@ namespace Controllers
         }
 
         [HttpPost]
-        public ActionResult<Equipo> Agregar(Equipo equipo)
+        public IActionResult Agregar(Equipo equipo)
         {
             try
             {
                 var nuevoEquipo = _service.Agregar(equipo);
-                return Ok(nuevoEquipo);
+                return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevoEquipo.Id }, new EquipoDTO(nuevoEquipo));
             }
             catch (Exception ex)
             {
@@ -36,12 +38,17 @@ namespace Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Equipo>> Obtener()
+        public IActionResult Obtener()
         {
             try
             {
                 var equipos = _service.ObtenerTodos();
-                return Ok(equipos);
+                List<EquipoDTO> respuesta = new List<EquipoDTO>();
+                foreach (var equipo in equipos)
+                {
+                    respuesta.Add(new EquipoDTO(equipo));
+                }
+                return Ok(respuesta);
             }
             catch (Exception ex)
             {
@@ -52,7 +59,7 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Equipo> ObtenerPorId(byte id)
+        public IActionResult ObtenerPorId(byte id)
         {
             try
             {
@@ -61,7 +68,7 @@ namespace Controllers
                 {
                     return NotFound();
                 }
-                return Ok(equipo);
+                return Ok(new EquipoDTO(equipo));
             }
             catch (Exception ex)
             {
@@ -92,12 +99,12 @@ namespace Controllers
         }
 
         [HttpGet("{id}/jugadores")]
-        public ActionResult<List<Jugador>> ObtenerJugadoresPorEquipo(byte id)
+        public IActionResult ObtenerJugadoresPorEquipo(byte id)
         {
             try
             {
                 var jugadores = _service.ObtenerJugadoresPorEquipo(id);
-                return Ok(jugadores);
+                return Ok(jugadores.Select(j => new JugadorDTO(j)));
             }
             catch (Exception ex)
             {

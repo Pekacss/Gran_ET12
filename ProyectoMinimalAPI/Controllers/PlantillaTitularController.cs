@@ -2,7 +2,7 @@ using System;
 using Models;
 using Services;
 using Microsoft.AspNetCore.Mvc;
-//ten q catryea tod
+using dto;
 namespace Controllers
 {
     [ApiController]
@@ -17,12 +17,12 @@ namespace Controllers
         }
 
         [HttpPost]
-        public ActionResult<PlantillaTitular> Agregar(PlantillaTitular plantillaTitular)
+        public IActionResult Agregar(PlantillaTitular plantillaTitular)
         {
             try
             {
                 var nuevaPlantillaTitular = _service.Agregar(plantillaTitular);
-                return Ok(nuevaPlantillaTitular);
+                return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevaPlantillaTitular.IdPlantilla }, new PlantillaTitularDTO(nuevaPlantillaTitular));
             }
             catch (Exception ex)
             {
@@ -33,12 +33,12 @@ namespace Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<PlantillaTitular>> Obtener()
+        public IActionResult Obtener()
         {
             try
             {
-                var plantillasTitulares = _service.ObtenerTodos();
-                return Ok(plantillasTitulares);
+                var titulares = _service.ObtenerTodos();
+                return Ok(titulares.Select(t => new PlantillaTitularDTO(t)).ToList());
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<PlantillaTitular> ObtenerPorId(int id)
+        public IActionResult ObtenerPorId(int id)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace Controllers
                 {
                     return NotFound();
                 }
-                return Ok(plantillaTitular);
+                return Ok(new PlantillaTitularDTO(plantillaTitular));
             }
             catch (Exception ex)
             {
@@ -69,12 +69,12 @@ namespace Controllers
         }
 
         [HttpGet("titulares/{id}")]
-        public ActionResult<List<Jugador>> ObtenerTitularesPlantilla(int id)
+        public IActionResult ObtenerTitularesPlantilla(int id)
         {
             try
             {
                 var titulares = _service.ObtenerTitularesPlantilla(id);
-                return Ok(titulares);
+                return Ok(titulares.Select(t => new JugadorDTO(t)).ToList());
             }
             catch (Exception ex)
             {
