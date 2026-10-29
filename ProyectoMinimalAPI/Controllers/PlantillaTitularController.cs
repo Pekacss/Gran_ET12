@@ -17,11 +17,11 @@ namespace Controllers
         }
 
         [HttpPost]
-        public IActionResult Agregar(PlantillaTitular plantillaTitular)
+        public IActionResult Agregar(PlantillaTitularDTO plantillaTitularDTO)
         {
             try
             {
-                var nuevaPlantillaTitular = _service.Agregar(plantillaTitular);
+                var nuevaPlantillaTitular = _service.Agregar(plantillaTitularDTO.AModelo());
                 return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevaPlantillaTitular.IdPlantilla }, new PlantillaTitularDTO(nuevaPlantillaTitular));
             }
             catch (Exception ex)

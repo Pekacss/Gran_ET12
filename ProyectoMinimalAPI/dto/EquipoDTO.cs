@@ -6,6 +6,13 @@ namespace dto
     {
         public string Nombre { get; set; } = string.Empty;
 
+        public EquipoDTO() { }
+
+        public Equipo AModelo()
+        {
+            return new Equipo { Nombre = Nombre };
+        }
+
         public EquipoDTO(Equipo equipo)
         {
             Nombre = equipo.Nombre;

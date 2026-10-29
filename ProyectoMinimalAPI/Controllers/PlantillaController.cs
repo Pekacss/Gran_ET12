@@ -19,11 +19,11 @@ namespace Controllers
         }
 
         [HttpPost]
-        public IActionResult Agregar(Plantilla plantilla)
+        public IActionResult Agregar(PlantillaDTO plantillaDTO)
         {
             try
             {
-                var nuevaPlantilla = _service.Agregar(plantilla);
+                var nuevaPlantilla = _service.Agregar(plantillaDTO.AModelo());
                 return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevaPlantilla.Id }, new PlantillaDTO(nuevaPlantilla));
             }
             catch (Exception ex)

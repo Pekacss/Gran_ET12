@@ -3,7 +3,6 @@ using Models;
 using dto;
 using Services;
 using Microsoft.AspNetCore.Mvc;
-using dto;
 
 namespace Controllers
 {
@@ -19,11 +18,11 @@ namespace Controllers
         }
 
         [HttpPost]
-        public IActionResult Agregar(Equipo equipo)
+        public IActionResult Agregar(EquipoDTO equipoDTO)
         {
             try
             {
-                var nuevoEquipo = _service.Agregar(equipo);
+                var nuevoEquipo = _service.Agregar(equipoDTO.AModelo());
                 return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevoEquipo.Id }, new EquipoDTO(nuevoEquipo));
             }
             catch (Exception ex)

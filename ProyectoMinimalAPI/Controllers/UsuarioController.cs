@@ -18,12 +18,12 @@ namespace Controllers
         }
 
         [HttpPost]
-        public IActionResult Agregar(Usuario usuario)
+        public IActionResult Agregar(UsuarioPostDTO usuarioDTO)
         {
             Usuario nuevoUsuario;
             try
             {
-                nuevoUsuario = _service.Agregar(usuario);
+                nuevoUsuario = _service.Agregar(usuarioDTO.AModelo());
                 return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevoUsuario.Id }, new UsuarioPostDTO(nuevoUsuario));
             }
             catch (Exception ex)
@@ -35,7 +35,7 @@ namespace Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult IniciarSesion(Usuario credenciales)
+        public IActionResult IniciarSesion(UsuarioLoginDTO credenciales)
         {
             try
             {

@@ -13,6 +13,22 @@ namespace dto
         public decimal Cotizacion { get; set; }
         public byte IdPosicion { get; set; }
         
+        public JugadorDTO() { }
+
+        public Jugador AModelo()
+        {
+            return new Jugador
+            {
+                Nombre = Nombre,
+                Apellido = Apellido,
+                Apodo = Apodo,
+                FechaNacimiento = FechaNacimiento.ToDateTime(TimeOnly.MinValue),
+                IdEquipo = IdEquipo,
+                Cotizacion = Cotizacion,
+                IdPosicion = IdPosicion
+            };
+        }
+
         public JugadorDTO(Jugador jugador)
         {
             Nombre = jugador.Nombre;

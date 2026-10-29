@@ -18,11 +18,11 @@ namespace Controllers
         }
 
         [HttpPost]
-        public IActionResult Agregar(Jugador jugador)
+        public IActionResult Agregar(JugadorDTO jugadorDTO)
         {
             try
             {
-                var nuevoJugador = _service.Agregar(jugador);
+                var nuevoJugador = _service.Agregar(jugadorDTO.AModelo());
                 return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevoJugador.Id }, new JugadorDTO(nuevoJugador));
             }
             catch (Exception ex)

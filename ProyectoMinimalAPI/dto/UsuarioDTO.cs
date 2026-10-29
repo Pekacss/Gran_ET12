@@ -11,6 +11,21 @@ namespace dto
         public bool EsAdmin { get; set; } = false;
         public string Contraseña { get; set; } = string.Empty;
 
+        public UsuarioPostDTO() { }
+
+        public Usuario AModelo()
+        {
+            return new Usuario
+            {
+                Nombre = Nombre,
+                Apellido = Apellido,
+                Email = Email,
+                FechaNacimiento = FechaNacimiento.ToDateTime(TimeOnly.MinValue),
+                Administrador = EsAdmin,
+                Contraseña = Contraseña
+            };
+        }
+
         public UsuarioPostDTO(Usuario usuario)
         {
             Nombre = usuario.Nombre;
@@ -26,6 +41,8 @@ namespace dto
     {
         public string Email { get; set; } = string.Empty;
         public string Contraseña { get; set; } = string.Empty;
+
+        public UsuarioLoginDTO() { }
 
         public UsuarioLoginDTO(Usuario usuario)
         {

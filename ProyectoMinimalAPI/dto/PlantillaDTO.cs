@@ -8,6 +8,13 @@ namespace dto
         public byte Fecha { get; set; }
         public string? Nombre { get; set; }
 
+        public PlantillaDTO() { }
+
+        public Plantilla AModelo()
+        {
+            return new Plantilla { IdUsuario = IdUsuario, Fecha = Fecha, Nombre = Nombre };
+        }
+
         public PlantillaDTO(Plantilla plantilla)
         {
             IdUsuario = plantilla.IdUsuario;
