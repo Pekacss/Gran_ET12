@@ -26,9 +26,9 @@ namespace Controllers
             }
             catch (Exception ex)
             {
-                if (ex is ArgumentException || ex is InvalidOperationException)
-                    return BadRequest(ex.Message);
-                return StatusCode(500, ex.Message);
+                return (ex is ArgumentException || ex is InvalidOperationException) ?
+                    BadRequest(ex.Message) :
+                    StatusCode(500, ex.Message);
             }
         }
 

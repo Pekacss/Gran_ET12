@@ -91,11 +91,8 @@ namespace Controllers
             try
             {
                 var eliminado = _service.Eliminar(id);
-                if (!eliminado)
-                {
-                    return NotFound();
-                }
-                return NoContent();
+                return !eliminado ? NotFound() : NoContent();
+                // Retorna NotFound si no se eliminó, de lo contrario retorna NoContent.
             }
             catch (Exception ex)
             {
