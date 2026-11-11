@@ -1,0 +1,93 @@
+GRAN DT — DIAGRAMAS DE SECUENCIA
+
+Casos de uso tomados del diagrama de referencia:
+1. Agregar un jugador como titular.
+2. Consultar el puntaje de un jugador.
+
+Los diagramas están escritos en Mermaid. Copiá cada bloque completo en un
+editor compatible con Mermaid para visualizarlo o exportarlo.
+
+============================================================
+1. AGREGAR UN JUGADOR COMO TITULAR
+============================================================
+
+Actor: Usuario.
+Precondición: existen la plantilla y el jugador que se desea incorporar.
+
+Flujo principal: el usuario envía la relación de titularidad; la API delega
+la operación al servicio, el repositorio la guarda y devuelve la respuesta.
+
+```mermaid
+sequenceDiagram
+    actor Usuario
+    participant API as PlantillaTitularController
+    participant Servicio as ServicePlantillaTitular
+    participant Repo as RepoPlantillaTitular
+    participant BD as MySQL
+
+    Usuario->>API: POST /api/PlantillaTitular
+    Note right of Usuario: idPlantilla e idJugador
+    API->>Servicio: Agregar(relacion)
+    Servicio->>Servicio: Validar Id, IdPlantilla e IdJugador
+    Servicio->>Repo: Agregar(relacion)
+    Repo->>BD: sp_PlantillaTitular_Agregar
+    BD-->>Repo: Relacion guardada con Id generado
+    Repo-->>Servicio: PlantillaTitular
+    Servicio-->>API: PlantillaTitular
+    API-->>Usuario: 201 Created + PlantillaTitularDTO
+
+    alt Identificador inválido
+        Servicio-->>API: ArgumentException
+        API-->>Usuario: 400 Bad Request
+    else Error al guardar
+        BD-->>Repo: Error de persistencia
+        Repo-->>API: Excepción
+        API-->>Usuario: 500 Internal Server Error
+    end
+```
+
+Nota: el servicio actual valida Id, IdPlantilla e IdJugador como distintos de
+cero antes de llamar al repositorio.
+
+============================================================
+2. CONSULTAR EL PUNTAJE DE UN JUGADOR
+============================================================
+
+Actor: Usuario.
+Precondición: el usuario conoce la fecha y el identificador del jugador.
+
+Flujo principal: el usuario solicita el puntaje para una fecha y un jugador;
+la API busca el registro y devuelve el resultado, o informa que no existe.
+
+```mermaid
+sequenceDiagram
+    actor Usuario
+    participant API as PuntuacionController
+    participant Servicio as ServicePuntuacion
+    participant Repo as RepoPuntuacion
+    participant BD as MySQL
+
+    Usuario->>API: GET /api/Puntuacion/fecha/{fecha}/jugador/{id}
+    API->>Servicio: ObtenerPorFechaJugador(fecha, id)
+    Servicio->>Repo: ObtenerPorFechaJugador(fecha, id)
+    Repo->>BD: sp_Puntuacion_ObtenerPorFechaJugador
+    alt Puntuación encontrada
+        BD-->>Repo: Fecha, IdJugador y Puntaje
+        Repo-->>Servicio: Puntuacion
+        Servicio-->>API: Puntuacion
+        API-->>Usuario: 200 OK + Puntuacion
+    else Puntuación inexistente
+        BD-->>Repo: Sin resultados
+        Repo-->>Servicio: null
+        Servicio-->>API: null
+        API-->>Usuario: 404 Not Found
+    else Error de persistencia
+        BD-->>Repo: Error de persistencia
+        Repo-->>API: Excepción
+        API-->>Usuario: 500 Internal Server Error
+    end
+```
+
+Nota: el endpoint concreto es GET
+`/api/Puntuacion/fecha/{fecha}/jugador/{id}`. Los parámetros fecha e id son
+los definidos por el controlador actual.
