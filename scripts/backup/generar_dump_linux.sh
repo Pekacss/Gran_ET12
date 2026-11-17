@@ -6,6 +6,9 @@ usage() {
 Uso:
   ./scripts/backup/generar_dump_linux.sh <base_origen> [archivo_salida]
 
+Nota:
+  Si archivo_salida es relativo, se guarda respecto a la raiz del repo.
+
 Ejemplo:
   ./scripts/backup/generar_dump_linux.sh bd_granet12_restauracion_20261020 scripts/backup/torneo.sql
 
@@ -30,6 +33,9 @@ fi
 DB_NAME="$1"
 OUTPUT_PATH="${2:-scripts/backup/torneo.sql}"
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
 if [[ ! "$DB_NAME" =~ ^[A-Za-z0-9_]+$ ]]; then
   echo "Error: nombre de base invalido. Usa solo letras, numeros y guion bajo." >&2
   exit 1
@@ -39,14 +45,20 @@ MYSQL_HOST="${MYSQL_HOST:-localhost}"
 MYSQL_PORT="${MYSQL_PORT:-3306}"
 MYSQL_USER="${MYSQL_USER:-root}"
 
+if [[ "$OUTPUT_PATH" = /* ]]; then
+  OUTPUT_ABS_PATH="$OUTPUT_PATH"
+else
+  OUTPUT_ABS_PATH="$REPO_ROOT/$OUTPUT_PATH"
+fi
+
 if ! command -v mysqldump >/dev/null 2>&1; then
   echo "Error: no se encontro el comando 'mysqldump' en PATH." >&2
   exit 1
 fi
 
-mkdir -p "$(dirname "$OUTPUT_PATH")"
+mkdir -p "$(dirname "$OUTPUT_ABS_PATH")"
 
-echo "Generando dump en $OUTPUT_PATH ..."
+echo "Generando dump en $OUTPUT_ABS_PATH ..."
 mysqldump \
   -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u "$MYSQL_USER" \
   --default-character-set=utf8mb4 \
@@ -54,6 +66,12 @@ mysqldump \
   --skip-lock-tables \
   --routines \
   --triggers \
-  "$DB_NAME" > "$OUTPUT_PATH"
+  "$DB_NAME" > "$OUTPUT_ABS_PATH"
 
-echo "Dump generado correctamente."
+if [[ ! -s "$OUTPUT_ABS_PATH" ]]; then
+  echo "Error: se genero un archivo vacio. Revisar credenciales, permisos y nombre de base." >&2
+  exit 1
+fi
+
+echo "Dump generado correctamente en: $OUTPUT_ABS_PATH"
+echo "Tamano: $(wc -c < "$OUTPUT_ABS_PATH") bytes"
