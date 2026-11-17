@@ -10,9 +10,9 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddSingleton<DBConnection>(serviceProvider =>
 {
-    string? connectionString = builder.Configuration.GetConnectionString("GranET12");
+    string? connectionString = builder.Configuration.GetConnectionString("Secu");
     if (string.IsNullOrWhiteSpace(connectionString))
-        throw new InvalidOperationException("Defina la variable de entorno ConnectionStrings__GranET12 con la cadena de conexión local.");
+        throw new InvalidOperationException("Defina la variable de entorno ConnectionStrings__Secu con la cadena de conexión local.");
 
     return new DBConnection(connectionString);
 });

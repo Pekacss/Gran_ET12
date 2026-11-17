@@ -21,13 +21,29 @@ La prueba confirma la restauración en MariaDB de XAMPP, no en MySQL 8. Queda pe
 
 ## Repetir
 
-Con XAMPP iniciado, se puede restaurar en otra base de prueba vacía:
+En Linux, la contraparte de un `.bat` es un script `.sh`. En este proyecto quedaron dos scripts en `scripts/backup/`:
 
-```powershell
-$mysql = "C:\xampp\mysql\bin\mysql.exe"
-& $mysql -u root -e "CREATE DATABASE bd_granet12_restore_test CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
-& $mysql -u root bd_granet12_restore_test -e "source backup/torneo.sql"
-& $mysql -u root -e "SELECT COUNT(*) FROM bd_granet12_restore_test.jugador;"
+- `restaurar_dump_linux.sh`: restaura el dump en una base destino (esto es lo que se entrega como restauración).
+- `generar_dump_linux.sh`: regenera el dump desde una base origen (opcional, para volver a exportar).
+
+Uso recomendado (restauración):
+
+```bash
+cd /home/et12alumno/Escritorio/Gran_ET12
+./scripts/backup/restaurar_dump_linux.sh bd_granet12_restore_test
+```
+
+Si necesitás credenciales/host/puerto distintos:
+
+```bash
+MYSQL_HOST=localhost MYSQL_PORT=3306 MYSQL_USER=root ./scripts/backup/restaurar_dump_linux.sh bd_granet12_restore_test
+```
+
+Regenerar dump (opcional):
+
+```bash
+cd /home/et12alumno/Escritorio/Gran_ET12
+./scripts/backup/generar_dump_linux.sh bd_granet12_restauracion_20261020 scripts/backup/torneo.sql
 ```
 
 Para regenerar el dump, usar una base de pruebas con datos exclusivamente ficticios. No hacer el dump de la base local original si contiene datos personales. El archivo exportado incluye esquema, datos de demostración, rutinas y triggers; no incluye cuentas MySQL ni credenciales.

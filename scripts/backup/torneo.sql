@@ -618,7 +618,8 @@ BEGIN
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!GRANT SELECT ON bd_GranET12.PlantillaTitular TO 'usuario'@'localhost';
+50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
@@ -633,7 +634,8 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Jugador_ObtenerPorId`(IN p_Id SMALLINT UNSIGNED)
 BEGIN
-    SELECT * FROM Jugador WHERE Id = p_Id;
+   GRANT SELECT ON bd_GranET12.PlantillaTitular TO 'usuario'@'localhost';
+ SELECT * FROM Jugador WHERE Id = p_Id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -653,7 +655,8 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Jugador_ObtenerPosicion`(IN p_Id SMALLINT UNSIGNED)
 BEGIN
     SELECT p.* FROM Posicion p INNER JOIN Jugador j ON j.IdPosicion = p.Id WHERE j.Id = p_Id;
-END ;;
+ENDGRANT SELECT ON bd_GranET12.PlantillaTitular TO 'usuario'@'localhost';
+ ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -759,6 +762,8 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_PlantillaSuplente_ObtenerTodos` */;
+/*!50003 SET @saved_cs_client      = @@character_sATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_PlantillaSuplente_ObtenerPorId` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -766,6 +771,24 @@ DELIMITER ;
 /*!50003 SET character_set_results = cp850 */ ;
 /*!50003 SET collation_connection  = cp850_general_ci */ ;
 DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_PlantillaSuplente_ObtenerPorId`(IN p_Id INT)
+BEGINet_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = cp850 */ ;
+/*!50003 SET character_set_results = cp850 */ ;
+/*!50003 SET collation_connection  = cp850_general_ci */ ;
+DELIMITER ;;ATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_PlantillaSuplente_ObtenerPorId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = cp850 */ ;
+/*!50003 SET character_set_results = cp850 */ ;
+/*!50003 SET collation_connection  = cp850_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_PlantillaSuplente_ObtenerPorId`(IN p_Id INT)
+BEGIN
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_PlantillaSuplente_ObtenerTodos`()
 BEGIN
     SELECT * FROM PlantillaSuplente;

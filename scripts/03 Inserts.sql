@@ -14,7 +14,14 @@ VALUES  (1, 'Arquero'),
 INSERT INTO Equipo (Id, Nombre)
 VALUES	(1, 'Boca Juniors'),
 		(2, 'River Plate'),
-	    (3, 'Racing Club');
+	    (3, 'Racing Club'),
+		(4, 'Independiente'),
+		(5, 'San Lorenzo'),
+		(6, 'Velez Sarsfield'),
+		(7, 'Estudiantes'),
+		(8, 'Gimnasia y Esgrima La Plata'),
+		(9, 'Newell''s Old Boys'),
+		(10, 'Rosario Central');
 
 INSERT IGNORE INTO Jugador
 	(Id, Nombre, Apellido, Apodo, FechaNacimiento, IdEquipo, Cotizacion, IdPosicion)
