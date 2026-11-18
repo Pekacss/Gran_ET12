@@ -12,9 +12,9 @@ DROP USER IF EXISTS 'torneo_admin'@'localhost';
 DROP USER IF EXISTS 'torneo_invitado'@'localhost';
 
 CREATE USER IF NOT EXISTS 'admin'@'localhost'
-    IDENTIFIED BY 'REEMPLAZAR_CLAVE_ADMIN';
+    IDENTIFIED BY 'Password1!';
 CREATE USER IF NOT EXISTS 'usuario'@'localhost'
-	IDENTIFIED BY 'REEMPLAZAR_CLAVE_USUARIO';
+	IDENTIFIED BY 'Password2!';
 
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'admin'@'localhost';
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'usuario'@'localhost';
