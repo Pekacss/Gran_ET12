@@ -125,20 +125,16 @@ Si una prueba falla, conservar el resultado y corregirlo antes de presentar la e
 
 ### Crear y restaurar un backup
 
-El archivo de entrega se generó con `mysqldump` desde una base temporal con datos ficticios. Para repetirlo en este entorno, XAMPP debe estar iniciado:
+El archivo de entrega (`scripts/backup/torneo.sql`) se generó con `mysqldump` desde una base temporal con datos ficticios. Para regenerarlo en Windows, iniciar XAMPP y ejecutar desde PowerShell en la raíz:
 
 ```powershell
-New-Item -ItemType Directory -Force backup | Out-Null
-$mysqldump = "C:\xampp\mysql\bin\mysqldump.exe"
-& $mysqldump -u root --routines --triggers --result-file=backup/torneo.sql bd_granet12_restauracion_final_20261020
+.\scripts\backup\win\generar_dump_win.bat bd_granet12_restauracion_final_20261020
 ```
 
-Para probarlo, crear una base vacía de evaluación y restaurar allí el archivo:
+Para probarlo, restaurar el archivo en una base de evaluación:
 
 ```powershell
-$mysql = "C:\xampp\mysql\bin\mysql.exe"
-& $mysql -u root -e "CREATE DATABASE bd_GranET12_prueba;"
-& $mysql -u root bd_GranET12_prueba -e "source backup/torneo.sql"
+.\scripts\backup\win\restaurar_dump_win.bat bd_GranET12_prueba
 ```
 
 Comprobar tablas y datos con `SHOW TABLES` y consultas `SELECT COUNT(*)` a `Equipo`, `Jugador` y `Usuario`. Registrar los conteos y el resultado real en [doc/evaluacion/restauracion.md](doc/evaluacion/restauracion.md). No incluir cuentas de MySQL ni credenciales en el backup.

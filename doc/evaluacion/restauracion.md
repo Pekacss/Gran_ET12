@@ -2,7 +2,7 @@
 
 ## Resultado
 
-El 20/10/2026 generé `backup/torneo.sql` con `mysqldump` de XAMPP. Para no copiar datos personales de la base original, usé una base temporal que contiene solamente fixtures ficticios.
+El 20/10/2026 generé `scripts/backup/torneo.sql` con `mysqldump` de XAMPP. Para no copiar datos personales de la base original, usé una base temporal que contiene solamente fixtures ficticios.
 
 Restauré el archivo en una segunda base vacía (`bd_granet12_restauracion_final_20261020`) usando XAMPP MariaDB 10.4.32. La importación creó las ocho tablas, los triggers y los procedimientos almacenados. Verifiqué `sp_Usuario_ObtenerTodos` y estos conteos:
 
@@ -21,29 +21,43 @@ La prueba confirma la restauración en MariaDB de XAMPP, no en MySQL 8. Queda pe
 
 ## Repetir
 
-En Linux, la contraparte de un `.bat` es un script `.sh`. En este proyecto quedaron dos scripts en `scripts/backup/`:
+Los scripts están separados por sistema operativo:
 
-- `restaurar_dump_linux.sh`: restaura el dump en una base destino (esto es lo que se entrega como restauración).
-- `generar_dump_linux.sh`: regenera el dump desde una base origen (opcional, para volver a exportar).
+- `scripts/backup/linux/restaurar_dump_linux.sh` y `scripts/backup/win/restaurar_dump_win.bat`: restauran el dump en una base destino (esto es lo que se entrega como restauración).
+- `scripts/backup/linux/generar_dump_linux.sh` y `scripts/backup/win/generar_dump_win.bat`: regeneran el dump desde una base origen (opcional, para volver a exportar).
 
-Uso recomendado (restauración):
+Uso recomendado en Linux (restauración):
 
 ```bash
 cd /home/et12alumno/Escritorio/Gran_ET12
-./scripts/backup/restaurar_dump_linux.sh bd_granet12_restore_test
+./scripts/backup/linux/restaurar_dump_linux.sh bd_granet12_restore_test
 ```
 
 Si necesitás credenciales/host/puerto distintos:
 
 ```bash
-MYSQL_HOST=localhost MYSQL_PORT=3306 MYSQL_USER=root ./scripts/backup/restaurar_dump_linux.sh bd_granet12_restore_test
+MYSQL_HOST=localhost MYSQL_PORT=3306 MYSQL_USER=root ./scripts/backup/linux/restaurar_dump_linux.sh bd_granet12_restore_test
 ```
 
-Regenerar dump (opcional):
+En Windows, desde PowerShell en la raíz del repositorio:
+
+```powershell
+.\scripts\backup\win\restaurar_dump_win.bat bd_granet12_restore_test
+```
+
+Si necesitás credenciales, definí `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER` y opcionalmente `MYSQL_PWD` en el entorno antes de ejecutar el `.bat`. Si no definís `MYSQL_PWD`, `mysql` solicita la contraseña.
+
+Regenerar dump en Linux (opcional):
 
 ```bash
 cd /home/et12alumno/Escritorio/Gran_ET12
-./scripts/backup/generar_dump_linux.sh bd_granet12_restauracion_20261020 scripts/backup/torneo.sql
+./scripts/backup/linux/generar_dump_linux.sh bd_granet12_restauracion_20261020 scripts/backup/torneo.sql
+```
+
+En Windows:
+
+```powershell
+.\scripts\backup\win\generar_dump_win.bat bd_granet12_restauracion_20261020 scripts\backup\torneo.sql
 ```
 
 Para regenerar el dump, usar una base de pruebas con datos exclusivamente ficticios. No hacer el dump de la base local original si contiene datos personales. El archivo exportado incluye esquema, datos de demostración, rutinas y triggers; no incluye cuentas MySQL ni credenciales.

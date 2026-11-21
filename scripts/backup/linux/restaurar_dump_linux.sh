@@ -4,10 +4,10 @@ set -euo pipefail
 usage() {
   cat <<'EOF'
 Uso:
-  ./scripts/backup/restaurar_dump_linux.sh <base_destino> [ruta_dump]
+  ./scripts/backup/linux/restaurar_dump_linux.sh <base_destino> [ruta_dump]
 
 Ejemplo:
-  ./scripts/backup/restaurar_dump_linux.sh bd_granet12_restauracion_final_20261020
+  ./scripts/backup/linux/restaurar_dump_linux.sh bd_granet12_restauracion_final_20261020
 
 Variables de entorno opcionales:
   MYSQL_HOST (default: localhost)
@@ -28,7 +28,9 @@ if [[ $# -lt 1 || $# -gt 2 ]]; then
 fi
 
 DB_NAME="$1"
-DUMP_PATH="${2:-scripts/backup/torneo.sql}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+DUMP_PATH="${2:-$REPO_ROOT/scripts/backup/torneo.sql}"
 
 if [[ ! "$DB_NAME" =~ ^[A-Za-z0-9_]+$ ]]; then
   echo "Error: nombre de base invalido. Usa solo letras, numeros y guion bajo." >&2

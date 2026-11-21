@@ -7,7 +7,7 @@ Comparación con el cuadro. Revisión del 20/10/2026.
 | #1, semana 2 | Hipótesis, contraste y contrato con doce endpoints | Los documentos completos están en `doc/Indagacion`. El contrato enumera diez operaciones; la pauta pide doce. No agregué rutas sin definición. |
 | #2, semana 3 | Scripts SQL, permisos, proyectos por capas, repositorios Dapper y pruebas | Parcial. Existen esquema, procedimientos, triggers, datos, repositorios Dapper y pruebas. Se agregó script de cuentas y se verificó SELECT/INSERT con XAMPP MariaDB. Se ajustaron BCrypt, presupuesto y alta gradual de plantillas. Falta separar los proyectos y repetir permisos con MySQL 8. |
 | #3, semana 5 | Doce endpoints, Swagger, pruebas o solicitudes HTTP | Parcial. La API publica OpenAPI y Scalar; aún no implementa todas las operaciones del contrato. El archivo `.http` solo contiene WeatherForecast. Faltan las dos rutas no especificadas, el recorrido HTTP y la verificación de estados. |
-| #4, semana 6 | Backup restaurable, README, comprobación de restauración, reflexión y defensa | El backup ficticio `backup/torneo.sql` se generó con `mysqldump` y se restauró correctamente en MariaDB de XAMPP. Falta repetir la restauración en MySQL 8 y realizar la defensa oral. |
+| #4, semana 6 | Backup restaurable, README, comprobación de restauración, reflexión y defensa | El backup ficticio `scripts/backup/torneo.sql` se generó con `mysqldump` y se restauró correctamente en MariaDB de XAMPP. Falta repetir la restauración en MySQL 8 y realizar la defensa oral. |
 
 ## Comprobaciones
 

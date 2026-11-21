@@ -20,7 +20,7 @@ El proyecto ya usa .NET 10, Dapper, MySQL, modelos, servicios, repositorios, pru
 
 ## Evaluación
 
-Se generó `backup/torneo.sql` desde una base temporal con datos ficticios y se restauró en MariaDB 10.4 de XAMPP. Se verificaron ocho tablas, sus conteos y un procedimiento almacenado. También se comprobó que la cuenta de lectura puede consultar y que el `INSERT` se rechaza con error 1142. Falta repetir en MySQL 8.
+Se generó `scripts/backup/torneo.sql` desde una base temporal con datos ficticios y se restauró en MariaDB 10.4 de XAMPP. Se verificaron ocho tablas, sus conteos y un procedimiento almacenado. También se comprobó que la cuenta de lectura puede consultar y que el `INSERT` se rechaza con error 1142. Falta repetir en MySQL 8.
 
 Las pruebas focalizadas dieron 21/21 para plantilla y 10/10 para usuario/BCrypt. La suite completa de repositorios requiere MySQL. La API compiló sin advertencias ni errores.
 

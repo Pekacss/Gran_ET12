@@ -4,13 +4,13 @@ set -euo pipefail
 usage() {
   cat <<'EOF'
 Uso:
-  ./scripts/backup/generar_dump_linux.sh <base_origen> [archivo_salida]
+  ./scripts/backup/linux/generar_dump_linux.sh <base_origen> [archivo_salida]
 
 Nota:
   Si archivo_salida es relativo, se guarda respecto a la raiz del repo.
 
 Ejemplo:
-  ./scripts/backup/generar_dump_linux.sh bd_granet12_restauracion_20261020 scripts/backup/torneo.sql
+  ./scripts/backup/linux/generar_dump_linux.sh bd_granet12_restauracion_20261020 scripts/backup/torneo.sql
 
 Variables de entorno opcionales:
   MYSQL_HOST (default: localhost)
@@ -50,7 +50,7 @@ else
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 
 if [[ ! "$DB_NAME" =~ ^[A-Za-z0-9_]+$ ]]; then
   echo "Error: nombre de base invalido. Usa solo letras, numeros y guion bajo." >&2
